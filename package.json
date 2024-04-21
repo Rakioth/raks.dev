@@ -5,15 +5,36 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check && tsc --noEmit",
+    "lint": "eslint --ext .astro,.ts,.js,.tsx .",
+    "lint:fix": "eslint --ext .astro,.ts,.js,.tsx . --fix",
+    "format": "prettier --write src",
+    "format:check": "prettier --check src"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.6",
-    "@astrojs/tailwind": "^5.1.0",
-    "astro": "^4.4.6",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3"
+    "@fontsource-variable/onest": "5.0.3",
+    "astro": "4.5.10"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "0.43.1",
+    "@astrojs/check": "0.5.10",
+    "@astrojs/tailwind": "5.1.0",
+    "@typescript-eslint/parser": "7.3.1",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-astro": "0.31.4",
+    "eslint-plugin-jsx-a11y": "6.8.0",
+    "lightningcss": "1.24.0",
+    "postcss-import": "16.1.0",
+    "postcss-nesting": "12.1.0",
+    "prettier": "3.2.5",
+    "prettier-plugin-astro": "0.13.0",
+    "prettier-plugin-astro-organize-imports": "0.4.3",
+    "prettier-plugin-tailwindcss": "0.5.12",
+    "tailwindcss": "3.4.3",
+    "typescript": "5.4.3"
   }
 }

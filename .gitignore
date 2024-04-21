@@ -1,21 +1,33 @@
-# build output
+### Build Output ###
 dist/
 
-# generated types
+### Generated Types ###
 .astro/
 
-# dependencies
+### Dependencies ###
 node_modules/
 
-# logs
+### Logs ###
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# environment variables
+### Environment Variables ###
 .env
 .env.production
 
-# macOS-specific files
+### Mac OS ###
 .DS_Store
+
+### Packages ###
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+### IDE Folders ###
+.vs/
+.idea
+
+### Generated Vercel Output ###
+.vercel/
