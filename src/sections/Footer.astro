@@ -1,0 +1,27 @@
+---
+import UnderlineLink from "@/components/UnderlineLink.astro"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+---
+
+<footer
+	class="container m-4 mx-auto mb-10 mt-auto flex w-full justify-center md:max-w-2xl lg:max-w-4xl"
+>
+	<div
+		class="mx-auto flex w-full max-w-screen-xl items-center justify-center pb-4 pt-20 text-sm text-zinc-800/90 dark:text-zinc-200/90"
+	>
+		<span
+			>{t("footer.author")}
+			<UnderlineLink href="https://github.com/Rakioth"><strong>Raks</strong></UnderlineLink>
+			<span aria-hidden="true">|</span>
+			<UnderlineLink
+				href="https://github.com/Rakioth/raks.dev"
+				class="text-primary-700 dark:text-primary-400"
+			>
+				<strong>{t("footer.source")}</strong>
+			</UnderlineLink>
+		</span>
+	</div>
+</footer>

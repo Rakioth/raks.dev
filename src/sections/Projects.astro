@@ -1,0 +1,99 @@
+---
+import ProjectItem from "@/components/ProjectItem.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+import AndroidIcon from "@/icons/Android.astro"
+import CodeIcon from "@/icons/Code.astro"
+import KotlinIcon from "@/icons/Kotlin.astro"
+import MariaDBIcon from "@/icons/MariaDB.astro"
+import SpringIcon from "@/icons/Spring.astro"
+import VueIcon from "@/icons/Vue.astro"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+const tags = {
+	SPRING: {
+		name: "Spring Boot",
+		class: "bg-[#4c7b2c]",
+		icon: SpringIcon,
+	},
+	VUE: {
+		name: "Vue.js",
+		class: "bg-gradient-to-r from-[#42b883] to-[#35495e]",
+		icon: VueIcon,
+	},
+	MARIADB: {
+		name: "MariaDB",
+		class: "bg-gradient-to-r from-[#c0765a] to-[#1f305f]",
+		icon: MariaDBIcon,
+	},
+	ANDROID: {
+		name: "Android",
+		class: "bg-[#277d3e]",
+		icon: AndroidIcon,
+	},
+	KOTLIN: {
+		name: "Kotlin",
+		class: "bg-gradient-to-r from-[#e44857] via-[#c711e1] to-[#7f52ff]",
+		icon: KotlinIcon,
+	},
+}
+
+const projects = [
+	{
+		title: t("projects.0.title"),
+		description: t("projects.0.description"),
+		image: "swiftly",
+		alt: t("projects.0.alt"),
+		tags: [tags.SPRING, tags.VUE, tags.MARIADB],
+		github: "https://github.com/pheralb/svgl",
+		link: "https://svgl.vercel.app/",
+	},
+	{
+		title: t("projects.1.title"),
+		description: t("projects.1.description"),
+		image: "pvcreator",
+		alt: t("projects.1.alt"),
+		tags: [tags.ANDROID, tags.KOTLIN],
+		link: "https://adventjs.dev",
+	},
+]
+---
+
+<SectionContainer id={t("nav.projects.label")} title={t("nav.projects.title")}>
+	<CodeIcon class="size-8" slot="icon" />
+	<div class="flex flex-col gap-y-16" id="projects-container">
+		{projects.map((project) => <ProjectItem {...project} />)}
+	</div>
+</SectionContainer>
+
+<script>
+	import { $, $$ } from "@/lib/dom-selector"
+
+	document.addEventListener("astro:page-load", () => {
+		const pictures = $$("#projects-container picture") as NodeListOf<HTMLPictureElement>
+
+		function picturesToggle(theme: string) {
+			pictures.forEach((picture) => {
+				const id = picture.id
+				const img = $("img", picture) as HTMLImageElement
+				const source = $("source", picture) as HTMLSourceElement
+
+				img.setAttribute("src", `/projects/${theme}/${id}.png`)
+				source.setAttribute("srcset", `/projects/${theme}/${id}.webp`)
+			})
+		}
+
+		function handleThemeToggled(event: any) {
+			picturesToggle(event.detail.theme)
+		}
+
+		document.addEventListener("astro:before-swap", () => {
+			document.removeEventListener("themetoggled", handleThemeToggled)
+		})
+
+		picturesToggle(window.getThemePreference())
+		document.addEventListener("themetoggled", handleThemeToggled)
+	})
+</script>

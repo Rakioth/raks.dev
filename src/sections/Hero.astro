@@ -1,0 +1,63 @@
+---
+import ButtonLink from "@/components/ButtonLink.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+import CVIcon from "@/icons/CV.astro"
+import LinkedInIcon from "@/icons/LinkedIn.astro"
+import MailIcon from "@/icons/Mail.astro"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+---
+
+<SectionContainer
+	class="flex flex-col items-center justify-center text-balance py-16 text-center md:py-32"
+>
+	<picture
+		class="mb-6 size-24 overflow-clip rounded-full bg-primary-700 shadow-lg dark:bg-primary-400"
+	>
+		<source srcset="/profile/hero.webp" type="image/webp" />
+		<img src="/profile/hero.png" alt="Daniel Muñoz Neyra" />
+	</picture>
+	<h1 class="text-4xl font-bold uppercase text-gray-800 dark:text-white sm:text-5xl">
+		<span>{t("hero.title")}</span> Daniel
+	</h1>
+	<p class="mt-6 text-xl text-gray-800 dark:text-gray-300">
+		<strong class="font-semibold text-primary-700 dark:text-primary-400">{t("subtitle")}</strong>
+		{t("hero.location")}
+		<picture>
+			<source srcset="/profile/flag.webp" type="image/webp" />
+			<img class="inline-block size-6" src="/profile/flag.png" alt={t("hero.flag")} /></picture
+		>.
+	</p>
+	<p class="text-xl text-gray-800 dark:text-gray-300">
+		{t("hero.description")}
+	</p>
+	<nav class="mt-8 flex flex-wrap justify-center gap-4">
+		<ButtonLink href="mailto:dmunozneyra@gmail.com">
+			<MailIcon class="size-4" />
+			{t("hero.contact")}
+		</ButtonLink>
+		<ButtonLink href="https://linkedin.com/in/dmunozneyra">
+			<LinkedInIcon class="size-4" />
+			LinkedIn
+		</ButtonLink>
+		<ButtonLink href=`/cv/${locale}.pdf`>
+			<CVIcon class="size-4" />
+			{t("hero.cv")}
+		</ButtonLink>
+	</nav>
+</SectionContainer>
+
+<style>
+	@supports (-webkit-text-stroke: 0.0625rem white) {
+		h1 > span {
+			color: transparent;
+			-webkit-text-stroke: 0.0625rem theme("colors.gray.800");
+		}
+
+		h1 > span:is(.dark *) {
+			-webkit-text-stroke: 0.0625rem white;
+		}
+	}
+</style>
