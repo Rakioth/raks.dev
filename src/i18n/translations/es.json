@@ -1,0 +1,98 @@
+{
+  "title": "Porfolio de Daniel | {0}",
+  "subtitle": "Desarrollador Full-Stack",
+  "description": "Este es un sitio web de ejemplo",
+  "go-back": "Volver al inicio",
+  "nav": {
+    "experience": {
+      "title": "Experiencia",
+      "label": "experiencia",
+      "alt-title": "Experiencia laboral"
+    },
+    "projects": {
+      "title": "Proyectos",
+      "label": "proyectos"
+    },
+    "about-me": {
+      "title": "Sobre mí",
+      "label": "sobre-mi"
+    },
+    "contact": {
+      "title": "Contacto"
+    }
+  },
+  "toggle": {
+    "locale": {
+      "en": "Cambiar idioma a inglés",
+      "es": "Cambiar idioma a español"
+    },
+    "theme": {
+      "default": "Alternar tema",
+      "dark": "Activar modo oscuro",
+      "light": "Activar modo claro"
+    },
+    "menu": {
+      "open": "Abrir menu",
+      "close": "Cerrar menu"
+    }
+  },
+  "hero": {
+    "title": "Hey, soy",
+    "location": "de Madrid, España",
+    "flag": "Bandera de España",
+    "description": "Especializado en crear aplicaciones únicas.",
+    "contact": "Contáctame",
+    "cv": "Currículum"
+  },
+  "experience": {
+    "0": {
+      "date": "Actualmente...",
+      "title": "Creador de Contenido",
+      "company": "Twitch",
+      "description": "Divulgo sobre programación y desarrollo web en diferentes plataformas. Galardonado como mejor creador de contenido de habla no-inglesa en 2022 y mejor comunidad en 2023 por GitHub."
+    },
+    "1": {
+      "date": "Septiembre 2022",
+      "title": "Principal Frontend Engineer",
+      "company": "Adevinta Spain",
+      "description": "Responsable de la plataforma, componentes y utilidades para la creación y desarrollo de aplicaciones web. Mejora de un 30% en la entrega de software. Implantación de medidas de integración continua y despliegue con A/B testing en más de 15 equipos."
+    }
+  },
+  "projects": {
+    "0": {
+      "title": "SVGL - A beautiful library with SVG logos",
+      "description": "Biblioteca de logos SVG de las marcas más populares. +10k visitas al mes. +2K svgs descargados. Creado desde cero con Next.js, React y Tailwind CSS.",
+      "alt": "opa"
+    },
+    "1": {
+      "title": "AdventJS - Retos de programación con JavaScript y TypeScript",
+      "description": "Plataforma gratuita con retos de programación. Más de 1 millón de visitas en un mes. +50K retos completados. Creada desde cero con Next.js, React y Tailwind CSS.",
+      "alt": "opa"
+    },
+    "links": {
+      "code": "Código",
+      "preview": "Vista previa"
+    }
+  },
+  "about-me": {
+    "p-1": "Me llamo Miguel Ángel pero mis amigos me llaman midu. Empecé en la programación con un Amstrad, tenía 10 años. Actualmente estoy",
+    "p-2": "Algunos de mis éxitos incluyen",
+    "p-3": ". Aunque hoy está desaparecido fue un gran avance en el mundo del desarrollo web.",
+    "p-4": "Como creador de contenido,",
+    "p-5": ". Mi objetivo es mejorar la empleabilidad de la comunidad hispana y el acceso a contenido de calidad.",
+    "strong-1": "liderando equipos de desarrollo en multinacionales",
+    "strong-2": "colaborar con Mozilla para el desarrollo de las primeras apps en su sistema FirefoxOS",
+    "strong-3": "cuento con el canal de habla hispana más visto del mundo en la categoría de",
+    "strong-4": "en Twitch",
+    "em-1": "Software & Game Development"
+  },
+  "footer": {
+    "author": "Creado por",
+    "source": "Código Fuente"
+  },
+  "seo": {
+    "keywords": "Desarrollador Full-Stack, Desarrollo Web, Desarrollo Front-End, Desarrollo Back-End, JavaScript, HTML, CSS, React, Node.js, Express, MongoDB, Portafolio, Ingeniero de Software, Diseño Web, Diseño Responsivo, UI/UX, Desarrollo de API, Metodologías Ágiles, Control de Versiones, Git",
+    "site-name": "Porfolio de Daniel",
+    "image-alt": "Fondo del sitio web raks.dev"
+  }
+}
