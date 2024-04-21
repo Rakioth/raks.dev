@@ -1,51 +1,118 @@
 ---
+import { ViewTransitions } from "astro:transitions"
+
+import DottedBackground from "@/components/DottedBackground.astro"
+import NoiseBackground from "@/components/NoiseBackground.astro"
+import SEO from "@/components/SEO.astro"
+import Footer from "@/sections/Footer.astro"
+import Header from "@/sections/Header.astro"
+import "@fontsource-variable/onest"
+
 interface Props {
-	title: string;
+	lang: string
+	title: string
+	description: string
+	canonical?: string
+	image?: string
+	themeColor?: string
 }
 
-const { title } = Astro.props;
+const { lang, title, description, canonical, image, themeColor } = Astro.props
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+		<SEO
+			title={title}
+			description={description}
+			canonical={canonical}
+			image={image}
+			themeColor={themeColor}
+		/>
+		<ViewTransitions />
 	</head>
-	<body>
+
+	<body class="flex min-h-screen flex-col">
+		<DottedBackground />
+		<NoiseBackground />
+		<Header />
 		<slot />
+		<Footer />
+		<style is:global>
+			:root {
+				--background-color: #f3f2f9;
+				--background-dotted: 137, 23, 152;
+			}
+
+			.dark {
+				--background-color: #0f004a;
+				--background-dotted: 155, 67, 255;
+			}
+
+			html {
+				font-family: "Onest Variable", system-ui, sans-serif;
+				background: var(--background-color);
+				scroll-behavior: none;
+				scrollbar-gutter: stable;
+				cursor: url(/cursor/light.png), auto;
+				cursor: -webkit-image-set(url(/cursor/light.png) 2x), auto;
+			}
+
+			html.dark {
+				cursor: url(/cursor/dark.png), auto;
+				cursor: -webkit-image-set(url(/cursor/dark.png) 2x), auto;
+			}
+
+			@media screen and (prefers-reduced-motion: no-preference) {
+				html {
+					scroll-behavior: smooth;
+				}
+			}
+
+			@supports selector(::selection) {
+				::selection {
+					@apply bg-primary-700 text-gray-800 dark:bg-primary-400 dark:text-white;
+					-webkit-text-stroke: 0;
+				}
+			}
+
+			@supports selector(::-webkit-scrollbar) {
+				::-webkit-scrollbar {
+					width: 0.675rem;
+					border-radius: 0.675rem;
+				}
+
+				::-webkit-scrollbar-thumb {
+					@apply bg-primary-700 dark:bg-primary-400;
+					border: 0.125rem solid transparent;
+					border-radius: 0.675rem;
+					background-clip: content-box;
+				}
+
+				::-webkit-scrollbar-thumb:active {
+					background-color: theme("colors.neutral.500");
+				}
+
+				::-webkit-scrollbar-track {
+					background: var(--background-image);
+				}
+
+				::-webkit-scrollbar-corner {
+					background: var(--background-image);
+				}
+			}
+
+			@supports not selector(::-webkit-scrollbar) {
+				* {
+					scrollbar-width: thin;
+					scrollbar-color: theme("colors.primary.400") transparent;
+				}
+
+				*:is(.dark *) {
+					scrollbar-color: theme("colors.primary.700") transparent;
+				}
+			}
+		</style>
 	</body>
 </html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-</style>
