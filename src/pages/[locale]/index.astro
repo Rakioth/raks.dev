@@ -1,0 +1,26 @@
+---
+import { getLocaleByUrl, translations, useTranslations } from "@/i18n"
+import Layout from "@/layouts/Layout.astro"
+import AboutMe from "@/sections/AboutMe.astro"
+import Experience from "@/sections/Experience.astro"
+import Hero from "@/sections/Hero.astro"
+import Projects from "@/sections/Projects.astro"
+
+export function getStaticPaths() {
+	return Object.keys(translations).map((lang) => ({ params: { locale: lang } }))
+}
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+---
+
+<Layout lang={locale} title={t("title", t("subtitle"))} description={t("description")}>
+	<main class="px-4">
+		<Hero />
+		<div class="space-y-24">
+			<Experience />
+			<Projects />
+			<AboutMe />
+		</div>
+	</main>
+</Layout>
