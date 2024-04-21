@@ -1,0 +1,210 @@
+<canvas transition:persist class="pointer-events-none fixed left-0 top-0 -z-20 h-screen w-full">
+</canvas>
+
+<script>
+	import { $ } from "@/lib/dom-selector"
+
+	const DOT_SIZE = 2
+
+	const canvas = $("canvas") as HTMLCanvasElement
+	const context = canvas.getContext("2d") as CanvasRenderingContext2D
+
+	// 🟣 Dots
+
+	let SPREAD = 22
+	let dots: Dot[] = []
+
+	interface Dot {
+		x: number
+		y: number
+		currentOpacity?: number
+		targetOpacity?: number
+	}
+
+	function drawDot(dot: Dot, opacity: number = 0.1) {
+		context.beginPath()
+		context.fillStyle = `rgba(${window.getComputedStyle(document.documentElement).getPropertyValue("--background-dotted")}, ${opacity})`
+		context.fillRect(dot.x, dot.y, DOT_SIZE, DOT_SIZE)
+	}
+
+	// 🧱 Rendering
+
+	const FPS = 30
+	const FPS_INTERVAL = 1000 / FPS
+
+	let isRendering = false
+	let then = 0
+	let stopInterval = 0
+
+	function tick(timestamp: number) {
+		if (isRendering) {
+			requestAnimationFrame(tick)
+			const elapsed = timestamp - then
+			if (elapsed > FPS_INTERVAL) {
+				then = timestamp - (elapsed % FPS_INTERVAL)
+				context.clearRect(0, 0, canvas.width, canvas.height)
+				animateDots()
+			}
+		}
+	}
+
+	function startRendering() {
+		isRendering = true
+		then = window.performance.now()
+		requestAnimationFrame(tick)
+	}
+
+	function stopRendering() {
+		isRendering = false
+	}
+
+	function resetRendering() {
+		if (stopInterval) window.clearInterval(stopInterval)
+		stopInterval = 0
+		if (!isRendering) startRendering()
+	}
+
+	// 👂 Listeners
+
+	let mouseX = 0
+	let mouseY = 0
+	let isMouseClicked = false
+	let isMouseMoved = false
+	let clickTime = 0
+	let mouseStart = 0
+	let impact = 0
+
+	function handleResize(handler: () => void, timeout: number) {
+		let timer: number
+
+		return function () {
+			clearTimeout(timer)
+			timer = window.setTimeout(handler, timeout)
+		}
+	}
+
+	function handleMouseDown() {
+		mouseStart = Date.now()
+		resetRendering()
+	}
+
+	function handleMouseUp(event: MouseEvent) {
+		mouseX = event.x
+		mouseY = event.y
+		isMouseClicked = true
+		clickTime = Date.now() - mouseStart
+		impact = clickTime < 150 ? 150 : clickTime > 250 ? 250 : clickTime
+	}
+
+	function handleMouseMove(event: MouseEvent) {
+		mouseX = event.x
+		mouseY = event.y
+		isMouseMoved = true
+		resetRendering()
+	}
+
+	function handleVisibilityChange() {
+		if (document.hidden) stopRendering()
+		else resetRendering()
+	}
+
+	// 📽️ Animation
+
+	function setCanvasSize() {
+		canvas.width = canvas.offsetWidth
+		canvas.height = canvas.offsetHeight
+		SPREAD = canvas.width > 640 ? 22 : 18
+	}
+
+	function createDots() {
+		dots = []
+		for (let x = SPREAD; x < canvas.width; x += SPREAD)
+			for (let y = SPREAD; y < canvas.height; y += SPREAD) dots.push({ x, y })
+	}
+
+	function animateDots() {
+		for (let i = 0; i < dots.length; i++) {
+			const dot = dots[i]
+			let opacity = 0.1
+
+			if (isMouseClicked || isMouseMoved) {
+				const dx = mouseX - dot.x
+				const dy = mouseY - dot.y
+				const distance = Math.round(1.8 * Math.sqrt(dx * dx + dy * dy))
+
+				impact = clickTime ? impact : 80
+				if (distance < impact) {
+					opacity = distance / impact
+					dot.currentOpacity = 0.1
+					dot.targetOpacity = 1
+				}
+
+				if (i === dots.length - 1) {
+					isMouseClicked = false
+					clickTime = 0
+					isMouseMoved = false
+
+					if (!stopInterval)
+						stopInterval = window.setTimeout(() => {
+							stopRendering()
+						}, 2000)
+				}
+			}
+
+			let currentOpacity = dot.currentOpacity
+
+			if (currentOpacity) {
+				let targetOpacity = dot.targetOpacity || 0.1
+
+				if (currentOpacity >= targetOpacity) {
+					targetOpacity = 0.1
+					currentOpacity -= opacity
+					if (currentOpacity <= 0.1) currentOpacity = 0.1
+				} else {
+					currentOpacity += opacity
+				}
+
+				dot.currentOpacity = currentOpacity
+				dot.targetOpacity = targetOpacity
+			}
+
+			drawDot(dot, currentOpacity)
+		}
+	}
+
+	// ✂️ Reduced motion
+
+	function handleReducedMotionPreferenceChange(event: MediaQueryListEvent) {
+		if (event.matches) addEventListeners()
+		else removeEventListeners()
+	}
+
+	const reducedMotionPreference = window.matchMedia("(prefers-reduced-motion: no-preference)")
+	reducedMotionPreference.addEventListener("change", handleReducedMotionPreferenceChange)
+
+	// 🚀 Setup
+
+	function init() {
+		setCanvasSize()
+		createDots()
+		animateDots()
+	}
+
+	function addEventListeners() {
+		window.addEventListener("mousedown", handleMouseDown)
+		window.addEventListener("mouseup", handleMouseUp)
+		window.addEventListener("mousemove", handleMouseMove)
+		document.addEventListener("visibilitychange", handleVisibilityChange)
+	}
+
+	function removeEventListeners() {
+		window.removeEventListener("mousedown", handleMouseDown)
+		window.removeEventListener("mouseup", handleMouseUp)
+		window.removeEventListener("mousemove", handleMouseMove)
+		document.removeEventListener("visibilitychange", handleVisibilityChange)
+	}
+
+	init()
+	window.addEventListener("resize", handleResize(init, 300))
+	if (reducedMotionPreference.matches) addEventListeners()
+</script>

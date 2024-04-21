@@ -1,0 +1,88 @@
+---
+import { MOBILE_MENU_BUTTON_ID, MOBILE_MENU_CONTENT_ID } from "@/consts/mobile-menu"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+const navItems = [
+	{
+		title: t("nav.experience.title"),
+		url: `#${t("nav.experience.label")}`,
+	},
+	{
+		title: t("nav.projects.title"),
+		url: `#${t("nav.projects.label")}`,
+	},
+	{
+		title: t("nav.about-me.title"),
+		url: `#${t("nav.about-me.label")}`,
+	},
+	{
+		title: t("nav.contact.title"),
+		url: "mailto:miduga@gmail.com",
+	},
+]
+
+interface Props {
+	isMobile?: boolean
+}
+
+const { isMobile = false } = Astro.props
+---
+
+<ul
+	class:list={[
+		"flex items-center justify-center gap-6 uppercase",
+		{ "flex-col text-4xl": isMobile },
+		{ "flex-row text-sm": !isMobile },
+	]}
+>
+	{
+		navItems.map((link) => (
+			<li class="group relative mx-5 py-3.5">
+				<a
+					href={link.url}
+					class:list={[
+						"rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 group-[.nav-selected]:before:absolute group-[.nav-selected]:before:left-0 group-[.nav-selected]:before:top-1/2 group-[.nav-selected]:before:-translate-y-1/2 group-[.nav-selected]:before:rounded-full group-[.nav-selected]:before:bg-current group-[.nav-selected]:before:content-[''] any-hover:text-primary-600 motion-safe:transition-colors dark:focus-visible:ring-primary-400 dark:any-hover:text-primary-400",
+						{
+							"group-[.nav-selected]:before:size-5 group-[.nav-selected]:before:-translate-x-7":
+								isMobile,
+						},
+						{
+							"group-[.nav-selected]:before:size-2 group-[.nav-selected]:before:-translate-x-3":
+								!isMobile,
+						},
+					]}
+				>
+					<span
+						class:list={[
+							"group-[.nav-selected]:before:absolute group-[.nav-selected]:before:left-0 group-[.nav-selected]:before:top-1/2 group-[.nav-selected]:before:-translate-y-1/2 group-[.nav-selected]:before:text-current group-[.nav-selected]:before:content-['('] group-[.nav-selected]:after:absolute group-[.nav-selected]:after:right-0 group-[.nav-selected]:after:top-1/2 group-[.nav-selected]:after:-translate-y-1/2 group-[.nav-selected]:after:text-current group-[.nav-selected]:after:content-[')']",
+							{
+								"group-[.nav-selected]:before:-translate-x-12 group-[.nav-selected]:after:translate-x-6":
+									isMobile,
+							},
+							{
+								"group-[.nav-selected]:before:-translate-x-5 group-[.nav-selected]:after:translate-x-2.5":
+									!isMobile,
+							},
+						]}
+					>
+						{link.title}
+					</span>
+				</a>
+			</li>
+		))
+	}
+</ul>
+
+<script is:inline define:vars={{ MOBILE_MENU_BUTTON_ID, MOBILE_MENU_CONTENT_ID }}>
+	const menuToggle = document.getElementById(MOBILE_MENU_BUTTON_ID)
+	const navLinks = document.querySelectorAll(`#${MOBILE_MENU_CONTENT_ID} a`)
+
+	function handleClick() {
+		menuToggle.click()
+	}
+
+	navLinks.forEach((navLink) => navLink.addEventListener("click", handleClick))
+</script>

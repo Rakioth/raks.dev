@@ -1,0 +1,16 @@
+---
+import { getLocaleByUrl, getNextLocale, useTranslations } from "@/i18n"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+const nextLocale = getNextLocale(locale)
+---
+
+<a
+	href=`/${nextLocale}`
+	aria-label={t(`toggle.locale.${nextLocale}`)}
+	class="rounded-sm uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 dark:focus-visible:ring-primary-400"
+>
+	{nextLocale}
+</a>

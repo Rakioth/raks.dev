@@ -1,0 +1,54 @@
+<div
+	transition:persist
+	id="noise-background"
+	class="pointer-events-none fixed -left-[150%] -top-[300%] -z-10 h-[600vh] w-[600%] bg-[url('/effects/noise.png')] bg-[url('/effects/noise.webp')] bg-repeat opacity-25 motion-safe:animate-[grain_7s_steps(10)_infinite]"
+>
+</div>
+
+<style>
+	@keyframes grain {
+		0%,
+		100% {
+			transform: translate(0);
+		}
+		10% {
+			transform: translate(-5%, -10%);
+		}
+		20% {
+			transform: translate(-15%, 5%);
+		}
+		30% {
+			transform: translate(7%, -25%);
+		}
+		40% {
+			transform: translate(-5%, 25%);
+		}
+		50% {
+			transform: translate(-15%, 10%);
+		}
+		60% {
+			transform: translate(15%);
+		}
+		70% {
+			transform: translateY(15%);
+		}
+		80% {
+			transform: translate(3%, 35%);
+		}
+		90% {
+			transform: translate(-10%, 10%);
+		}
+	}
+</style>
+
+<script>
+	import { $ } from "@/lib/dom-selector"
+
+	const noiseBackground = $("#noise-background")
+
+	function handleVisibilityChange() {
+		noiseBackground.classList.toggle("animate-none", document.hidden)
+	}
+
+	document.addEventListener("visibilitychange", handleVisibilityChange)
+</script>

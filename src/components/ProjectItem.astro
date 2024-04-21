@@ -1,0 +1,83 @@
+---
+import ButtonLink from "@/components/ButtonLink.astro"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+import GithubIcon from "@/icons/Github.astro"
+import LinkIcon from "@/icons/Link.astro"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+interface Props {
+	title: string
+	description: string
+	image: string
+	alt: string
+	tags: {
+		name: string
+		class: string
+		icon: (_props: Record<string, any>) => any
+	}[]
+	github?: string
+	link?: string
+}
+
+const { title, description, image, alt, tags, github, link } = Astro.props
+---
+
+<article class="group flex flex-col space-x-0 space-y-8 md:flex-row md:space-x-8 md:space-y-0">
+	<div class="w-full md:w-1/2">
+		<div
+			class="overflow-clip rounded-xl shadow-xl ease-in-out motion-safe:transition motion-safe:duration-500 sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-primary-800 lg:any-hover:border-primary-700 lg:any-hover:bg-primary-800/50 dark:lg:border-primary-500 dark:lg:any-hover:border-primary-400 dark:lg:any-hover:bg-primary-500/50"
+		>
+			<picture id={image}>
+				<source type="image/webp" />
+				<img
+					class="h-56 w-full object-cover object-top motion-safe:transition-transform motion-safe:duration-500 sm:h-full md:scale-110 md:group-hover:scale-105"
+					alt={alt}
+					loading="lazy"
+				/>
+			</picture>
+		</div>
+	</div>
+	<div class="w-full md:w-1/2 md:max-w-lg">
+		<h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{title}</h3>
+		<div class="mt-2 flex flex-wrap">
+			<ul class="mb-2 flex flex-row gap-x-2">
+				{
+					tags.map((tag) => (
+						<li>
+							<span
+								class:list={[
+									tag.class,
+									"flex items-center gap-x-2 rounded-full border border-black/20 px-2 py-1 text-xs dark:border-white/40",
+								]}
+							>
+								<tag.icon class="size-3.5 text-white" />
+								{tag.name}
+							</span>
+						</li>
+					))
+				}
+			</ul>
+			<div class="mt-2 text-pretty text-gray-800 dark:text-gray-300">{description}</div>
+			<footer class="mt-4 flex items-end justify-start gap-x-4">
+				{
+					github && (
+						<ButtonLink href={github} altStyle={true}>
+							<GithubIcon class="size-6" />
+							{t("projects.links.code")}
+						</ButtonLink>
+					)
+				}
+				{
+					link && (
+						<ButtonLink href={link} altStyle={true}>
+							<LinkIcon class="size-6" />
+							{t("projects.links.preview")}
+						</ButtonLink>
+					)
+				}
+			</footer>
+		</div>
+	</div>
+</article>

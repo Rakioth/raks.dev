@@ -1,0 +1,98 @@
+---
+import onest from "@fontsource-variable/onest/files/onest-latin-wght-normal.woff2"
+
+import { THEME_COLOR } from "@/consts/theme"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+interface Props {
+	title: string
+	description: string
+	canonical?: string
+	image?: string
+	themeColor?: string
+}
+
+const {
+	title,
+	description,
+	canonical,
+	image = "/og.jpg",
+	themeColor = THEME_COLOR.LIGHT,
+} = Astro.props
+
+const canonicalURL = canonical
+	? new URL(canonical, Astro.site)
+	: new URL(Astro.url.pathname, Astro.site)
+---
+
+<title>{title}</title>
+
+<meta charset="UTF-8" />
+<meta name="description" content={description} />
+
+<link rel="preload" href={onest} as="font" type="font/woff2" crossorigin />
+
+<link rel="canonical" href={canonicalURL} />
+<meta name="viewport" content="width=device-width" />
+<meta name="color-scheme" content="dark light" />
+<meta name="theme-color" content={themeColor} />
+<meta name="apple-mobile-web-app-status-bar" content={themeColor} />
+
+<meta name="keywords" content={t("seo.keywords")} />
+
+<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:image:alt" content={t("seo.image-alt")} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:site_name" content={t("seo.site-name")} />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:locale:alternate" content="es_ES" />
+
+<meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:domain" content={Astro.url.hostname} />
+
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+<meta name="googlebot" content="notranslate" />
+
+<link rel="alternate" href={Astro.url} hreflang="x-default" />
+<link rel="alternate" href={new URL("/en", Astro.url)} hreflang="en" />
+<link rel="alternate" href={new URL("/es", Astro.url)} hreflang="es" />
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+<link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+
+<link rel="manifest" href=`/${locale}/light.webmanifest` />
+<meta name="msapplication-config" content="/browserconfig.xml" />
+
+<script is:inline define:vars={{ THEME_COLOR }}>
+	window.getThemePreference = () => {
+		const localItem = typeof localStorage !== "undefined" && localStorage.getItem("theme")
+		if (localItem) return localItem
+		return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+	}
+
+	document.addEventListener("astro:page-load", () => {
+		const theme = window.getThemePreference()
+		const manifest = document.querySelector("link[rel=manifest]")
+		const themeColor = document.querySelector("meta[name=theme-color]")
+		const statusColor = document.querySelector("meta[name=apple-mobile-web-app-status-bar]")
+		const color = theme === "dark" ? THEME_COLOR.DARK : THEME_COLOR.LIGHT
+
+		document.documentElement.classList.toggle("dark", theme === "dark")
+		manifest.setAttribute("href", manifest.getAttribute("href").replace(/dark|light/, theme))
+		themeColor.setAttribute("content", color)
+		statusColor.setAttribute("content", color)
+	})
+</script>

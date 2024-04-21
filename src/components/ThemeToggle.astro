@@ -1,0 +1,98 @@
+---
+import { THEME_COLOR } from "@/consts/theme"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+const darkModeLabel = t("toggle.theme.dark")
+const lightModeLabel = t("toggle.theme.light")
+---
+
+<button
+	transition:persist
+	id="theme-toggle"
+	type="button"
+	aria-label={t("toggle.theme.default")}
+	class="group rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 dark:focus-visible:ring-primary-400"
+>
+	<svg
+		aria-hidden="true"
+		width="17"
+		height="17"
+		viewBox="0 0 17 17"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+	>
+		<path
+			d="M14.994,7.99a7,7,0,0,1-12.813,3.9,1,1,0,0,1,1.063-1.532,6.139,6.139,0,0,0,1.961.089,6.012,6.012,0,0,0,5.212-4.985,6.067,6.067,0,0,0-.065-2.274A1,1,0,0,1,11.9,2.182,6.985,6.985,0,0,1,14.994,7.99Z"
+			class="translate-y-5 duration-[250] group-[.toggled]:transform-none motion-safe:transition-transform"
+		>
+		</path>
+		<g
+			class="transform-none duration-[250] group-[.toggled]:translate-y-5 motion-safe:transition-transform"
+		>
+			<circle cx="8.5" cy="8.5" r="3"></circle>
+			<line x1="8.5" y1="1" x2="8.5" y2="2"></line>
+			<line x1="13.803" y1="3.197" x2="13.096" y2="3.904"></line>
+			<line x1="16" y1="8.5" x2="15" y2="8.5"></line>
+			<line x1="13.803" y1="13.803" x2="13.096" y2="13.096"></line>
+			<line x1="8.5" y1="16" x2="8.5" y2="15"> </line>
+			<line x1="3.197" y1="13.803" x2="3.904" y2="13.096"></line>
+			<line x1="1" y1="8.5" x2="2" y2="8.5"></line>
+			<line x1="3.197" y1="3.197" x2="3.904" y2="3.904"></line>
+		</g>
+	</svg>
+</button>
+
+<script is:inline define:vars={{ darkModeLabel, lightModeLabel, THEME_COLOR }} data-astro-rerun>
+	const themeToggle = document.getElementById("theme-toggle")
+	const colorSchemePreference = window.matchMedia("(prefers-color-scheme: dark)")
+	const manifest = document.querySelector("link[rel=manifest]")
+	const themeColor = document.querySelector("meta[name=theme-color]")
+	const statusColor = document.querySelector("meta[name=apple-mobile-web-app-status-bar]")
+
+	function updateThemeState(theme) {
+		const ariaLabel = theme ? lightModeLabel : darkModeLabel
+		const color = theme ? THEME_COLOR.DARK : THEME_COLOR.LIGHT
+
+		themeToggle.classList.toggle("toggled", theme)
+		themeToggle.setAttribute("aria-label", ariaLabel)
+		manifest.setAttribute(
+			"href",
+			manifest.getAttribute("href").replace(/dark|light/, theme ? "dark" : "light")
+		)
+		themeColor.setAttribute("content", color)
+		statusColor.setAttribute("content", color)
+	}
+
+	function handleToggleClick() {
+		const element = document.documentElement
+		element.classList.toggle("dark")
+
+		const isDark = element.classList.contains("dark")
+		const theme = isDark ? "dark" : "light"
+		localStorage.setItem("theme", theme)
+
+		const themeToggledEvent = new CustomEvent("themetoggled", { detail: { theme } })
+		updateThemeState(isDark)
+		document.dispatchEvent(themeToggledEvent)
+	}
+
+	function handleColorSchemePreferenceChange(event) {
+		const isDark = document.documentElement.classList.contains("dark")
+		const toggle = (event.matches && !isDark) || (!event.matches && isDark)
+		if (toggle) handleToggleClick()
+	}
+
+	document.addEventListener("astro:before-swap", () => {
+		themeToggle.removeEventListener("click", handleToggleClick)
+		colorSchemePreference.removeEventListener("change", handleColorSchemePreferenceChange)
+	})
+
+	updateThemeState(window.getThemePreference() === "dark")
+	themeToggle.addEventListener("click", handleToggleClick)
+	colorSchemePreference.addEventListener("change", handleColorSchemePreferenceChange)
+</script>
