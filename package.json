@@ -15,8 +15,8 @@
     "format:check": "prettier --check src"
   },
   "dependencies": {
-    "@fontsource-variable/onest": "5.0.4",
     "@fontsource-variable/newsreader": "5.0.19",
+    "@fontsource-variable/onest": "5.0.4",
     "astro": "4.5.10"
   },
   "devDependencies": {
