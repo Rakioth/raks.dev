@@ -2,7 +2,6 @@
 import ExperienceItem from "@/components/ExperienceItem.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
 import { getLocaleByUrl, useTranslations } from "@/i18n"
-import BriefcaseIcon from "@/icons/Briefcase.astro"
 
 const locale = getLocaleByUrl(Astro.url)
 const t = useTranslations(locale)
@@ -13,22 +12,24 @@ const experiences = [
 		title: t("experience.0.title"),
 		company: t("experience.0.company"),
 		description: t("experience.0.description"),
+		link: "https://www.tragsa.es",
 	},
 	{
 		date: t("experience.1.date"),
 		title: t("experience.1.title"),
 		company: t("experience.1.company"),
 		description: t("experience.1.description"),
+		link: "https://www.tragsa.es",
 	},
 ]
 ---
 
-<SectionContainer id={t("nav.experience.label")} title={t("nav.experience.alt-title")}>
-	<BriefcaseIcon class="size-8" slot="icon" />
-	<ol class="relative ml-4 border-s border-black/20 dark:border-white/20">
+<SectionContainer title={t("nav.experience")}>
+	<span class="pl-4 font-emoji not-italic" slot="icon">💼</span>
+	<ol>
 		{
 			experiences.map((experience) => (
-				<li class="flex flex-col pb-10 ps-8 md:flex-row">
+				<li>
 					<ExperienceItem {...experience} />
 				</li>
 			))

@@ -1,5 +1,7 @@
 ---
+import newsreader from "@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2"
 import onest from "@fontsource-variable/onest/files/onest-latin-wght-normal.woff2"
+import emoji from "/fonts/apple-color-emoji.woff"
 
 import { THEME_COLOR } from "@/consts/theme"
 import { getLocaleByUrl, useTranslations } from "@/i18n"
@@ -12,16 +14,9 @@ interface Props {
 	description: string
 	canonical?: string
 	image?: string
-	themeColor?: string
 }
 
-const {
-	title,
-	description,
-	canonical,
-	image = "/og.jpg",
-	themeColor = THEME_COLOR.LIGHT,
-} = Astro.props
+const { title, description, canonical, image = "/og.jpg" } = Astro.props
 
 const canonicalURL = canonical
 	? new URL(canonical, Astro.site)
@@ -33,13 +28,14 @@ const canonicalURL = canonical
 <meta charset="UTF-8" />
 <meta name="description" content={description} />
 
+<link rel="preload" href={newsreader} as="font" type="font/woff2" crossorigin />
 <link rel="preload" href={onest} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={emoji} as="font" type="font/woff" crossorigin />
 
 <link rel="canonical" href={canonicalURL} />
 <meta name="viewport" content="width=device-width" />
-<meta name="color-scheme" content="dark light" />
-<meta name="theme-color" content={themeColor} />
-<meta name="apple-mobile-web-app-status-bar" content={themeColor} />
+<meta name="theme-color" content={THEME_COLOR.LIGHT} />
+<meta name="apple-mobile-web-app-status-bar" content={THEME_COLOR.LIGHT} />
 
 <meta name="keywords" content={t("seo.keywords")} />
 
@@ -83,16 +79,104 @@ const canonicalURL = canonical
 		return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
 	}
 
-	document.addEventListener("astro:page-load", () => {
-		const theme = window.getThemePreference()
+	window.updateSeoState = (theme) => {
 		const manifest = document.querySelector("link[rel=manifest]")
 		const themeColor = document.querySelector("meta[name=theme-color]")
 		const statusColor = document.querySelector("meta[name=apple-mobile-web-app-status-bar]")
 		const color = theme === "dark" ? THEME_COLOR.DARK : THEME_COLOR.LIGHT
 
-		document.documentElement.classList.toggle("dark", theme === "dark")
 		manifest.setAttribute("href", manifest.getAttribute("href").replace(/dark|light/, theme))
 		themeColor.setAttribute("content", color)
 		statusColor.setAttribute("content", color)
+	}
+
+	document.addEventListener("astro:page-load", () => {
+		const theme = window.getThemePreference()
+
+		document.documentElement.classList.toggle("dark", theme === "dark")
+		window.updateSeoState(theme)
 	})
+</script>
+
+<script is:inline define:vars={{ originalTitle: title }}>
+	let countTitleRun = 0
+	let intervalTitleRun = 0
+
+	async function getWeatherEmoji() {
+		const weatherCode = await fetch(
+			"https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=weather_code&forecast_days=1"
+		)
+			.then((res) => res.json())
+			.then((data) => data.daily.weather_code[0])
+			.catch(() => -1)
+
+		switch (true) {
+			case weatherCode === 0:
+				return "☀️"
+			case weatherCode === 1:
+				return "🌤️"
+			case weatherCode === 2:
+				return "⛅"
+			case weatherCode === 3:
+				return "☁️"
+			case weatherCode >= 45 && weatherCode <= 48:
+				return "🌫️"
+			case (weatherCode >= 51 && weatherCode <= 55) ||
+				(weatherCode >= 61 && weatherCode <= 65) ||
+				(weatherCode >= 80 && weatherCode <= 82):
+				return "🌧️"
+			case (weatherCode >= 56 && weatherCode <= 57) || (weatherCode >= 66 && weatherCode <= 67):
+				return "🌨️"
+			case (weatherCode >= 71 && weatherCode <= 77) || (weatherCode >= 85 && weatherCode <= 86):
+				return "❄️"
+			case weatherCode >= 95 && weatherCode <= 96:
+				return "🌩️"
+			case weatherCode === 99:
+				return "⛈️"
+			default:
+				return "❓"
+		}
+	}
+
+	async function titleRun() {
+		const weatherEmoji = await getWeatherEmoji()
+
+		const title = Array.from(originalTitle).reduce((accumulator, currentValue) => {
+			const previousValue = accumulator[accumulator.length - 1]
+			if (
+				previousValue &&
+				(previousValue.length === 2 ||
+					(previousValue.codePointAt(0) >= 55296 && previousValue.codePointAt(0) <= 56319))
+			) {
+				accumulator[accumulator.length - 1] = previousValue + currentValue
+			} else {
+				accumulator.push(currentValue)
+			}
+			return accumulator
+		}, [])
+
+		const emojiIndex = title.indexOf(weatherEmoji)
+		if (emojiIndex >= 0) title.splice(emojiIndex, 1)
+
+		title.splice(countTitleRun, 0, weatherEmoji)
+		document.title = title.join("")
+		countTitleRun = (countTitleRun + 1) % title.length
+	}
+
+	function handleBlur() {
+		intervalTitleRun = setInterval(titleRun, 500)
+	}
+
+	function handleFocus() {
+		if (intervalTitleRun) clearInterval(intervalTitleRun)
+		document.title = originalTitle
+	}
+
+	document.addEventListener("astro:before-swap", () => {
+		window.removeEventListener("blur", handleBlur)
+		window.removeEventListener("focus", handleFocus)
+	})
+
+	window.addEventListener("blur", handleBlur)
+	window.addEventListener("focus", handleFocus)
 </script>

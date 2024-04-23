@@ -5,6 +5,10 @@ export default {
 	content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
 	theme: {
 		extend: {
+			fontFamily: {
+				emoji: "Apple Color Emoji, system-ui, sans-serif",
+				newsreader: "Newsreader Variable, system-ui, sans-serif",
+			},
 			colors: {
 				primary: {
 					50: "#fef4ff",

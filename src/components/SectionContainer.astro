@@ -1,20 +1,16 @@
 ---
 interface Props {
-	id?: string
-	class?: string
 	title?: string
+	class?: string
 }
 
-const { id, class: className, title } = Astro.props
+const { title, class: className } = Astro.props
 ---
 
-<section
-	id={id}
-	class:list={[className, "container mx-auto w-full scroll-m-20 md:max-w-2xl lg:max-w-4xl"]}
->
+<section class:list={[className, "container mx-auto w-full md:max-w-2xl lg:max-w-3xl"]}>
 	{
 		title && (
-			<h2 class="mb-6 flex items-center gap-x-3 text-3xl font-semibold text-black/80 dark:text-white">
+			<h2 class="mb-4 flex gap-x-1 font-newsreader text-base font-medium italic text-black/80 dark:text-white md:mb-2 md:gap-x-2 md:text-lg">
 				<slot name="icon" />
 				{title}
 			</h2>

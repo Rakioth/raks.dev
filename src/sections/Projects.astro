@@ -3,7 +3,6 @@ import ProjectItem from "@/components/ProjectItem.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
 import { getLocaleByUrl, useTranslations } from "@/i18n"
 import AndroidIcon from "@/icons/Android.astro"
-import CodeIcon from "@/icons/Code.astro"
 import KotlinIcon from "@/icons/Kotlin.astro"
 import MariaDBIcon from "@/icons/MariaDB.astro"
 import SpringIcon from "@/icons/Spring.astro"
@@ -47,8 +46,7 @@ const projects = [
 		image: "swiftly",
 		alt: t("projects.0.alt"),
 		tags: [tags.SPRING, tags.VUE, tags.MARIADB],
-		github: "https://github.com/pheralb/svgl",
-		link: "https://svgl.vercel.app/",
+		link: "https://svgl.vercel.app",
 	},
 	{
 		title: t("projects.1.title"),
@@ -61,18 +59,16 @@ const projects = [
 ]
 ---
 
-<SectionContainer id={t("nav.projects.label")} title={t("nav.projects.title")}>
-	<CodeIcon class="size-8" slot="icon" />
-	<div class="flex flex-col gap-y-16" id="projects-container">
-		{projects.map((project) => <ProjectItem {...project} />)}
-	</div>
+<SectionContainer title={t("nav.projects")} class="projects">
+	<span class="pl-4 font-emoji not-italic" slot="icon">🎯</span>
+	{projects.map((project) => <ProjectItem {...project} />)}
 </SectionContainer>
 
 <script>
 	import { $, $$ } from "@/lib/dom-selector"
 
 	document.addEventListener("astro:page-load", () => {
-		const pictures = $$("#projects-container picture") as NodeListOf<HTMLPictureElement>
+		const pictures = $$(".projects picture") as NodeListOf<HTMLPictureElement>
 
 		function picturesToggle(theme: string) {
 			pictures.forEach((picture) => {

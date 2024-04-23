@@ -1,39 +1,17 @@
 ---
 import SectionContainer from "@/components/SectionContainer.astro"
 import { getLocaleByUrl, useTranslations } from "@/i18n"
-import ProfileIcon from "@/icons/Profile.astro"
 
 const locale = getLocaleByUrl(Astro.url)
 const t = useTranslations(locale)
 ---
 
-<SectionContainer id={t("nav.about-me.label")} title={t("nav.about-me.title")}>
-	<ProfileIcon class="size-8" slot="icon" />
+<SectionContainer title={t("nav.about-me")}>
+	<span class="pl-4 font-emoji not-italic" slot="icon">🙋‍♂️</span>
 	<article
-		class="flex flex-col items-center justify-center gap-8 text-gray-800 dark:text-gray-300 md:flex-row"
+		class="text-pretty p-4 text-gray-800 dark:text-gray-300 [&>p>strong]:font-mono [&>p>strong]:font-normal [&>p>strong]:text-primary-700 dark:[&>p>strong]:text-primary-400 [&>p]:mb-4"
 	>
-		<div
-			class="order-2 text-pretty md:order-1 [&>p>strong]:font-mono [&>p>strong]:font-normal [&>p>strong]:text-primary-700 dark:[&>p>strong]:text-primary-400 [&>p]:mb-4"
-		>
-			<p>{t("about-me.p-1")} <strong>{t("about-me.strong-1")}</strong>.</p>
-			<p>{t("about-me.p-2")} <strong>{t("about-me.strong-2")}</strong>{t("about-me.p-3")}</p>
-			<p>
-				{t("about-me.p-4")}
-				<strong>
-					{t("about-me.strong-3")}
-					<em class="italic">{t("about-me.em-1")}</em>
-					{t("about-me.strong-4")}</strong
-				>{t("about-me.p-5")}
-			</p>
-		</div>
-		<picture class="order-1 aspect-square size-60 rotate-3 md:order-2 lg:size-64">
-			<source srcset="/profile/about-me.webp" type="image/webp" />
-			<img
-				class="rounded-2xl bg-black/20 p-1 ring-1 ring-black/70 dark:bg-white/20 dark:ring-white/70 lg:p-2"
-				src="/profile/about-me.png"
-				alt="Daniel Muñoz Neyra"
-				loading="lazy"
-			/>
-		</picture>
+		<p>{t("about-me.p-1")} <strong>{t("about-me.strong-1")}</strong>.</p>
+		<p>{t("about-me.p-2")} <strong>{t("about-me.strong-2")}</strong>{t("about-me.p-3")}</p>
 	</article>
 </SectionContainer>

@@ -1,0 +1,21 @@
+---
+interface Props {
+	href: string
+	isExternal?: boolean
+	class?: string
+}
+
+const { href, isExternal = true, class: className } = Astro.props
+---
+
+<a
+	href={href}
+	rel={isExternal ? "noopener noreferrer" : undefined}
+	target={isExternal ? "_blank" : "_self"}
+	class:list={[
+		className,
+		"rounded-lg p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 any-hover:bg-white/50 any-hover:shadow-lg any-hover:ring-1 any-hover:ring-black/10 any-hover:backdrop-blur motion-safe:transition dark:focus-visible:ring-primary-400 any-hover:dark:bg-black/50 any-hover:dark:ring-white/10",
+	]}
+>
+	<slot />
+</a>

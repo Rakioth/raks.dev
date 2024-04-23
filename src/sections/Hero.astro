@@ -2,62 +2,98 @@
 import ButtonLink from "@/components/ButtonLink.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
 import { getLocaleByUrl, useTranslations } from "@/i18n"
-import CVIcon from "@/icons/CV.astro"
-import LinkedInIcon from "@/icons/LinkedIn.astro"
-import MailIcon from "@/icons/Mail.astro"
 
 const locale = getLocaleByUrl(Astro.url)
 const t = useTranslations(locale)
 ---
 
 <SectionContainer
-	class="flex flex-col items-center justify-center text-balance py-16 text-center md:py-32"
+	class="flex flex-col justify-center gap-y-5 text-balance px-4 text-left text-gray-800 dark:text-white md:gap-y-6"
 >
-	<picture
-		class="mb-6 size-24 overflow-clip rounded-full bg-primary-700 shadow-lg dark:bg-primary-400"
-	>
-		<source srcset="/profile/hero.webp" type="image/webp" />
-		<img src="/profile/hero.png" alt="Daniel Muñoz Neyra" />
-	</picture>
-	<h1 class="text-4xl font-bold uppercase text-gray-800 dark:text-white sm:text-5xl">
-		<span>{t("hero.title")}</span> Daniel
+	<h1 class="text-4xl font-medium md:text-5xl">
+		{t("hero.title")} Daniel.
+		<br />
+		{t("hero.statement")}
+		<span
+			data-words={t("hero.skills")}
+			id="typewriter"
+			class="font-newsreader italic text-primary-700 transition dark:text-primary-400"></span><span
+			class="text-primary-700 motion-safe:animate-[cursor_1s_infinite] dark:text-primary-400"
+			>⎸
+		</span>
 	</h1>
-	<p class="mt-6 text-xl text-gray-800 dark:text-gray-300">
-		<strong class="font-semibold text-primary-700 dark:text-primary-400">{t("subtitle")}</strong>
-		{t("hero.location")}
-		<picture>
-			<source srcset="/profile/flag.webp" type="image/webp" />
-			<img class="inline-block size-6" src="/profile/flag.png" alt={t("hero.flag")} /></picture
-		>.
-	</p>
-	<p class="text-xl text-gray-800 dark:text-gray-300">
-		{t("hero.description")}
-	</p>
-	<nav class="mt-8 flex flex-wrap justify-center gap-4">
-		<ButtonLink href="mailto:dmunozneyra@gmail.com">
-			<MailIcon class="size-4" />
-			{t("hero.contact")}
-		</ButtonLink>
-		<ButtonLink href="https://linkedin.com/in/dmunozneyra">
-			<LinkedInIcon class="size-4" />
-			LinkedIn
-		</ButtonLink>
-		<ButtonLink href=`/cv/${locale}.pdf`>
-			<CVIcon class="size-4" />
-			{t("hero.cv")}
-		</ButtonLink>
-	</nav>
+
+	<p>{t("hero.description")}</p>
+
+	<ul class="flex flex-wrap gap-4">
+		<li>
+			<ButtonLink href="mailto:dmunozneyra@gmail.com" class="aspect-square sm:aspect-auto">
+				<span class="font-emoji">📩</span>
+				<span class="hidden sm:inline-flex">{t("hero.contact")}</span>
+			</ButtonLink>
+		</li>
+		<li>
+			<ButtonLink href="https://linkedin.com/in/dmunozneyra" class="aspect-square sm:aspect-auto">
+				<span class="font-emoji">👔</span>
+				<span class="hidden sm:inline-flex">LinkedIn</span>
+			</ButtonLink>
+		</li>
+		<li>
+			<ButtonLink href=`/cv/${locale}.pdf` class="aspect-square sm:aspect-auto">
+				<span class="font-emoji">📚</span>
+				<span class="hidden sm:inline-flex">{t("hero.cv")}</span>
+			</ButtonLink>
+		</li>
+	</ul>
 </SectionContainer>
 
 <style>
-	@supports (-webkit-text-stroke: 0.0625rem white) {
-		h1 > span {
-			color: transparent;
-			-webkit-text-stroke: 0.0625rem theme("colors.gray.800");
+	@keyframes cursor {
+		0%,
+		100% {
+			@apply opacity-0;
 		}
-
-		h1 > span:is(.dark *) {
-			-webkit-text-stroke: 0.0625rem white;
+		50% {
+			@apply opacity-100;
 		}
 	}
 </style>
+
+<script>
+	import { $ } from "@/lib/dom-selector"
+
+	document.addEventListener("astro:page-load", () => {
+		const typewriter = $("#typewriter")
+		const words = typewriter.getAttribute("data-words")?.split(";") || []
+
+		let isTyping = true
+
+		function sleep(ms: number = 100) {
+			return new Promise((resolve) => setTimeout(resolve, ms))
+		}
+
+		async function typingLoop(index: number = 0) {
+			if (!isTyping) return
+
+			const word = words[index]
+
+			for (let i = 0; i < word.length; i++) {
+				typewriter.innerText = word.substring(0, i + 1)
+				await sleep()
+			}
+
+			await sleep(1500)
+
+			for (let i = word.length; i > 0; i--) {
+				typewriter.innerText = word.substring(0, i - 1)
+				await sleep()
+			}
+
+			await sleep(500)
+			typingLoop((index + 1) % words.length)
+		}
+
+		document.addEventListener("astro:before-swap", () => (isTyping = false))
+		typingLoop()
+	})
+</script>

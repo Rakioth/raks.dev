@@ -6,6 +6,7 @@ import NoiseBackground from "@/components/NoiseBackground.astro"
 import SEO from "@/components/SEO.astro"
 import Footer from "@/sections/Footer.astro"
 import Header from "@/sections/Header.astro"
+import "@fontsource-variable/newsreader"
 import "@fontsource-variable/onest"
 
 interface Props {
@@ -14,38 +15,39 @@ interface Props {
 	description: string
 	canonical?: string
 	image?: string
-	themeColor?: string
 }
 
-const { lang, title, description, canonical, image, themeColor } = Astro.props
+const { lang, title, description, canonical, image } = Astro.props
 ---
 
 <!doctype html>
 <html lang={lang}>
 	<head>
-		<SEO
-			title={title}
-			description={description}
-			canonical={canonical}
-			image={image}
-			themeColor={themeColor}
-		/>
+		<SEO title={title} description={description} canonical={canonical} image={image} />
 		<ViewTransitions />
 	</head>
 
-	<body class="flex min-h-screen flex-col">
+	<body class="flex min-h-screen flex-col px-6">
 		<DottedBackground />
 		<NoiseBackground />
 		<Header />
 		<slot />
 		<Footer />
 		<style is:global>
+			@font-face {
+				font-family: "Apple Color Emoji";
+				font-display: swap;
+				src: url("/fonts/apple-color-emoji.woff") format("woff");
+			}
+
 			:root {
+				color-scheme: light;
 				--background-color: #f3f2f9;
 				--background-dotted: 137, 23, 152;
 			}
 
 			.dark {
+				color-scheme: dark;
 				--background-color: #0f004a;
 				--background-dotted: 155, 67, 255;
 			}
@@ -73,7 +75,6 @@ const { lang, title, description, canonical, image, themeColor } = Astro.props
 			@supports selector(::selection) {
 				::selection {
 					@apply bg-primary-700 text-gray-800 dark:bg-primary-400 dark:text-white;
-					-webkit-text-stroke: 0;
 				}
 			}
 

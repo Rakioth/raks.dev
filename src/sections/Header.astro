@@ -1,94 +1,35 @@
 ---
 import LocaleToggle from "@/components/LocaleToggle.astro"
-import MenuToggle from "@/components/MenuToggle.astro"
-import NavDrawer from "@/components/NavDrawer.astro"
-import NavItems from "@/components/NavItems.astro"
 import ThemeToggle from "@/components/ThemeToggle.astro"
-import { getLocaleByUrl } from "@/i18n"
-import Logo from "@/icons/Logo.astro"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
 
 const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
 ---
 
 <header
-	class="sticky left-0 top-0 z-10 flex w-full items-center justify-center p-4 text-gray-600 dark:text-gray-200"
+	class="container mx-auto flex w-full items-center justify-between px-4 pb-12 pt-6 text-sm md:max-w-2xl md:pb-20 md:pt-12 md:text-base lg:max-w-3xl"
 >
-	<div
-		class="z-10 flex min-h-12 w-full items-center justify-between rounded-full px-6 motion-safe:animate-[blur_1s_linear_both] motion-reduce:animate-[blur_0s_linear_both] dark:motion-safe:animate-[blur-dark_1s_linear_both] dark:motion-reduce:animate-[blur-dark_0s_linear_both]"
-	>
-		<div class="flex flex-grow basis-0">
-			<a
-				href={`/${locale}`}
-				aria-label="Logo Raks"
-				class="rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 dark:focus-visible:ring-primary-400"
-				data-astro-reload
-			>
-				<Logo />
-			</a>
+	<div class="flex gap-x-3 md:gap-x-4">
+		<picture>
+			<source srcset="/profile/me.webp" type="image/webp" />
+			<img
+				class="size-10 rounded-full bg-primary-700 dark:bg-primary-400 md:size-12"
+				src="/profile/me.png"
+				alt="Daniel Muñoz Neyra"
+			/>
+		</picture>
+
+		<div>
+			<h2 class="font-semibold text-gray-800 dark:text-white">Daniel Muñoz</h2>
+			<h3 class="font-normal text-gray-950 dark:text-gray-300">{t("subtitle")}</h3>
 		</div>
-		<nav class="hidden lg:block">
-			<NavItems />
-		</nav>
-		<nav class="flex flex-grow basis-0 justify-end">
-			<ul class="flex items-center justify-center gap-x-6">
-				<li><LocaleToggle /></li>
-				<li class="inline-flex"><ThemeToggle /></li>
-				<li class="inline-flex lg:hidden"><MenuToggle /></li>
-			</ul>
-		</nav>
 	</div>
-	<NavDrawer />
+
+	<nav>
+		<ul class="flex items-center justify-center gap-x-6">
+			<li><LocaleToggle /></li>
+			<li><ThemeToggle /></li>
+		</ul>
+	</nav>
 </header>
-
-<style>
-	header > div:first-of-type {
-		animation-timeline: scroll();
-		animation-range: 0 6.25rem;
-	}
-
-	@keyframes blur {
-		to {
-			@apply bg-white/50 shadow-lg ring-1 ring-black/10 backdrop-blur;
-		}
-	}
-
-	@keyframes blur-dark {
-		to {
-			@apply bg-black/50 shadow-lg ring-1 ring-white/10 backdrop-blur;
-		}
-	}
-</style>
-
-<script>
-	import { $, $$ } from "@/lib/dom-selector"
-
-	document.addEventListener("astro:page-load", () => {
-		const sections = $$("section")
-		const navItems = $$("nav li.group")
-
-		const callback = (entries: IntersectionObserverEntry[]) => {
-			entries.forEach((entry) => {
-				if (entry.isIntersecting) {
-					navItems.forEach((item) => {
-						const link = $("a", item)
-						const isIntersected = link.getAttribute("href")?.substring(1) === entry.target.id
-						item.classList.toggle("nav-selected", isIntersected)
-					})
-				}
-			})
-		}
-
-		const observer = new IntersectionObserver(callback, {
-			threshold: 1,
-		})
-
-		sections.forEach((section) => observer.observe(section))
-
-		function handleVisibilityChange() {
-			if (document.hidden) observer.disconnect()
-			else sections.forEach((section) => observer.observe(section))
-		}
-
-		document.addEventListener("visibilitychange", handleVisibilityChange)
-	})
-</script>

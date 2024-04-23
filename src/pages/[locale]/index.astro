@@ -15,12 +15,10 @@ const t = useTranslations(locale)
 ---
 
 <Layout lang={locale} title={t("title", t("subtitle"))} description={t("description")}>
-	<main class="px-4">
+	<main class="space-y-12 md:space-y-20">
 		<Hero />
-		<div class="space-y-24">
-			<Experience />
-			<Projects />
-			<AboutMe />
-		</div>
+		<Experience />
+		<Projects />
+		<AboutMe />
 	</main>
 </Layout>

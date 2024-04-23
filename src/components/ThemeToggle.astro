@@ -1,5 +1,4 @@
 ---
-import { THEME_COLOR } from "@/consts/theme"
 import { getLocaleByUrl, useTranslations } from "@/i18n"
 
 const locale = getLocaleByUrl(Astro.url)
@@ -14,58 +13,40 @@ const lightModeLabel = t("toggle.theme.light")
 	id="theme-toggle"
 	type="button"
 	aria-label={t("toggle.theme.default")}
-	class="group rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 dark:focus-visible:ring-primary-400"
+	title={t("toggle.theme.default")}
+	data-emoji="🎨"
+	class="font-emoji rounded-sm after:content-[attr(data-emoji)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 dark:focus-visible:ring-primary-400"
 >
-	<svg
-		aria-hidden="true"
-		width="17"
-		height="17"
-		viewBox="0 0 17 17"
-		fill="none"
-		stroke="currentColor"
-		stroke-width="2"
-		stroke-linecap="round"
-	>
-		<path
-			d="M14.994,7.99a7,7,0,0,1-12.813,3.9,1,1,0,0,1,1.063-1.532,6.139,6.139,0,0,0,1.961.089,6.012,6.012,0,0,0,5.212-4.985,6.067,6.067,0,0,0-.065-2.274A1,1,0,0,1,11.9,2.182,6.985,6.985,0,0,1,14.994,7.99Z"
-			class="translate-y-5 duration-[250] group-[.toggled]:transform-none motion-safe:transition-transform"
-		>
-		</path>
-		<g
-			class="transform-none duration-[250] group-[.toggled]:translate-y-5 motion-safe:transition-transform"
-		>
-			<circle cx="8.5" cy="8.5" r="3"></circle>
-			<line x1="8.5" y1="1" x2="8.5" y2="2"></line>
-			<line x1="13.803" y1="3.197" x2="13.096" y2="3.904"></line>
-			<line x1="16" y1="8.5" x2="15" y2="8.5"></line>
-			<line x1="13.803" y1="13.803" x2="13.096" y2="13.096"></line>
-			<line x1="8.5" y1="16" x2="8.5" y2="15"> </line>
-			<line x1="3.197" y1="13.803" x2="3.904" y2="13.096"></line>
-			<line x1="1" y1="8.5" x2="2" y2="8.5"></line>
-			<line x1="3.197" y1="3.197" x2="3.904" y2="3.904"></line>
-		</g>
-	</svg>
 </button>
 
-<script is:inline define:vars={{ darkModeLabel, lightModeLabel, THEME_COLOR }} data-astro-rerun>
+<script is:inline define:vars={{ darkModeLabel, lightModeLabel }} data-astro-rerun>
 	const themeToggle = document.getElementById("theme-toggle")
 	const colorSchemePreference = window.matchMedia("(prefers-color-scheme: dark)")
-	const manifest = document.querySelector("link[rel=manifest]")
-	const themeColor = document.querySelector("meta[name=theme-color]")
-	const statusColor = document.querySelector("meta[name=apple-mobile-web-app-status-bar]")
+	const reducedMotionPreference = window.matchMedia("(prefers-reduced-motion: reduce)")
+
+	const toLight = ["🌒", "🌓", "🌔", "🌕"]
+	const toDark = ["🌖", "🌗", "🌘", "🌑"]
+
+	let isLoading = true
+
+	function emojiAnimation(emojiChain) {
+		for (let i = 0; i < emojiChain.length; i++)
+			setTimeout(() => {
+				themeToggle.setAttribute("data-emoji", emojiChain[i])
+			}, 250 * i)
+	}
 
 	function updateThemeState(theme) {
-		const ariaLabel = theme ? lightModeLabel : darkModeLabel
-		const color = theme ? THEME_COLOR.DARK : THEME_COLOR.LIGHT
+		const label = theme ? lightModeLabel : darkModeLabel
+		const emojiChain = theme ? toLight : toDark
 
-		themeToggle.classList.toggle("toggled", theme)
-		themeToggle.setAttribute("aria-label", ariaLabel)
-		manifest.setAttribute(
-			"href",
-			manifest.getAttribute("href").replace(/dark|light/, theme ? "dark" : "light")
-		)
-		themeColor.setAttribute("content", color)
-		statusColor.setAttribute("content", color)
+		if (isLoading || reducedMotionPreference.matches)
+			themeToggle.setAttribute("data-emoji", emojiChain[emojiChain.length - 1])
+		else emojiAnimation(emojiChain)
+
+		themeToggle.setAttribute("aria-label", label)
+		themeToggle.setAttribute("title", label)
+		window.updateSeoState(theme ? "dark" : "light")
 	}
 
 	function handleToggleClick() {
@@ -95,4 +76,5 @@ const lightModeLabel = t("toggle.theme.light")
 	updateThemeState(window.getThemePreference() === "dark")
 	themeToggle.addEventListener("click", handleToggleClick)
 	colorSchemePreference.addEventListener("change", handleColorSchemePreferenceChange)
+	isLoading = false
 </script>

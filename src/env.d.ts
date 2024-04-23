@@ -2,4 +2,5 @@
 
 interface Window {
 	getThemePreference(): string
+	updateSeoState(theme: string): void
 }

@@ -4,22 +4,9 @@
   "description": "Este es un sitio web de ejemplo",
   "go-back": "Volver al inicio",
   "nav": {
-    "experience": {
-      "title": "Experiencia",
-      "label": "experiencia",
-      "alt-title": "Experiencia laboral"
-    },
-    "projects": {
-      "title": "Proyectos",
-      "label": "proyectos"
-    },
-    "about-me": {
-      "title": "Sobre mí",
-      "label": "sobre-mi"
-    },
-    "contact": {
-      "title": "Contacto"
-    }
+    "experience": "Experiencia laboral",
+    "projects": "Proyectos",
+    "about-me": "Sobre mí"
   },
   "toggle": {
     "locale": {
@@ -30,17 +17,13 @@
       "default": "Alternar tema",
       "dark": "Activar modo oscuro",
       "light": "Activar modo claro"
-    },
-    "menu": {
-      "open": "Abrir menu",
-      "close": "Cerrar menu"
     }
   },
   "hero": {
     "title": "Hey, soy",
-    "location": "de Madrid, España",
-    "flag": "Bandera de España",
-    "description": "Especializado en crear aplicaciones únicas.",
+    "statement": "I design",
+    "skills": "aplicaciones.;webs.;software.",
+    "description": "Designer who's obsessed with (no)code tech. Creating aesthetic and timeless digital products & showing you how to build your own design businesses by yourself.",
     "contact": "Contáctame",
     "cv": "Currículum"
   },
@@ -68,23 +51,14 @@
       "title": "AdventJS - Retos de programación con JavaScript y TypeScript",
       "description": "Plataforma gratuita con retos de programación. Más de 1 millón de visitas en un mes. +50K retos completados. Creada desde cero con Next.js, React y Tailwind CSS.",
       "alt": "opa"
-    },
-    "links": {
-      "code": "Código",
-      "preview": "Vista previa"
     }
   },
   "about-me": {
     "p-1": "Me llamo Miguel Ángel pero mis amigos me llaman midu. Empecé en la programación con un Amstrad, tenía 10 años. Actualmente estoy",
     "p-2": "Algunos de mis éxitos incluyen",
     "p-3": ". Aunque hoy está desaparecido fue un gran avance en el mundo del desarrollo web.",
-    "p-4": "Como creador de contenido,",
-    "p-5": ". Mi objetivo es mejorar la empleabilidad de la comunidad hispana y el acceso a contenido de calidad.",
     "strong-1": "liderando equipos de desarrollo en multinacionales",
-    "strong-2": "colaborar con Mozilla para el desarrollo de las primeras apps en su sistema FirefoxOS",
-    "strong-3": "cuento con el canal de habla hispana más visto del mundo en la categoría de",
-    "strong-4": "en Twitch",
-    "em-1": "Software & Game Development"
+    "strong-2": "colaborar con Mozilla para el desarrollo de las primeras apps en su sistema FirefoxOS"
   },
   "footer": {
     "author": "Creado por",

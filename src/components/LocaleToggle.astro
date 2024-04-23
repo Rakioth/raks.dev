@@ -1,16 +1,36 @@
 ---
-import { getLocaleByUrl, getNextLocale, useTranslations } from "@/i18n"
+import { getLocaleByUrl, getNextLocale, translations, useTranslations } from "@/i18n"
+import type { Locale } from "@/i18n/config"
 
 const locale = getLocaleByUrl(Astro.url)
 const t = useTranslations(locale)
 
 const nextLocale = getNextLocale(locale)
+const emojiLocale: Record<Locale, string> = {
+	en: "🇺🇸",
+	es: "🇪🇸",
+} as const
+
+const nextLocalePath = () => {
+	const pathname = Astro.url.pathname
+	const path = pathname.split("/")
+
+	const index = path.findIndex((locale) => locale in translations)
+
+	if (index !== -1) {
+		path[index] = nextLocale
+		return path.join("/")
+	}
+
+	return `/${nextLocale}${pathname}`
+}
 ---
 
 <a
-	href=`/${nextLocale}`
+	href={nextLocalePath()}
 	aria-label={t(`toggle.locale.${nextLocale}`)}
-	class="rounded-sm uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 dark:focus-visible:ring-primary-400"
+	title={t(`toggle.locale.${nextLocale}`)}
+	class="rounded-sm font-emoji focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 dark:focus-visible:ring-primary-400"
 >
-	{nextLocale}
+	{emojiLocale[nextLocale]}
 </a>
