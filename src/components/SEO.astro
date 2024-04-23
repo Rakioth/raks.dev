@@ -1,7 +1,7 @@
 ---
 import newsreader from "@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2"
 import onest from "@fontsource-variable/onest/files/onest-latin-wght-normal.woff2"
-import emoji from "/fonts/apple-color-emoji.woff"
+import emoji from "/fonts/apple-color-emoji.woff2"
 
 import { THEME_COLOR } from "@/consts/theme"
 import { getLocaleByUrl, useTranslations } from "@/i18n"
@@ -30,7 +30,7 @@ const canonicalURL = canonical
 
 <link rel="preload" href={newsreader} as="font" type="font/woff2" crossorigin />
 <link rel="preload" href={onest} as="font" type="font/woff2" crossorigin />
-<link rel="preload" href={emoji} as="font" type="font/woff" crossorigin />
+<link rel="preload" href={emoji} as="font" type="font/woff2" crossorigin />
 
 <link rel="canonical" href={canonicalURL} />
 <meta name="viewport" content="width=device-width" />
