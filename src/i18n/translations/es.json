@@ -1,10 +1,10 @@
 {
   "title": "Porfolio de Daniel | {0}",
   "subtitle": "Desarrollador Full-Stack",
-  "description": "Este es un sitio web de ejemplo",
+  "description": "Desarrollador enfocado en la creación y diseño de productos, con el objetivo de mejorar la experiencia del usuario dándole soluciones a problemas cotidianos.",
   "go-back": "Volver al inicio",
   "nav": {
-    "experience": "Experiencia laboral",
+    "experience": "Experiencia Laboral",
     "projects": "Proyectos",
     "about-me": "Sobre mí"
   },
@@ -21,44 +21,37 @@
   },
   "hero": {
     "title": "Hey, soy",
-    "statement": "I design",
+    "statement": "Diseño",
     "skills": "aplicaciones.;webs.;software.",
-    "description": "Designer who's obsessed with (no)code tech. Creating aesthetic and timeless digital products & showing you how to build your own design businesses by yourself.",
     "contact": "Contáctame",
     "cv": "Currículum"
   },
   "experience": {
     "0": {
-      "date": "Actualmente...",
-      "title": "Creador de Contenido",
-      "company": "Twitch",
-      "description": "Divulgo sobre programación y desarrollo web en diferentes plataformas. Galardonado como mejor creador de contenido de habla no-inglesa en 2022 y mejor comunidad en 2023 por GitHub."
-    },
-    "1": {
-      "date": "Septiembre 2022",
-      "title": "Principal Frontend Engineer",
-      "company": "Adevinta Spain",
-      "description": "Responsable de la plataforma, componentes y utilidades para la creación y desarrollo de aplicaciones web. Mejora de un 30% en la entrega de software. Implantación de medidas de integración continua y despliegue con A/B testing en más de 15 equipos."
+      "date": "Sept 2023 — Actual",
+      "title": "Desarrollador Full-Stack",
+      "company": "Tragsatec",
+      "description": "Desarrollo de una aplicación móvil para el Ministerio de Agricultura, Pesca y Alimentación de España con el propósito de gestionar las explotaciones agrícolas de manera eficaz y accesible a través de dispositivos móviles. Incorporé funcionalidades que permiten operar sin conexión, especialmente adaptadas para áreas rurales con acceso limitado a internet."
     }
   },
   "projects": {
     "0": {
-      "title": "SVGL - A beautiful library with SVG logos",
-      "description": "Biblioteca de logos SVG de las marcas más populares. +10k visitas al mes. +2K svgs descargados. Creado desde cero con Next.js, React y Tailwind CSS.",
-      "alt": "opa"
+      "title": "Swiftly — E-Commerce",
+      "description": "Tienda online creada desde cero, con una interfaz de compra fácil de usar y un robusto panel de administración para una gestión ágil de los pedidos y el inventario.",
+      "alt": "Imagen del proyecto Swiftly"
     },
     "1": {
-      "title": "AdventJS - Retos de programación con JavaScript y TypeScript",
-      "description": "Plataforma gratuita con retos de programación. Más de 1 millón de visitas en un mes. +50K retos completados. Creada desde cero con Next.js, React y Tailwind CSS.",
-      "alt": "opa"
+      "title": "PV Creator — Generador de Códigos",
+      "description": "Aplicación móvil que permite a los usuarios diseñar objetos personalizados dentro del juego mediante un sistema de códigos de barras, que luego pueden escanearse para utilizarlos en el videojuego Viva Piñata: Trouble in Paradise.",
+      "alt": "Imagen del proyecto PV Creator"
     }
   },
   "about-me": {
-    "p-1": "Me llamo Miguel Ángel pero mis amigos me llaman midu. Empecé en la programación con un Amstrad, tenía 10 años. Actualmente estoy",
-    "p-2": "Algunos de mis éxitos incluyen",
-    "p-3": ". Aunque hoy está desaparecido fue un gran avance en el mundo del desarrollo web.",
-    "strong-1": "liderando equipos de desarrollo en multinacionales",
-    "strong-2": "colaborar con Mozilla para el desarrollo de las primeras apps en su sistema FirefoxOS"
+    "p-1": "Me llamo Dani, tengo {0} años y soy de Madrid, España. Terminé mis estudios como desarrollador de aplicaciones multiplataforma y web. Me encanta enfocarme en la parte del",
+    "p-2": "Además de contribuir de manera activa a la comunidad open source,",
+    "p-3": ". En 2022, mi equipo y yo logramos obtener la medalla de bronce, lo que nos permitió alcanzar el podio.",
+    "strong-1": "rendimiento, para ofrecer la mejor experiencia al usuario",
+    "strong-2": "he participado en las competiciones nacionales de ProgramaMe"
   },
   "footer": {
     "author": "Creado por",

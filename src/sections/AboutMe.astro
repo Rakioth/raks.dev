@@ -4,6 +4,21 @@ import { getLocaleByUrl, useTranslations } from "@/i18n"
 
 const locale = getLocaleByUrl(Astro.url)
 const t = useTranslations(locale)
+
+const currentAge = () => {
+	const dob = new Date("2001-12-02")
+	const now = new Date()
+
+	let age = now.getFullYear() - dob.getFullYear()
+
+	if (
+		now.getMonth() < dob.getMonth() ||
+		(now.getMonth() === dob.getMonth() && now.getDate() < dob.getDate())
+	)
+		age--
+
+	return String(age)
+}
 ---
 
 <SectionContainer title={t("nav.about-me")}>
@@ -11,7 +26,7 @@ const t = useTranslations(locale)
 	<article
 		class="text-pretty p-4 text-gray-800 dark:text-gray-300 [&>p>strong]:font-mono [&>p>strong]:font-normal [&>p>strong]:text-primary-700 dark:[&>p>strong]:text-primary-400 [&>p]:mb-4"
 	>
-		<p>{t("about-me.p-1")} <strong>{t("about-me.strong-1")}</strong>.</p>
+		<p>{t("about-me.p-1", currentAge())} <strong>{t("about-me.strong-1")}</strong>.</p>
 		<p>{t("about-me.p-2")} <strong>{t("about-me.strong-2")}</strong>{t("about-me.p-3")}</p>
 	</article>
 </SectionContainer>

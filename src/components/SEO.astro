@@ -101,6 +101,7 @@ const canonicalURL = canonical
 <script is:inline define:vars={{ originalTitle: title }}>
 	let countTitleRun = 0
 	let intervalTitleRun = 0
+	let weatherEmoji = null
 
 	async function getWeatherEmoji() {
 		const weatherCode = await fetch(
@@ -139,7 +140,7 @@ const canonicalURL = canonical
 	}
 
 	async function titleRun() {
-		const weatherEmoji = await getWeatherEmoji()
+		if (!weatherEmoji) weatherEmoji = await getWeatherEmoji()
 
 		const title = Array.from(originalTitle).reduce((accumulator, currentValue) => {
 			const previousValue = accumulator[accumulator.length - 1]
