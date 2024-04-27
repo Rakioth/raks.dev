@@ -15,7 +15,7 @@ const lightModeLabel = t("toggle.theme.light")
 	aria-label={t("toggle.theme.default")}
 	title={t("toggle.theme.default")}
 	data-emoji="🎨"
-	class="font-emoji rounded-sm after:content-[attr(data-emoji)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 dark:focus-visible:ring-primary-400"
+	class="rounded-sm font-emoji after:content-[attr(data-emoji)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 dark:focus-visible:ring-primary-400"
 >
 </button>
 
@@ -60,21 +60,50 @@ const lightModeLabel = t("toggle.theme.light")
 		const themeToggledEvent = new CustomEvent("themetoggled", { detail: { theme } })
 		updateThemeState(isDark)
 		document.dispatchEvent(themeToggledEvent)
+		themeToggle.removeAttribute("disabled")
+	}
+
+	function handleToggleTransition() {
+		themeToggle.setAttribute("disabled", true)
+
+		if (reducedMotionPreference.matches) {
+			handleToggleClick()
+			return
+		}
+
+		const transition = document.startViewTransition(() => handleToggleClick())
+
+		document.documentElement.classList.add("theme-transition")
+
+		transition.ready.then(() =>
+			document.documentElement.animate(
+				{
+					clipPath: ["inset(0 0 0 100%)", "inset(0 0 0 0)"],
+				},
+				{
+					duration: 1000,
+					easing: "ease-in-out",
+					pseudoElement: "::view-transition-new(root)",
+				}
+			)
+		)
+
+		transition.finished.then(() => document.documentElement.classList.remove("theme-transition"))
 	}
 
 	function handleColorSchemePreferenceChange(event) {
 		const isDark = document.documentElement.classList.contains("dark")
 		const toggle = (event.matches && !isDark) || (!event.matches && isDark)
-		if (toggle) handleToggleClick()
+		if (toggle) handleToggleTransition()
 	}
 
 	document.addEventListener("astro:before-swap", () => {
-		themeToggle.removeEventListener("click", handleToggleClick)
+		themeToggle.removeEventListener("click", handleToggleTransition)
 		colorSchemePreference.removeEventListener("change", handleColorSchemePreferenceChange)
 	})
 
 	updateThemeState(window.getThemePreference() === "dark")
-	themeToggle.addEventListener("click", handleToggleClick)
+	themeToggle.addEventListener("click", handleToggleTransition)
 	colorSchemePreference.addEventListener("change", handleColorSchemePreferenceChange)
 	isLoading = false
 </script>

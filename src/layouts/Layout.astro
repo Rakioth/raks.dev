@@ -61,6 +61,12 @@ const { lang, title, description, canonical, image } = Astro.props
 				cursor: -webkit-image-set(url(/cursor/light.png) 2x), auto;
 			}
 
+			.theme-transition::view-transition-old(root),
+			.theme-transition::view-transition-new(root) {
+				animation: none;
+				mix-blend-mode: normal;
+			}
+
 			html.dark {
 				cursor: url(/cursor/dark.png), auto;
 				cursor: -webkit-image-set(url(/cursor/dark.png) 2x), auto;
