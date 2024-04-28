@@ -16,7 +16,7 @@ interface Props {
 	image?: string
 }
 
-const { title, description, canonical, image = "/og.jpg" } = Astro.props
+const { title, description, canonical, image = "/assets/portfolio/og.jpg" } = Astro.props
 
 const canonicalURL = canonical
 	? new URL(canonical, Astro.site)
@@ -64,13 +64,13 @@ const canonicalURL = canonical
 <link rel="alternate" href={new URL("/en", Astro.url)} hreflang="en" />
 <link rel="alternate" href={new URL("/es", Astro.url)} hreflang="es" />
 
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-<link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
-<link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+<link rel="apple-touch-icon" href="/assets/portfolio/apple-touch-icon.png" />
+<link rel="shortcut icon" href="/assets/portfolio/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="/assets/portfolio/favicon-32x32.png" type="image/png" sizes="32x32" />
+<link rel="icon" href="/assets/portfolio/favicon-16x16.png" type="image/png" sizes="16x16" />
 
 <link rel="manifest" href=`/${locale}/light.webmanifest` />
-<meta name="msapplication-config" content="/browserconfig.xml" />
+<meta name="msapplication-config" content="/assets/portfolio/browserconfig.xml" />
 
 <script is:inline define:vars={{ THEME_COLOR }}>
 	window.getThemePreference = () => {

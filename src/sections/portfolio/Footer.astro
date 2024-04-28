@@ -1,5 +1,5 @@
 ---
-import UnderlineLink from "@/components/UnderlineLink.astro"
+import UnderlineLink from "@/components/portfolio/UnderlineLink.astro"
 import { getLocaleByUrl, useTranslations } from "@/i18n"
 
 const locale = getLocaleByUrl(Astro.url)
@@ -7,7 +7,7 @@ const t = useTranslations(locale)
 ---
 
 <footer
-	class="container mx-auto mt-auto flex w-full items-center justify-center py-12 md:max-w-2xl md:pt-20 lg:max-w-3xl"
+	class="container mx-auto mt-auto flex w-full items-center justify-center pb-6 pt-12 md:max-w-2xl md:pb-12 md:pt-20 lg:max-w-3xl"
 >
 	<span class="text-sm text-gray-800 dark:text-gray-300">
 		{t("footer.author")}

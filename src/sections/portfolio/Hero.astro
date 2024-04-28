@@ -1,6 +1,6 @@
 ---
-import ButtonLink from "@/components/ButtonLink.astro"
-import SectionContainer from "@/components/SectionContainer.astro"
+import ButtonLink from "@/components/portfolio/ButtonLink.astro"
+import SectionContainer from "@/components/portfolio/SectionContainer.astro"
 import { getLocaleByUrl, useTranslations } from "@/i18n"
 
 const locale = getLocaleByUrl(Astro.url)
@@ -39,7 +39,7 @@ const t = useTranslations(locale)
 			</ButtonLink>
 		</li>
 		<li>
-			<ButtonLink href=`/cv/${locale}.pdf` class="aspect-square sm:aspect-auto">
+			<ButtonLink href=`/${locale}/cv` class="aspect-square sm:aspect-auto">
 				<span class="font-emoji">📚</span>
 				<span class="hidden sm:inline-flex">{t("hero.cv")}</span>
 			</ButtonLink>

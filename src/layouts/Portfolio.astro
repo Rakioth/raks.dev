@@ -1,11 +1,11 @@
 ---
 import { ViewTransitions } from "astro:transitions"
 
-import DottedBackground from "@/components/DottedBackground.astro"
-import NoiseBackground from "@/components/NoiseBackground.astro"
-import SEO from "@/components/SEO.astro"
-import Footer from "@/sections/Footer.astro"
-import Header from "@/sections/Header.astro"
+import DottedBackground from "@/components/portfolio/DottedBackground.astro"
+import NoiseBackground from "@/components/portfolio/NoiseBackground.astro"
+import SEO from "@/components/portfolio/SEO.astro"
+import Footer from "@/sections/portfolio/Footer.astro"
+import Header from "@/sections/portfolio/Header.astro"
 import "@fontsource-variable/newsreader"
 import "@fontsource-variable/onest"
 
@@ -27,7 +27,7 @@ const { lang, title, description, canonical, image } = Astro.props
 		<ViewTransitions />
 	</head>
 
-	<body class="flex min-h-screen flex-col px-6">
+	<body class="flex min-h-screen flex-col px-2">
 		<DottedBackground />
 		<NoiseBackground />
 		<Header />

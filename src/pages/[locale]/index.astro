@@ -1,10 +1,10 @@
 ---
 import { getLocaleByUrl, translations, useTranslations } from "@/i18n"
-import Layout from "@/layouts/Layout.astro"
-import AboutMe from "@/sections/AboutMe.astro"
-import Experience from "@/sections/Experience.astro"
-import Hero from "@/sections/Hero.astro"
-import Projects from "@/sections/Projects.astro"
+import Layout from "@/layouts/Portfolio.astro"
+import AboutMe from "@/sections/portfolio/AboutMe.astro"
+import Experience from "@/sections/portfolio/Experience.astro"
+import Hero from "@/sections/portfolio/Hero.astro"
+import Projects from "@/sections/portfolio/Projects.astro"
 
 export function getStaticPaths() {
 	return Object.keys(translations).map((lang) => ({ params: { locale: lang } }))
