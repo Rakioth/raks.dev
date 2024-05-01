@@ -1,0 +1,57 @@
+---
+import DateHint from "@/components/curriculum/DateHint.astro"
+import SimpleLink from "@/components/curriculum/SimpleLink.astro"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+interface Props {
+	startDate: string
+	endDate?: string
+	company: string
+	location: string
+	position: string
+	responsibilities: string[]
+	accomplishments: string[]
+	link: string
+}
+
+const { startDate, endDate, company, location, position, responsibilities, accomplishments, link } =
+	Astro.props
+---
+
+<article class="flex flex-col gap-y-2">
+	<header>
+		<div class="flex items-center justify-between gap-x-2">
+			<h3 class="flex items-center gap-x-2 font-semibold text-black">
+				<SimpleLink
+					href={link}
+					class="rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-500 any-hover:underline"
+				>
+					{company}
+				</SimpleLink>
+				<span class="rounded-md bg-gray-200 px-2 py-0.5 font-mono text-xs font-semibold">
+					{location}
+				</span>
+			</h3>
+
+			<div class="text-sm tabular-nums text-gray-500">
+				<DateHint date={startDate} />
+				—
+				<DateHint date={endDate} />
+			</div>
+		</div>
+		<h4 class="font-mono text-sm text-black">{position}</h4>
+	</header>
+
+	<footer
+		class="[&>h5]:font-newsreader [&>h5]:font-medium [&>h5]:italic [&>h5]:text-black [&>ul]:ml-5 [&>ul]:list-disc [&>ul]:text-pretty [&>ul]:font-mono [&>ul]:text-xs [&>ul]:text-gray-500"
+	>
+		<h5>{t("cv.experience.responsibilities")}</h5>
+		<ul>{responsibilities.map((responsibility) => <li>{responsibility}</li>)}</ul>
+
+		<h5 class="mt-2">{t("cv.experience.accomplishments")}</h5>
+		<ul>{accomplishments.map((accomplishment) => <li>{accomplishment}</li>)}</ul>
+	</footer>
+</article>

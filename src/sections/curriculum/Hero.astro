@@ -1,0 +1,81 @@
+---
+import ButtonLink from "@/components/curriculum/ButtonLink.astro"
+import SectionContainer from "@/components/curriculum/SectionContainer.astro"
+import SimpleLink from "@/components/curriculum/SimpleLink.astro"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+import DribbbleIcon from "@/icons/Dribbble.astro"
+import GitHubIcon from "@/icons/GitHub.astro"
+import GlobeIcon from "@/icons/Globe.astro"
+import LinkedInIcon from "@/icons/LinkedIn.astro"
+import MailIcon from "@/icons/Mail.astro"
+import PhoneIcon from "@/icons/Phone.astro"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+const buttonLinks = [
+	{
+		icon: MailIcon,
+		label: "dmunozneyra@gmail.com",
+		href: "mailto:dmunozneyra@gmail.com",
+	},
+	{
+		icon: PhoneIcon,
+		label: "(34) 688 88 88 88",
+		href: "tel:+34688888888",
+	},
+	{
+		icon: DribbbleIcon,
+		label: "raks.dev",
+		href: "https://raks.dev",
+	},
+	{
+		icon: LinkedInIcon,
+		label: "in/dmunozneyra",
+		href: "https://linkedin.com/in/dmunozneyra",
+	},
+	{
+		icon: GitHubIcon,
+		label: "github/rakioth",
+		href: "https://github.com/Rakioth",
+	},
+]
+---
+
+<SectionContainer class="text-gray-500">
+	<header class="mb-5 hidden font-mono text-xs print:block">
+		{
+			buttonLinks.map((buttonLink, index) => (
+				<Fragment>
+					<SimpleLink href={buttonLink.href}>{buttonLink.label}</SimpleLink>
+					{index !== buttonLinks.length - 1 && " • "}
+				</Fragment>
+			))
+		}
+	</header>
+
+	<div class="flex items-center justify-between gap-x-4">
+		<div class="flex flex-1 flex-col gap-y-1.5">
+			<h1 class="text-2xl font-bold text-black">Daniel Muñoz Neyra</h1>
+			<h2 class="max-w-md text-pretty font-mono text-sm">{t("cv.description")}</h2>
+			<span class="inline-flex items-center gap-x-1.5 font-mono text-xs">
+				<GlobeIcon class="size-3" />
+				{t("cv.location")}
+			</span>
+			<footer class="mt-2.5 flex gap-x-1 print:hidden">
+				{
+					buttonLinks.map((buttonLink) => (
+						<ButtonLink href={buttonLink.href} ariaLabel={buttonLink.label}>
+							<buttonLink.icon />
+						</ButtonLink>
+					))
+				}
+			</footer>
+		</div>
+
+		<picture>
+			<source srcset="/profile/me.webp" type="image/webp" />
+			<img class="size-28 rounded-xl" src="/profile/me.png" alt="Daniel Muñoz Neyra" />
+		</picture>
+	</div>
+</SectionContainer>

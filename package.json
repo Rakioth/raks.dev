@@ -17,7 +17,8 @@
   "dependencies": {
     "@fontsource-variable/newsreader": "5.0.19",
     "@fontsource-variable/onest": "5.0.4",
-    "astro": "4.5.10"
+    "astro": "4.5.10",
+    "hotkeypad": "0.1.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "0.43.1",

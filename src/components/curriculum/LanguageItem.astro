@@ -1,0 +1,15 @@
+---
+interface Props {
+	lang: string
+	detail: string
+}
+
+const { lang, detail } = Astro.props
+---
+
+<article class="rounded-lg border border-gray-300 bg-white p-3">
+	<header>
+		<h3 class="mb-1.5 font-semibold text-black">{lang}</h3>
+		<p class="text-pretty font-mono text-sm text-gray-500">{detail}</p>
+	</header>
+</article>

@@ -1,0 +1,40 @@
+---
+import SectionContainer from "@/components/curriculum/SectionContainer.astro"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+const skills = [
+	t("cv.skills.0"),
+	t("cv.skills.1"),
+	t("cv.skills.2"),
+	t("cv.skills.3"),
+	t("cv.skills.4"),
+	t("cv.skills.5"),
+	t("cv.skills.6"),
+	t("cv.skills.7"),
+	"SQL",
+	"JavaScript",
+	"Java",
+	"Spring Boot",
+	"Vue",
+	"Astro",
+	"Kotlin",
+	"PowerShell",
+	t("cv.skills.8"),
+	t("cv.skills.9"),
+]
+---
+
+<SectionContainer title={t("cv.skills.title")}>
+	<ul class="-mx-3 flex flex-wrap gap-1">
+		{
+			skills.map((skill) => (
+				<li class="grow rounded-md bg-gray-700 px-2 py-1 text-center font-mono text-xs font-semibold text-white print:border print:border-gray-300 print:text-black">
+					{skill}
+				</li>
+			))
+		}
+	</ul>
+</SectionContainer>

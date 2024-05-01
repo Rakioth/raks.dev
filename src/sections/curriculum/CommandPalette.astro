@@ -1,0 +1,181 @@
+---
+import { getLocaleByUrl, getNextLocale, useTranslations } from "@/i18n"
+import CommandIcon from "@/icons/Command.astro"
+import "hotkeypad/index.css"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+const nextLocale = getNextLocale(locale)
+---
+
+<footer
+	class="command-palette group fixed bottom-0 left-0 right-0 hidden cursor-pointer border-t border-t-gray-200 bg-white p-1 text-center text-sm text-gray-500 any-hover:bg-gray-100 any-hover:text-black motion-safe:animate-[reveal_1s_linear] motion-safe:transition-colors lg:block print:hidden"
+>
+	{t("cv.command-palette.press")}
+	<kbd
+		class="inline-flex h-5 items-center gap-1 rounded border bg-gray-100 px-1.5 font-mono text-[0.625rem] font-medium group-hover:bg-gray-300 motion-safe:transition-colors"
+	>
+		<span class="text-xs">⌘</span>D
+	</kbd>
+	{t("cv.command-palette.hint")}
+</footer>
+
+<button
+	type="button"
+	aria-label=`${t("cv.command-palette.press")} ${t("cv.command-palette.hint")}`
+	class="command-palette fixed bottom-3 right-3 flex size-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 shadow-2xl focus-visible:border-gray-500 focus-visible:outline-none any-hover:bg-gray-100 any-hover:text-black motion-safe:transition-colors lg:hidden print:hidden"
+>
+	<CommandIcon />
+</button>
+
+<div
+	id="hotkeypad"
+	data-activation-letter="D"
+	data-placeholder={t("cv.command-palette.placeholder")}
+	data-locale={nextLocale}
+	data-language-label={t(`cv.command-palette.locale.${nextLocale}`)}
+	data-print-label={t("cv.command-palette.print")}
+	data-portfolio-label={t("cv.command-palette.portfolio")}
+	data-section-label={t("cv.command-palette.section")}
+>
+</div>
+
+<style>
+	@keyframes reveal {
+		from {
+			@apply opacity-0;
+		}
+		to {
+			@apply opacity-100;
+		}
+	}
+
+	footer {
+		animation-timeline: scroll();
+		animation-range: 0 10%;
+	}
+
+	#hotkeypad {
+		--hotkeypad-bg-backdrop: black;
+		--hotkeypad-bg-item-hover: theme("colors.gray.100");
+		--hotkeypad-border-container: theme("colors.gray.300");
+		--hotkeypad-border-container-hover: theme("colors.gray.300");
+		--hotkeypad-fg-muted: theme("colors.gray.500");
+	}
+</style>
+
+<style is:global>
+	#hotkeypad [data-backdrop] {
+		@apply opacity-20;
+	}
+
+	#hotkeypad [data-container] {
+		@apply w-[calc(100%-3rem)] max-w-xl;
+	}
+
+	#hotkeypad [data-container] header {
+		@apply p-4;
+	}
+
+	#hotkeypad [data-container] header input {
+		@apply text-sm text-black;
+	}
+
+	#hotkeypad [data-sections] {
+		@apply border-b-0;
+	}
+
+	#hotkeypad [data-section] h4 {
+		@apply px-4 pb-1.5 font-newsreader text-xs font-medium italic text-black;
+	}
+
+	#hotkeypad [data-hotkey] {
+		@apply mx-2 rounded-md px-2 py-3 text-sm before:content-none;
+	}
+
+	#hotkeypad [data-hotkey] p {
+		@apply normal-case;
+	}
+
+	#hotkeypad [data-hotkey] span {
+		@apply !text-[0.625rem] font-medium;
+	}
+
+	#hotkeypad [data-hotkey][data-active] p {
+		@apply text-black;
+	}
+
+	#hotkeypad [data-hotkey][data-active] span {
+		@apply bg-gray-300 text-black;
+	}
+
+	#hotkeypad [data-container] footer {
+		@apply hidden;
+	}
+</style>
+
+<script>
+	import { navigate } from "astro:transitions/client"
+	import HotKeyPad from "hotkeypad"
+
+	import { $$ } from "@/lib/dom-selector"
+
+	document.addEventListener("astro:page-load", () => {
+		const reducedMotionPreference = window.matchMedia("(prefers-reduced-motion: reduce)")
+
+		const hotKeyPad = new HotKeyPad()
+		const commandPaletteTriggers = $$(".command-palette")
+
+		const locale = hotKeyPad.instance.dataset.locale ?? "en"
+		const printLabel = hotKeyPad.instance.dataset.printLabel ?? ""
+		const portfolioLabel = hotKeyPad.instance.dataset.portfolioLabel ?? ""
+		const languageLabel = hotKeyPad.instance.dataset.languageLabel ?? ""
+		const sectionLabel = hotKeyPad.instance.dataset.sectionLabel ?? ""
+
+		hotKeyPad.setCommands([
+			{
+				id: "print",
+				title: printLabel,
+				hotkey: "ctrl+P",
+				section: sectionLabel,
+				handler: () => window.print(),
+			},
+			{
+				id: "language",
+				title: languageLabel,
+				hotkey: "ctrl+S",
+				section: sectionLabel,
+				handler: () =>
+					reducedMotionPreference.matches
+						? window.open(`/${locale}/cv`, "_self")
+						: navigate(`/${locale}/cv`),
+			},
+			{
+				id: "portfolio",
+				title: portfolioLabel,
+				hotkey: "ctrl+O",
+				section: "Links",
+				handler: () => window.open("https://raks.dev", "_blank"),
+			},
+			{
+				id: "linkedin",
+				title: "LinkedIn",
+				hotkey: "ctrl+L",
+				section: "Links",
+				handler: () => window.open("https://linkedin.com/in/dmunozneyra", "_blank"),
+			},
+			{
+				id: "github",
+				title: "GitHub",
+				hotkey: "ctrl+G",
+				section: "Links",
+				handler: () => window.open("https://github.com/Rakioth", "_blank"),
+			},
+		])
+
+		commandPaletteTriggers.forEach((trigger) =>
+			trigger.addEventListener("click", () => hotKeyPad.open())
+		)
+	})
+</script>

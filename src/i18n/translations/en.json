@@ -59,5 +59,77 @@
     "keywords": "Full-Stack Developer, Web Development, Front-End Development, Back-End Development, JavaScript, HTML, CSS, React, Node.js, Express, MongoDB, Portfolio, Software Engineer, Web Design, Responsive Design, UI/UX, API Development, Agile Methodologies, Version Control, Git",
     "site-name": "Daniel's Portfolio",
     "image-alt": "Background from the website raks.dev"
+  },
+  "cv": {
+    "title": "Curriculum | {0}",
+    "description": "Full-Stack Developer who loves designing and building maintainable and scalable solutions.",
+    "location": "Madrid, Spain, CET",
+    "experience": {
+      "title": "Work Experience",
+      "current": "Current",
+      "responsibilities": "Responsibilities",
+      "accomplishments": "Key Accomplishments",
+      "0": {
+        "company": "Tragsatec",
+        "location": "Madrid, Spain",
+        "position": "Full-Stack Developer",
+        "responsibilities": {
+          "0": "Develop a mobile app using the Ionic UI toolkit combined with Vue for the Ministry of Agriculture, Fisheries, and Food of Spain. This app allows users to efficiently manage and monitor their agricultural operations.",
+          "1": "Developed REST API services with Spring Boot to be consumed by the application."
+        },
+        "accomplishments": {
+          "0": "Effectively integrated offline-first principles into the mobile application, enabling users to seamlessly operate even in rural areas with restricted internet connectivity.",
+          "1": "Improved my team's productivity by creating a tool that generates the comprehensive artifact structure for the development of REST services."
+        }
+      }
+    },
+    "skills": {
+      "title": "Skills",
+      "0": "Fast learner",
+      "1": "Team player",
+      "2": "Abstract thinking",
+      "3": "Creative",
+      "4": "Adaptability",
+      "5": "Problem solving",
+      "6": "Mentoring",
+      "7": "Active listening",
+      "8": "Object-Oriented Programming (OOP)",
+      "9": "Domain-Driven Design (DDD)"
+    },
+    "education": {
+      "title": "Education",
+      "0": {
+        "institution": "IES Clara Del Rey",
+        "area": "Multiplatform and Web Application Development (Double Degree)."
+      }
+    },
+    "languages": {
+      "title": "Languages",
+      "0": {
+        "lang": "English",
+        "detail": "Cambridge Certificate B2."
+      },
+      "1": {
+        "lang": "Spanish",
+        "detail": "Native Speaker."
+      }
+    },
+    "command-palette": {
+      "press": "Press",
+      "hint": "to open the command palette",
+      "placeholder": "Search command...",
+      "section": "Actions",
+      "print": "Print",
+      "portfolio": "Portfolio",
+      "locale": {
+        "en": "Switch to English",
+        "es": "Switch to Spanish"
+      }
+    },
+    "seo": {
+      "keywords": "CV Writing, Curriculum Vitae, Resume Building, Professional Summary, Work Experience, Education, Skills, Certifications, Achievements, References, Personal Information, Career Objective, Job History, Projects, Languages, Contact Information, LinkedIn Profile, Full-Stack Developer, Web Development, Front-End Development, Back-End Development, JavaScript, HTML, CSS, React, Node.js, Express, MongoDB, Portfolio, Software Engineer, Web Design, Responsive Design, UI/UX, API Development, Agile Methodologies, Version Control, Git",
+      "site-name": "Curriculum",
+      "image-alt": "Background from the CV website"
+    }
   }
 }

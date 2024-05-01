@@ -1,0 +1,62 @@
+---
+import newsreader from "@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2"
+import onest from "@fontsource-variable/onest/files/onest-latin-wght-normal.woff2"
+
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+interface Props {
+	title: string
+	description: string
+	canonical?: string
+	image?: string
+}
+
+const { title, description, canonical, image = "/assets/curriculum/og.jpg" } = Astro.props
+
+const canonicalURL = canonical
+	? new URL(canonical, Astro.site)
+	: new URL(Astro.url.pathname, Astro.site)
+---
+
+<title>{title}</title>
+
+<meta charset="UTF-8" />
+<meta name="description" content={description} />
+
+<link rel="preload" href={newsreader} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={onest} as="font" type="font/woff2" crossorigin />
+
+<link rel="canonical" href={canonicalURL} />
+<meta name="viewport" content="width=device-width" />
+
+<meta name="keywords" content={t("cv.seo.keywords")} />
+
+<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:image:alt" content={t("cv.seo.image-alt")} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:site_name" content={t("cv.seo.site-name")} />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:locale:alternate" content="es_ES" />
+
+<meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:domain" content={Astro.url.hostname} />
+
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+<meta name="googlebot" content="notranslate" />
+
+<link rel="alternate" href={Astro.url} hreflang="x-default" />
+<link rel="alternate" href={new URL("/en/cv", Astro.url)} hreflang="en" />
+<link rel="alternate" href={new URL("/es/cv", Astro.url)} hreflang="es" />
+
+<link rel="icon" href="/assets/curriculum/favicon.svg" type="image/svg+xml" />
