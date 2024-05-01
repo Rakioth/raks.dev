@@ -2,7 +2,7 @@
 import GlassLink from "@/components/portfolio/GlassLink.astro"
 
 interface Props {
-	title: string
+	name: string
 	description: string
 	image: string
 	alt: string
@@ -14,28 +14,23 @@ interface Props {
 	link: string
 }
 
-const { title, description, image, alt, tags, link } = Astro.props
+const { name, description, image, alt, tags, link } = Astro.props
 ---
 
 <article>
-	<GlassLink
-		href={link}
-		class="group flex flex-col space-x-0 space-y-8 md:flex-row md:space-x-8 md:space-y-0"
-	>
-		<div class="w-full overflow-clip rounded-lg shadow-lg md:w-1/2">
-			<picture id={image}>
-				<source type="image/webp" />
-				<img
-					class="h-56 w-full object-cover object-top motion-safe:transition-transform motion-safe:duration-500 sm:h-full md:group-hover:scale-105"
-					alt={alt}
-					loading="lazy"
-				/>
-			</picture>
-		</div>
+	<GlassLink href={link} class="group flex flex-col gap-8 md:flex-row">
+		<picture id={image} class="w-full overflow-hidden rounded-lg shadow-lg md:w-1/2">
+			<source type="image/webp" />
+			<img
+				class="h-56 w-full object-cover object-top motion-safe:transition-transform motion-safe:duration-500 sm:h-full md:group-hover:scale-105"
+				alt={alt}
+				loading="lazy"
+			/>
+		</picture>
 
-		<div class="w-full md:w-1/2 md:max-w-lg">
-			<h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">{title}</h3>
-			<ul class="my-2 flex flex-row flex-wrap gap-2">
+		<div class="flex w-full flex-col gap-y-2 md:w-1/2 md:max-w-lg">
+			<h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">{name}</h3>
+			<ul class="flex gap-x-2">
 				{
 					tags.map((tag) => (
 						<li

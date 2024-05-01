@@ -5,45 +5,52 @@ import { getLocaleByUrl, useTranslations } from "@/i18n"
 
 const locale = getLocaleByUrl(Astro.url)
 const t = useTranslations(locale)
+
+const buttonLinks = [
+	{
+		emoji: "📩",
+		label: t("hero.contact"),
+		href: "mailto:dmunozneyra@gmail.com",
+	},
+	{
+		emoji: "👔",
+		label: "LinkedIn",
+		href: "https://linkedin.com/in/dmunozneyra",
+	},
+	{
+		emoji: "📚",
+		label: t("hero.cv"),
+		href: `/${locale}/cv`,
+	},
+]
 ---
 
-<SectionContainer
-	class="flex flex-col justify-center gap-y-5 text-balance px-4 text-left text-gray-800 dark:text-white md:gap-y-6"
->
-	<h1 class="text-4xl font-medium md:text-5xl">
-		{t("hero.title")} Daniel.
+<SectionContainer class="flex flex-col gap-y-5 text-gray-800 dark:text-white md:gap-y-6">
+	<h1
+		class="text-4xl font-medium md:text-5xl [&>span]:text-primary-700 [&>span]:dark:text-primary-400"
+	>
+		{t("hero.title", "Daniel")}
 		<br />
 		{t("hero.statement")}
-		<span
-			data-words={t("hero.skills")}
-			id="typewriter"
-			class="font-newsreader italic text-primary-700 dark:text-primary-400"></span><span
-			class="text-primary-700 motion-safe:animate-[cursor_1s_infinite] dark:text-primary-400"
+		<span data-words={t("hero.skills")} id="typewriter" class="font-newsreader italic"></span><span
+			class="motion-safe:animate-[cursor_1s_infinite]"
 			>⎸
 		</span>
 	</h1>
 
-	<p>{t("description")}</p>
+	<p class="text-balance">{t("description")}</p>
 
-	<ul class="flex flex-wrap gap-4">
-		<li>
-			<ButtonLink href="mailto:dmunozneyra@gmail.com" class="aspect-square sm:aspect-auto">
-				<span class="font-emoji">📩</span>
-				<span class="hidden sm:inline-flex">{t("hero.contact")}</span>
-			</ButtonLink>
-		</li>
-		<li>
-			<ButtonLink href="https://linkedin.com/in/dmunozneyra" class="aspect-square sm:aspect-auto">
-				<span class="font-emoji">👔</span>
-				<span class="hidden sm:inline-flex">LinkedIn</span>
-			</ButtonLink>
-		</li>
-		<li>
-			<ButtonLink href=`/${locale}/cv` class="aspect-square sm:aspect-auto">
-				<span class="font-emoji">📚</span>
-				<span class="hidden sm:inline-flex">{t("hero.cv")}</span>
-			</ButtonLink>
-		</li>
+	<ul class="flex gap-x-4">
+		{
+			buttonLinks.map((buttonLink) => (
+				<li>
+					<ButtonLink href={buttonLink.href} class="aspect-square sm:aspect-auto">
+						<span class="font-emoji">{buttonLink.emoji}</span>
+						<span class="hidden sm:inline-flex">{buttonLink.label}</span>
+					</ButtonLink>
+				</li>
+			))
+		}
 	</ul>
 </SectionContainer>
 
@@ -64,7 +71,7 @@ const t = useTranslations(locale)
 
 	document.addEventListener("astro:page-load", () => {
 		const typewriter = $("#typewriter")
-		const words = typewriter.getAttribute("data-words")?.split(";") || []
+		const words = typewriter.dataset.words?.split(";") || []
 
 		let isTyping = true
 

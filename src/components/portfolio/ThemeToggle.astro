@@ -12,10 +12,10 @@ const lightModeLabel = t("toggle.theme.light")
 	transition:persist
 	id="theme-toggle"
 	type="button"
-	aria-label={t("toggle.theme.default")}
 	title={t("toggle.theme.default")}
+	aria-label={t("toggle.theme.default")}
 	data-emoji="🎨"
-	class="rounded-sm font-emoji after:content-[attr(data-emoji)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 dark:focus-visible:ring-primary-400"
+	class="rounded-sm font-emoji after:content-[attr(data-emoji)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:dark:ring-primary-400"
 >
 </button>
 
@@ -31,9 +31,7 @@ const lightModeLabel = t("toggle.theme.light")
 
 	function emojiAnimation(emojiChain) {
 		for (let i = 0; i < emojiChain.length; i++)
-			setTimeout(() => {
-				themeToggle.setAttribute("data-emoji", emojiChain[i])
-			}, 250 * i)
+			setTimeout(() => (themeToggle.dataset.emoji = emojiChain[i]), 250 * i)
 	}
 
 	function updateThemeState(theme) {
@@ -41,11 +39,11 @@ const lightModeLabel = t("toggle.theme.light")
 		const emojiChain = theme ? toLight : toDark
 
 		if (isLoading || reducedMotionPreference.matches)
-			themeToggle.setAttribute("data-emoji", emojiChain[emojiChain.length - 1])
+			themeToggle.dataset.emoji = emojiChain[emojiChain.length - 1]
 		else emojiAnimation(emojiChain)
 
-		themeToggle.setAttribute("aria-label", label)
-		themeToggle.setAttribute("title", label)
+		themeToggle.title = label
+		themeToggle.ariaLabel = label
 		window.updateSeoState(theme ? "dark" : "light")
 	}
 
@@ -60,13 +58,13 @@ const lightModeLabel = t("toggle.theme.light")
 		const themeToggledEvent = new CustomEvent("themetoggled", { detail: { theme } })
 		updateThemeState(isDark)
 		document.dispatchEvent(themeToggledEvent)
-		themeToggle.removeAttribute("disabled")
+		themeToggle.disabled = false
 	}
 
 	function handleToggleTransition() {
-		themeToggle.setAttribute("disabled", true)
+		themeToggle.disabled = true
 
-		if (reducedMotionPreference.matches) {
+		if (!document.startViewTransition || reducedMotionPreference.matches) {
 			handleToggleClick()
 			return
 		}

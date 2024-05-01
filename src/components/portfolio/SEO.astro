@@ -85,9 +85,9 @@ const canonicalURL = canonical
 		const statusColor = document.querySelector("meta[name=apple-mobile-web-app-status-bar]")
 		const color = theme === "dark" ? THEME_COLOR.DARK : THEME_COLOR.LIGHT
 
-		manifest.setAttribute("href", manifest.getAttribute("href").replace(/dark|light/, theme))
-		themeColor.setAttribute("content", color)
-		statusColor.setAttribute("content", color)
+		manifest.href = manifest.getAttribute("href").replace(/dark|light/, theme)
+		themeColor.content = color
+		statusColor.content = color
 	}
 
 	document.addEventListener("astro:page-load", () => {

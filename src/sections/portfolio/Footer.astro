@@ -1,4 +1,5 @@
 ---
+import SectionContainer from "@/components/portfolio/SectionContainer.astro"
 import UnderlineLink from "@/components/portfolio/UnderlineLink.astro"
 import { getLocaleByUrl, useTranslations } from "@/i18n"
 
@@ -6,11 +7,9 @@ const locale = getLocaleByUrl(Astro.url)
 const t = useTranslations(locale)
 ---
 
-<footer
-	class="container mx-auto mt-auto flex w-full items-center justify-center pb-6 pt-12 md:max-w-2xl md:pb-12 md:pt-20 lg:max-w-3xl"
->
-	<span class="text-sm text-gray-800 dark:text-gray-300">
-		{t("footer.author")}
+<SectionContainer as="footer" class="mt-auto flex items-center justify-center">
+	<span class="text-sm text-gray-800 dark:text-gray-300"
+		>{t("footer.author")}
 		<UnderlineLink href="https://github.com/Rakioth"><strong>Raks</strong></UnderlineLink>
 		<span aria-hidden="true">|</span>
 		<UnderlineLink
@@ -20,4 +19,4 @@ const t = useTranslations(locale)
 			<strong>{t("footer.source")}</strong>
 		</UnderlineLink>
 	</span>
-</footer>
+</SectionContainer>

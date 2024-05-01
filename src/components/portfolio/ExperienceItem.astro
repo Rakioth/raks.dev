@@ -1,24 +1,41 @@
 ---
 import GlassLink from "@/components/portfolio/GlassLink.astro"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
 import LinkIcon from "@/icons/Link.astro"
 
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+const options: Intl.DateTimeFormatOptions = { month: "short", year: "numeric" }
+
 interface Props {
-	date: string
-	title: string
+	startDate: string
+	endDate?: string
+	position: string
 	company: string
-	description: string
+	summary: string
 	link: string
 }
 
-const { date, title, company, description, link } = Astro.props
+const { startDate, endDate, position, company, summary, link } = Astro.props
+
+const startYear = new Date(startDate)
+	.toLocaleString(locale, options)
+	.replace(/^\w/, (c) => c.toUpperCase())
+const endYear = endDate
+	? new Date(endDate).toLocaleString(locale, options).replace(/^\w/, (c) => c.toUpperCase())
+	: t("experience.current")
 ---
 
 <GlassLink href={link} class="group flex gap-x-4 text-gray-800 dark:text-gray-300">
 	<div class="flex flex-col gap-y-1">
-		<h3 class="text-sm text-primary-700 dark:text-primary-400">{title}</h3>
+		<h3 class="text-sm text-primary-700 dark:text-primary-400">{position}</h3>
 		<h4 class="font-medium text-primary-800 dark:text-primary-500">{company}</h4>
-		<time class="text-sm">{date}</time>
-		<p class="mt-2 text-pretty">{description}</p>
+		<div class="text-sm">
+			<time datetime={startDate}>{startYear}</time>
+			—
+			<time datetime={endDate}>{endYear}</time>
+		</div>
+		<p class="mt-2 text-pretty">{summary}</p>
 	</div>
 
 	<div class="mr-4 hidden min-w-8 items-center justify-center sm:flex">

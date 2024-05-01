@@ -14,7 +14,7 @@ const { href, isExternal = true, class: className } = Astro.props
 	target={isExternal ? "_blank" : "_self"}
 	class:list={[
 		className,
-		"relative rounded-lg p-4 before:absolute before:inset-0 before:-z-10 before:scale-95 before:rounded-[inherit] before:opacity-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 before:any-hover:scale-100 before:any-hover:bg-white/50 before:any-hover:opacity-100 before:any-hover:shadow-lg before:any-hover:ring-1 before:any-hover:ring-black/10 before:any-hover:backdrop-blur before:motion-safe:transition dark:focus-visible:ring-primary-400 before:any-hover:dark:bg-black/50 before:any-hover:dark:ring-white/10",
+		"relative -mx-4 rounded-lg p-4 before:absolute before:inset-0 before:-z-10 before:scale-95 before:rounded-[inherit] before:opacity-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 any-hover:before:scale-100 any-hover:before:bg-white/50 any-hover:before:opacity-100 any-hover:before:shadow-lg any-hover:before:ring-1 any-hover:before:ring-black/10 any-hover:before:backdrop-blur motion-safe:before:transition focus-visible:dark:ring-primary-400 any-hover:before:dark:bg-black/50 any-hover:before:dark:ring-white/10",
 	]}
 >
 	<slot />

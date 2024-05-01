@@ -1,5 +1,6 @@
 ---
 import LocaleToggle from "@/components/portfolio/LocaleToggle.astro"
+import SectionContainer from "@/components/portfolio/SectionContainer.astro"
 import ThemeToggle from "@/components/portfolio/ThemeToggle.astro"
 import { getLocaleByUrl, useTranslations } from "@/i18n"
 
@@ -7,29 +8,27 @@ const locale = getLocaleByUrl(Astro.url)
 const t = useTranslations(locale)
 ---
 
-<header
-	class="container mx-auto flex w-full items-center justify-between px-4 pb-12 pt-6 text-sm md:max-w-2xl md:pb-20 md:pt-12 md:text-base lg:max-w-3xl"
->
+<SectionContainer as="header" class="flex items-center justify-between text-sm md:text-base">
 	<div class="flex gap-x-3 md:gap-x-4">
 		<picture>
-			<source srcset="/profile/me.webp" type="image/webp" />
+			<source srcset="/profile/me-transparent.webp" type="image/webp" />
 			<img
 				class="size-10 rounded-full bg-primary-700 dark:bg-primary-400 md:size-12"
-				src="/profile/me.png"
+				src="/profile/me-transparent.png"
 				alt="Daniel Muñoz Neyra"
 			/>
 		</picture>
 
 		<div>
 			<h2 class="font-semibold text-gray-800 dark:text-white">Daniel Muñoz</h2>
-			<h3 class="font-normal text-gray-950 dark:text-gray-300">{t("subtitle")}</h3>
+			<h3 class="text-gray-950 dark:text-gray-300">{t("subtitle")}</h3>
 		</div>
 	</div>
 
 	<nav>
-		<ul class="flex items-center justify-center gap-x-6">
+		<ul class="flex gap-x-6">
 			<li><LocaleToggle /></li>
 			<li><ThemeToggle /></li>
 		</ul>
 	</nav>
-</header>
+</SectionContainer>

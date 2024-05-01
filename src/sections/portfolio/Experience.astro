@@ -8,17 +8,17 @@ const t = useTranslations(locale)
 
 const experiences = [
 	{
-		date: t("experience.0.date"),
-		title: t("experience.0.title"),
+		startDate: "2023-09-18",
+		position: t("experience.0.position"),
 		company: t("experience.0.company"),
-		description: t("experience.0.description"),
+		summary: t("experience.0.summary"),
 		link: "https://www.tragsa.es",
 	},
 ]
 ---
 
-<SectionContainer title={t("nav.experience")}>
-	<span class="pl-4 font-emoji not-italic" slot="icon">💼</span>
+<SectionContainer title={t("experience.title")}>
+	<span class="font-emoji not-italic" slot="icon">💼</span>
 	<ol>
 		{
 			experiences.map((experience) => (

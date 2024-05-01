@@ -41,7 +41,7 @@ const tags = {
 
 const projects = [
 	{
-		title: t("projects.0.title"),
+		name: t("projects.0.name"),
 		description: t("projects.0.description"),
 		image: "swiftly",
 		alt: t("projects.0.alt"),
@@ -49,7 +49,7 @@ const projects = [
 		link: "https://github.com/Rakioth/ProgrammingCourse/tree/main/Exams/E6-KnowledgeIntegration",
 	},
 	{
-		title: t("projects.1.title"),
+		name: t("projects.1.name"),
 		description: t("projects.1.description"),
 		image: "pvcreator",
 		alt: t("projects.1.alt"),
@@ -59,8 +59,8 @@ const projects = [
 ]
 ---
 
-<SectionContainer title={t("nav.projects")} class="projects">
-	<span class="pl-4 font-emoji not-italic" slot="icon">🎯</span>
+<SectionContainer title={t("projects.title")} class="projects">
+	<span class="font-emoji not-italic" slot="icon">🎯</span>
 	{projects.map((project) => <ProjectItem {...project} />)}
 </SectionContainer>
 
@@ -76,8 +76,8 @@ const projects = [
 				const img = $("img", picture) as HTMLImageElement
 				const source = $("source", picture) as HTMLSourceElement
 
-				img.setAttribute("src", `/projects/${theme}/${id}.png`)
-				source.setAttribute("srcset", `/projects/${theme}/${id}.webp`)
+				img.src = `/projects/${theme}/${id}.png`
+				source.srcset = `/projects/${theme}/${id}.webp`
 			})
 		}
 

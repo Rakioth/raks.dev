@@ -3,11 +3,6 @@
   "subtitle": "Desarrollador Full-Stack",
   "description": "Desarrollador enfocado en la creación y diseño de productos, con el objetivo de mejorar la experiencia del usuario dándole soluciones a problemas cotidianos.",
   "go-back": "Volver al inicio",
-  "nav": {
-    "experience": "Experiencia Laboral",
-    "projects": "Proyectos",
-    "about-me": "Sobre mí"
-  },
   "toggle": {
     "locale": {
       "en": "Cambiar idioma a inglés",
@@ -20,33 +15,36 @@
     }
   },
   "hero": {
-    "title": "Hey, soy",
+    "title": "Hey, soy {0}.",
     "statement": "Diseño",
     "skills": "apps.;webs.;software.",
     "contact": "Contáctame",
     "cv": "Currículum"
   },
   "experience": {
+    "title": "Experiencia Laboral",
+    "current": "Actual",
     "0": {
-      "date": "Sept 2023 — Actual",
-      "title": "Desarrollador Full-Stack",
+      "position": "Desarrollador Full-Stack",
       "company": "Tragsatec",
-      "description": "Desarrollo de una aplicación móvil para el Ministerio de Agricultura, Pesca y Alimentación de España con el propósito de gestionar las explotaciones agrícolas de manera eficaz y accesible a través de dispositivos móviles. Incorporé funcionalidades que permiten operar sin conexión, especialmente adaptadas para áreas rurales con acceso limitado a internet."
+      "summary": "Desarrollo de una aplicación móvil para el Ministerio de Agricultura, Pesca y Alimentación de España con el propósito de gestionar las explotaciones agrícolas de manera eficaz y accesible a través de dispositivos móviles. Incorporé funcionalidades que permiten operar sin conexión, especialmente adaptadas para áreas rurales con acceso limitado a internet."
     }
   },
   "projects": {
+    "title": "Proyectos",
     "0": {
-      "title": "Swiftly — E-Commerce",
+      "name": "Swiftly — E-Commerce",
       "description": "Tienda online creada desde cero, con una interfaz de compra fácil de usar y un robusto panel de administración para una gestión ágil de los pedidos y el inventario.",
       "alt": "Imagen del proyecto Swiftly"
     },
     "1": {
-      "title": "PV Creator — Generador de Códigos",
+      "name": "PV Creator — Generador de Códigos",
       "description": "Aplicación móvil que permite a los usuarios diseñar objetos personalizados dentro del juego mediante un sistema de códigos de barras, que luego pueden escanearse para utilizarlos en el videojuego Viva Piñata: Trouble in Paradise.",
       "alt": "Imagen del proyecto PV Creator"
     }
   },
   "about-me": {
+    "title": "Sobre mí",
     "p-1": "Me llamo Dani, tengo {0} años y soy de Madrid, España. Terminé mis estudios como desarrollador de aplicaciones multiplataforma y web. Me encanta enfocarme en la parte del",
     "p-2": "Además de contribuir de manera activa a la comunidad open source,",
     "p-3": ". En 2022, mi equipo y yo logramos obtener la medalla de bronce, lo que nos permitió alcanzar el podio.",

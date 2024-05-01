@@ -13,7 +13,7 @@ const { href, class: className } = Astro.props
 	target="_blank"
 	class:list={[
 		className,
-		"relative inline-block rounded-sm after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:rounded-full after:bg-current after:ease-in-out after:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 any-hover:after:scale-x-100 motion-safe:after:transition-transform dark:focus-visible:ring-primary-400",
+		"relative inline-block rounded-sm after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-0 after:rounded-full after:bg-current after:ease-in-out after:content-[''] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 any-hover:after:w-full motion-safe:after:transition-[width] focus-visible:dark:ring-primary-400",
 	]}
 >
 	<slot />

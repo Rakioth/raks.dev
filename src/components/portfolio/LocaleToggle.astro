@@ -9,7 +9,7 @@ const nextLocale = getNextLocale(locale)
 const emojiLocale: Record<Locale, string> = {
 	en: "🇺🇸",
 	es: "🇪🇸",
-} as const
+}
 
 const nextLocalePath = () => {
 	const pathname = Astro.url.pathname
@@ -30,7 +30,7 @@ const nextLocalePath = () => {
 	href={nextLocalePath()}
 	aria-label={t(`toggle.locale.${nextLocale}`)}
 	title={t(`toggle.locale.${nextLocale}`)}
-	class="rounded-sm font-emoji focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 dark:focus-visible:ring-primary-400"
+	class="rounded-sm font-emoji focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:dark:ring-primary-400"
 >
 	{emojiLocale[nextLocale]}
 </a>
