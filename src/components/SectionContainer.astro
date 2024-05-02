@@ -13,7 +13,7 @@ const { as: Tag = "section", title, class: className } = Astro.props
 <Tag class:list={[className, "container mx-auto w-full md:max-w-2xl lg:max-w-3xl"]}>
 	{
 		title && (
-			<h2 class="mb-2 flex gap-x-1 font-newsreader text-base font-medium italic text-gray-800 dark:text-white md:gap-x-2 md:text-lg">
+			<h2 class="mb-2 flex gap-x-1 font-newsreader text-base font-medium italic text-gray-800 dark:text-white md:gap-x-2 md:text-lg [&>span]:font-emoji [&>span]:not-italic">
 				<slot name="icon" />
 				{title}
 			</h2>

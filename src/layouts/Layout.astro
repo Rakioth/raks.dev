@@ -1,11 +1,11 @@
 ---
 import { ViewTransitions } from "astro:transitions"
 
-import DottedBackground from "@/components/portfolio/DottedBackground.astro"
-import NoiseBackground from "@/components/portfolio/NoiseBackground.astro"
-import SEO from "@/components/portfolio/SEO.astro"
-import Footer from "@/sections/portfolio/Footer.astro"
-import Header from "@/sections/portfolio/Header.astro"
+import DottedBackground from "@/components/DottedBackground.astro"
+import NoiseBackground from "@/components/NoiseBackground.astro"
+import SEO from "@/components/SEO.astro"
+import Footer from "@/sections/Footer.astro"
+import Header from "@/sections/Header.astro"
 import "@fontsource-variable/newsreader"
 import "@fontsource-variable/onest"
 
@@ -13,21 +13,20 @@ interface Props {
 	lang: string
 	title: string
 	description: string
-	canonical?: string
 	image?: string
 }
 
-const { lang, title, description, canonical, image } = Astro.props
+const { lang, title, description, image } = Astro.props
 ---
 
 <!doctype html>
 <html lang={lang}>
 	<head>
-		<SEO title={title} description={description} canonical={canonical} image={image} />
+		<SEO title={title} description={description} image={image} />
 		<ViewTransitions />
 	</head>
 
-	<body class="flex min-h-screen flex-col gap-y-12 p-6 md:gap-y-20 md:p-12">
+	<body class="spacer min-h-screen p-6 md:p-12">
 		<DottedBackground />
 		<NoiseBackground />
 		<Header />
@@ -61,15 +60,19 @@ const { lang, title, description, canonical, image } = Astro.props
 				cursor: -webkit-image-set(url(/cursor/light.png) 2x), auto;
 			}
 
+			html.dark {
+				cursor: url(/cursor/dark.png), auto;
+				cursor: -webkit-image-set(url(/cursor/dark.png) 2x), auto;
+			}
+
 			.theme-transition::view-transition-old(root),
 			.theme-transition::view-transition-new(root) {
 				animation: none;
 				mix-blend-mode: normal;
 			}
 
-			html.dark {
-				cursor: url(/cursor/dark.png), auto;
-				cursor: -webkit-image-set(url(/cursor/dark.png) 2x), auto;
+			.spacer {
+				@apply flex flex-col gap-y-12 md:gap-y-20;
 			}
 
 			@media screen and (prefers-reduced-motion: no-preference) {

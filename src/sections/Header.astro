@@ -1,7 +1,7 @@
 ---
-import LocaleToggle from "@/components/portfolio/LocaleToggle.astro"
-import SectionContainer from "@/components/portfolio/SectionContainer.astro"
-import ThemeToggle from "@/components/portfolio/ThemeToggle.astro"
+import LocaleToggle from "@/components/LocaleToggle.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import ThemeToggle from "@/components/ThemeToggle.astro"
 import { getLocaleByUrl, useTranslations } from "@/i18n"
 
 const locale = getLocaleByUrl(Astro.url)
@@ -11,10 +11,10 @@ const t = useTranslations(locale)
 <SectionContainer as="header" class="flex items-center justify-between text-sm md:text-base">
 	<div class="flex gap-x-3 md:gap-x-4">
 		<picture>
-			<source srcset="/profile/me-transparent.webp" type="image/webp" />
+			<source srcset="/me.webp" type="image/webp" />
 			<img
 				class="size-10 rounded-full bg-primary-700 dark:bg-primary-400 md:size-12"
-				src="/profile/me-transparent.png"
+				src="/me.png"
 				alt="Daniel Muñoz Neyra"
 			/>
 		</picture>

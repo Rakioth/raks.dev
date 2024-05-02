@@ -1,5 +1,5 @@
 ---
-import SectionContainer from "@/components/portfolio/SectionContainer.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
 import { getLocaleByUrl, useTranslations } from "@/i18n"
 
 const locale = getLocaleByUrl(Astro.url)
@@ -22,9 +22,9 @@ const currentAge = () => {
 ---
 
 <SectionContainer title={t("about-me.title")}>
-	<span class="font-emoji not-italic" slot="icon">🙋‍♂️</span>
+	<span slot="icon">🙋‍♂️</span>
 	<article
-		class="flex flex-col gap-y-4 text-pretty py-4 text-gray-800 dark:text-gray-300 [&>p>strong]:font-mono [&>p>strong]:text-primary-700 [&>p>strong]:dark:text-primary-400"
+		class="flex flex-col gap-y-4 text-pretty py-4 text-gray-800 dark:text-gray-300 [&>p>strong]:font-mono [&>p>strong]:font-normal [&>p>strong]:text-primary-700 [&>p>strong]:dark:text-primary-400"
 	>
 		<p>{t("about-me.p-1", currentAge())} <strong>{t("about-me.strong-1")}</strong>.</p>
 		<p>{t("about-me.p-2")} <strong>{t("about-me.strong-2")}</strong>{t("about-me.p-3")}</p>

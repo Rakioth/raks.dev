@@ -1,6 +1,6 @@
 ---
-import ProjectItem from "@/components/portfolio/ProjectItem.astro"
-import SectionContainer from "@/components/portfolio/SectionContainer.astro"
+import ProjectItem from "@/components/ProjectItem.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
 import { getLocaleByUrl, useTranslations } from "@/i18n"
 import AndroidIcon from "@/icons/Android.astro"
 import KotlinIcon from "@/icons/Kotlin.astro"
@@ -60,7 +60,7 @@ const projects = [
 ---
 
 <SectionContainer title={t("projects.title")} class="projects">
-	<span class="font-emoji not-italic" slot="icon">🎯</span>
+	<span slot="icon">🎯</span>
 	{projects.map((project) => <ProjectItem {...project} />)}
 </SectionContainer>
 
