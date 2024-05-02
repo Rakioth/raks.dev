@@ -1,3 +1,4 @@
 {
+  "trailingSlash": false,
   "redirects": [{ "source": "/", "destination": "/en", "statusCode": 302 }]
 }

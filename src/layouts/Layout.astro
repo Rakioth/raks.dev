@@ -20,13 +20,13 @@ const { lang, title, description, image } = Astro.props
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={lang} class="h-full">
 	<head>
 		<SEO title={title} description={description} image={image} />
 		<ViewTransitions />
 	</head>
 
-	<body class="spacer min-h-screen p-6 md:p-12">
+	<body class="spacer min-h-full p-6 md:p-12">
 		<DottedBackground />
 		<NoiseBackground />
 		<Header />
