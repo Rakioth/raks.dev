@@ -14,7 +14,7 @@ const { href, isExternal = true, class: className } = Astro.props
 	target={isExternal ? "_blank" : "_self"}
 	class:list={[
 		className,
-		"relative inline-flex max-w-fit items-center justify-center gap-x-2 overflow-hidden rounded-xl border border-gray-300 px-3 py-2 text-gray-800 before:absolute before:inset-0 before:-z-10 before:bg-gray-100 before:content-[''] after:absolute after:left-0 after:top-0 after:-z-10 after:h-full after:w-0 after:rounded-lg after:bg-gray-800 after:content-[''] focus-visible:outline-none focus-visible:ring focus-visible:ring-primary-700/80 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-800 any-hover:border-gray-500 any-hover:text-gray-100 any-hover:after:w-full motion-safe:after:transition-[width] dark:border-gray-600 dark:text-white before:dark:bg-[#322663] after:dark:bg-white focus-visible:dark:ring-primary-400/80 focus-visible:dark:ring-offset-white any-hover:dark:border-gray-700 any-hover:dark:text-[#322663]",
+		"box-blur inline-flex items-center justify-center gap-x-2 rounded-md p-1.5 text-sm text-primary any-hover:bg-white motion-safe:transition-colors any-hover:dark:bg-neutral-900/90 [&>svg]:size-4 [&>svg]:text-zinc-600 [&>svg]:focus-visible:text-zinc-900 [&>svg]:group-hover:text-zinc-900 [&>svg]:motion-safe:transition-colors [&>svg]:dark:text-zinc-400 [&>svg]:focus-visible:dark:text-zinc-100 [&>svg]:group-hover:dark:text-zinc-100",
 	]}
 >
 	<slot />

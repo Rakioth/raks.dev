@@ -1,23 +1,25 @@
 ---
-import type { HTMLTag } from "astro/types"
-
 interface Props {
-	as?: HTMLTag
 	title?: string
 	class?: string
 }
 
-const { as: Tag = "section", title, class: className } = Astro.props
+const { title, class: className } = Astro.props
 ---
 
-<Tag class:list={[className, "container mx-auto w-full md:max-w-2xl lg:max-w-3xl"]}>
+<section
+	class:list={[
+		className,
+		"box-blur min-h-64 rounded-2xl p-4 shadow any-hover:shadow-lg motion-safe:transition-shadow",
+	]}
+>
 	{
 		title && (
-			<h2 class="mb-2 flex gap-x-1 font-newsreader text-base font-medium italic text-gray-800 dark:text-white md:gap-x-2 md:text-lg [&>span]:font-emoji [&>span]:not-italic">
+			<h2 class="box-blur mb-4 line-clamp-2 inline-flex h-8 w-fit items-center gap-x-1.5 rounded-2xl px-4 text-sm leading-5 text-primary [&>svg]:size-4">
 				<slot name="icon" />
 				{title}
 			</h2>
 		)
 	}
 	<slot />
-</Tag>
+</section>

@@ -6,8 +6,8 @@ export interface Translation {
 	[key: string]: string | Translation
 }
 
-export const defaultLocale: Locale = "en"
-export const translations: Record<Locale, Translation> = {
+export const DEFAULT_LOCALE: Locale = "en"
+export const TRANSLATIONS: Record<Locale, Translation> = {
 	en: enTranslations,
 	es: esTranslations,
 } as const

@@ -15,14 +15,15 @@
     "format:check": "prettier --check src"
   },
   "dependencies": {
-    "@fontsource-variable/newsreader": "5.0.19",
     "@fontsource-variable/onest": "5.0.4",
-    "astro": "4.5.10"
+    "astro": "4.5.10",
+    "three": "0.165.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "0.43.1",
     "@astrojs/check": "0.5.10",
     "@astrojs/tailwind": "5.1.0",
+    "@types/three": "0.165.0",
     "@typescript-eslint/parser": "7.3.1",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",

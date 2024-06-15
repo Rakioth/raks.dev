@@ -11,6 +11,6 @@
 
 This is my personal website.
 
-It prioritizes **speed**, **accessibility** and **responsiveness**.
+It features [Three.js](https://threejs.org) components.
 
 Built with just [Astro](https://astro.build), [TypeScript](https://www.typescriptlang.org) & [Tailwind CSS](https://tailwindcss.com).

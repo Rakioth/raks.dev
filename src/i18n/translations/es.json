@@ -3,57 +3,53 @@
   "subtitle": "Desarrollador Full-Stack",
   "description": "Desarrollador enfocado en la creación y diseño de productos, con el objetivo de mejorar la experiencia del usuario dándole soluciones a problemas cotidianos.",
   "go-back": "Volver al inicio",
-  "toggle": {
-    "locale": {
-      "en": "Cambiar idioma a inglés",
-      "es": "Cambiar idioma a español"
-    },
-    "theme": {
-      "default": "Alternar tema",
-      "dark": "Activar modo oscuro",
-      "light": "Activar modo claro"
-    }
-  },
   "hero": {
-    "title": "Hey, soy {0}.",
-    "statement": "Diseño",
-    "skills": "apps.;webs.;software.",
-    "contact": "Contáctame",
-    "cv": "Currículum"
+    "state": "Disponible para proyectos",
+    "social": "Encuéntrame en {0}"
   },
   "experience": {
     "title": "Experiencia Laboral",
     "current": "Actual",
+    "logo": "Logo de la empresa {0}",
+    "cv": "Leer CV",
     "0": {
-      "position": "Desarrollador Full-Stack",
       "company": "Tragsatec",
-      "summary": "Desarrollo de una aplicación móvil para el Ministerio de Agricultura, Pesca y Alimentación de España con el propósito de gestionar las explotaciones agrícolas de manera eficaz y accesible a través de dispositivos móviles. Incorporé funcionalidades que permiten operar sin conexión, especialmente adaptadas para áreas rurales con acceso limitado a internet."
+      "position": "Desarrollador Full-Stack"
     }
   },
   "projects": {
     "title": "Proyectos",
     "0": {
-      "name": "Swiftly — E-Commerce",
-      "description": "Tienda online creada desde cero, con una interfaz de compra fácil de usar y un robusto panel de administración para una gestión ágil de los pedidos y el inventario.",
-      "alt": "Imagen del proyecto Swiftly"
+      "name": "Swiftly",
+      "description": "🛒 Una tienda online moderna."
     },
     "1": {
-      "name": "PV Creator — Generador de Códigos",
-      "description": "Aplicación móvil que permite a los usuarios diseñar objetos personalizados dentro del juego mediante un sistema de códigos de barras, que luego pueden escanearse para utilizarlos en el videojuego Viva Piñata: Trouble in Paradise.",
-      "alt": "Imagen del proyecto PV Creator"
+      "name": "PV Creator",
+      "description": "🪅 Creador de código de barras personalizado."
+    },
+    "2": {
+      "name": "Acortador de URLs",
+      "description": "🔗 Acortador personal de baja latencia."
+    },
+    "3": {
+      "name": "Dotfiles",
+      "description": "🌚 Herramienta modular y personalizable."
     }
   },
-  "about-me": {
-    "title": "Sobre mí",
-    "p-1": "Me llamo Dani, tengo {0} años y soy de Madrid, España. Terminé mis estudios como desarrollador de aplicaciones multiplataforma y web. Me encanta enfocarme en la parte del",
-    "p-2": "Además de contribuir de manera activa a la comunidad open source,",
-    "p-3": ". En 2022, mi equipo y yo logramos obtener la medalla de bronce, lo que nos permitió alcanzar el podio.",
-    "strong-1": "rendimiento, para ofrecer la mejor experiencia al usuario",
-    "strong-2": "he participado en las competiciones nacionales de ProgramaMe"
+  "themes": {
+    "default": "Alternar tema",
+    "dark": "Activar modo oscuro",
+    "light": "Activar modo claro"
   },
-  "footer": {
-    "author": "Creado por",
-    "source": "Código Fuente"
+  "locales": {
+    "en": "Cambiar idioma a inglés",
+    "es": "Cambiar idioma a español"
+  },
+  "contact": {
+    "title": "Contactar",
+    "subtitle": "Sigamos en contacto!",
+    "description": "Construyendo experiencias digitales excepcionales. ¡Hablemos de tu proyecto!",
+    "email": "Envíame un Email"
   },
   "seo": {
     "keywords": "Desarrollador Full-Stack, Desarrollo Web, Desarrollo Front-End, Desarrollo Back-End, JavaScript, HTML, CSS, React, Node.js, Express, MongoDB, Portafolio, Ingeniero de Software, Diseño Web, Diseño Responsivo, UI/UX, Desarrollo de API, Metodologías Ágiles, Control de Versiones, Git",

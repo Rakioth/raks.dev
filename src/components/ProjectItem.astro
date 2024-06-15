@@ -1,51 +1,39 @@
 ---
-import GlassLink from "@/components/GlassLink.astro"
+import Chip from "@/components/Chip.astro"
+import ArrowIcon from "@/icons/Arrow.astro"
 
 interface Props {
 	name: string
 	description: string
-	image: string
-	alt: string
-	tags: {
-		name: string
-		class: string
-		icon: (_props: Record<string, any>) => any
-	}[]
+	tags: string[]
 	link: string
 }
 
-const { name, description, image, alt, tags, link } = Astro.props
+const { name, description, tags, link } = Astro.props
 ---
 
-<article>
-	<GlassLink href={link} class="group flex flex-col gap-8 md:flex-row">
-		<picture id={image} class="w-full overflow-hidden rounded-lg shadow-lg md:w-1/2">
-			<source type="image/webp" />
-			<img
-				class="h-56 w-full object-cover object-top motion-safe:transition-transform motion-safe:duration-500 sm:h-full md:group-hover:scale-105"
-				alt={alt}
-				loading="lazy"
-			/>
-		</picture>
+<article class="flex flex-col gap-y-2">
+	<a
+		href={link}
+		rel="noopener noreferrer"
+		target="_blank"
+		class="group inline-flex items-center gap-x-1.5 text-sm font-medium text-primary decoration-primary/50 decoration-dotted underline-offset-[0.3125rem] focus-visible:outline-none any-hover:underline"
+	>
+		{name}
+		<ArrowIcon
+			class="size-3 opacity-50 group-hover:translate-x-[0.09375rem] group-hover:opacity-100 group-focus-visible:translate-x-[0.09375rem] group-focus-visible:opacity-100 motion-safe:duration-200"
+		/>
+	</a>
 
-		<div class="flex w-full flex-col gap-y-2 md:w-1/2 md:max-w-lg">
-			<h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">{name}</h3>
-			<ul class="flex gap-x-2">
-				{
-					tags.map((tag) => (
-						<li
-							class:list={[
-								tag.class,
-								"flex aspect-square items-center gap-x-2 rounded-full border border-black/20 px-2 py-1 text-xs text-white dark:border-white/40 sm:aspect-auto",
-							]}
-						>
-							<tag.icon class="size-3.5" />
-							<span class="hidden sm:block">{tag.name}</span>
-						</li>
-					))
-				}
-			</ul>
-			<p class="text-pretty text-gray-800 dark:text-gray-300">{description}</p>
-		</div>
-	</GlassLink>
+	<p class="truncate text-sm text-secondary">{description}</p>
+
+	<ul class="flex flex-wrap gap-2">
+		{
+			tags.map((tag) => (
+				<Chip as="li" class="font-mono font-medium">
+					{tag}
+				</Chip>
+			))
+		}
+	</ul>
 </article>

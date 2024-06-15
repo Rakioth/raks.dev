@@ -3,57 +3,53 @@
   "subtitle": "Full-Stack Developer",
   "description": "Developer focused on the creation and design of products, with the goal of improving the user experience by providing solutions to everyday problems.",
   "go-back": "Go back home",
-  "toggle": {
-    "locale": {
-      "en": "Switch language to English",
-      "es": "Switch language to Spanish"
-    },
-    "theme": {
-      "default": "Toggle theme",
-      "dark": "Activate dark mode",
-      "light": "Activate light mode"
-    }
-  },
   "hero": {
-    "title": "Hey, I'm {0}.",
-    "statement": "I design",
-    "skills": "apps.;websites.;software.",
-    "contact": "Contact me",
-    "cv": "Curriculum"
+    "state": "Available for new projects",
+    "social": "Find me on {0}"
   },
   "experience": {
     "title": "Work Experience",
     "current": "Current",
+    "logo": "{0} company logo",
+    "cv": "Read CV",
     "0": {
-      "position": "Full-Stack Developer",
       "company": "Tragsatec",
-      "summary": "Development of a mobile app for the Ministry of Agriculture, Fisheries and Food of Spain with the purpose of managing farms in an efficient and accessible way through mobile devices. I incorporated functionalities that allow offline operation, especially adapted for rural areas with limited internet access."
+      "position": "Full-Stack Developer"
     }
   },
   "projects": {
     "title": "Projects",
     "0": {
-      "name": "Swiftly — E-Commerce",
-      "description": "Online shop built from scratch, featuring a user-friendly shopping interface and a robust admin dashboard for streamlined management of orders and inventory.",
-      "alt": "Image of the Swiftly project"
+      "name": "Swiftly",
+      "description": "🛒 A modern online shop."
     },
     "1": {
-      "name": "PV Creator — Code Generator",
-      "description": "Mobile app that allows users to design custom in-game items through a barcode system, which can then be scanned to use in the video game Viva Piñata: Trouble in Paradise.",
-      "alt": "Image of the PV Creator project"
+      "name": "PV Creator",
+      "description": "🪅 Custom barcode creator app."
+    },
+    "2": {
+      "name": "URL Shortener",
+      "description": "🔗 Personal low-latency shortener."
+    },
+    "3": {
+      "name": "Dotfiles",
+      "description": "🌚 Modular and customizable tool."
     }
   },
-  "about-me": {
-    "title": "About me",
-    "p-1": "My name is Dani, I'm {0} years old and I'm from Madrid, Spain. I finished my studies as a multiplatform and web application developer. I love to focus on the",
-    "p-2": "Besides actively contributing to the open source community,",
-    "p-3": ". In 2022, my team and I managed to get the bronze medal, which allowed us to reach the podium.",
-    "strong-1": "performance part, to offer the best user experience",
-    "strong-2": "I have participated in the national competitions of ProgramaMe"
+  "themes": {
+    "default": "Toggle theme",
+    "dark": "Activate dark mode",
+    "light": "Activate light mode"
   },
-  "footer": {
-    "author": "Build by",
-    "source": "Source Code"
+  "locales": {
+    "en": "Switch language to English",
+    "es": "Switch language to Spanish"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Let's stay in touch!",
+    "description": "Building exceptional digital experiences, let's talk about your project!",
+    "email": "Send me an Email"
   },
   "seo": {
     "keywords": "Full-Stack Developer, Web Development, Front-End Development, Back-End Development, JavaScript, HTML, CSS, React, Node.js, Express, MongoDB, Portfolio, Software Engineer, Web Design, Responsive Design, UI/UX, API Development, Agile Methodologies, Version Control, Git",

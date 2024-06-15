@@ -1,106 +1,58 @@
 ---
-import ButtonLink from "@/components/ButtonLink.astro"
+import Chip from "@/components/Chip.astro"
+import FigureContainer from "@/components/FigureContainer.astro"
+import Ping from "@/components/Ping.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
+import SocialLink from "@/components/SocialLink.astro"
 import { getLocaleByUrl, useTranslations } from "@/i18n"
+import GitHubIcon from "@/icons/GitHub.astro"
+import LinkedInIcon from "@/icons/LinkedIn.astro"
 
 const locale = getLocaleByUrl(Astro.url)
 const t = useTranslations(locale)
 
-const buttonLinks = [
+interface Props {
+	class?: string
+}
+
+const { class: className } = Astro.props
+
+const socialLinks = [
 	{
-		emoji: "📩",
-		label: t("hero.contact"),
-		href: "mailto:dmunozneyra@gmail.com",
+		icon: GitHubIcon,
+		label: "GitHub",
+		href: "https://github.com/Rakioth",
 	},
 	{
-		emoji: "👔",
+		icon: LinkedInIcon,
 		label: "LinkedIn",
 		href: "https://linkedin.com/in/dmunozneyra",
-	},
-	{
-		emoji: "📚",
-		label: t("hero.cv"),
-		href: `https://cv.raks.dev/${locale}`,
 	},
 ]
 ---
 
-<SectionContainer class="flex flex-col gap-y-5 text-gray-800 dark:text-white md:gap-y-6">
-	<h1
-		class="text-4xl font-medium md:text-5xl [&>span]:text-primary-700 [&>span]:dark:text-primary-400"
-	>
-		{t("hero.title", "Daniel")}
-		<br />
-		{t("hero.statement")}
-		<span data-words={t("hero.skills")} id="typewriter" class="font-newsreader italic"></span><span
-			class="motion-safe:animate-[cursor_1s_infinite]"
-			>⎸
-		</span>
-	</h1>
+<SectionContainer class:list={[className]}>
+	<FigureContainer class="group [&>img]:bg-accent">
+		<img class="block group-hover:hidden" src="/me/open.webp" alt="Avatar Daniel Muñoz Neyra" />
+		<img class="hidden group-hover:block" src="/me/close.webp" alt="Avatar Daniel Muñoz Neyra" />
+	</FigureContainer>
 
-	<p class="text-balance">{t("description")}</p>
+	<h1 class="mt-2 text-2xl font-bold text-primary">Daniel Muñoz</h1>
+	<p class="text-pretty text-secondary">{t("description")}</p>
 
-	<ul class="flex gap-x-4">
-		{
-			buttonLinks.map((buttonLink) => (
-				<li>
-					<ButtonLink href={buttonLink.href} class="aspect-square sm:aspect-auto">
-						<span class="font-emoji">{buttonLink.emoji}</span>
-						<span class="hidden sm:inline-flex">{buttonLink.label}</span>
-					</ButtonLink>
-				</li>
-			))
-		}
-	</ul>
+	<footer class="mt-4 flex items-end justify-between gap-x-2">
+		<Chip class="font-semibold">
+			<Ping class="[&>div]:bg-lime-500 [&>div]:dark:bg-lime-400" />
+			{t("hero.state")}
+		</Chip>
+		<div class="flex items-center justify-center gap-x-5">
+			{
+				socialLinks.map((socialLink) => (
+					<SocialLink href={socialLink.href} label={socialLink.label}>
+						<socialLink.icon />
+					</SocialLink>
+				))
+			}
+		</div>
+	</footer>
 </SectionContainer>
-
-<style>
-	@keyframes cursor {
-		0%,
-		100% {
-			@apply opacity-0;
-		}
-		50% {
-			@apply opacity-100;
-		}
-	}
-</style>
-
-<script>
-	import { $ } from "@/lib/dom-selector"
-
-	document.addEventListener("astro:page-load", () => {
-		const typewriter = $("#typewriter")
-		const words = typewriter.dataset.words?.split(";") || []
-
-		let isTyping = true
-
-		function sleep(ms: number = 100) {
-			return new Promise((resolve) => setTimeout(resolve, ms))
-		}
-
-		async function typingLoop(index: number = 0) {
-			if (!isTyping) return
-
-			const word = words[index]
-
-			for (let i = 0; i < word.length; i++) {
-				typewriter.innerText = word.substring(0, i + 1)
-				await sleep()
-			}
-
-			await sleep(1500)
-
-			for (let i = word.length; i > 0; i--) {
-				typewriter.innerText = word.substring(0, i - 1)
-				await sleep()
-			}
-
-			await sleep(500)
-			typingLoop((index + 1) % words.length)
-		}
-
-		document.addEventListener("astro:before-swap", () => (isTyping = false))
-		typingLoop()
-	})
-</script>
