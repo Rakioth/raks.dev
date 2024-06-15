@@ -5,11 +5,6 @@ export default defineConfig({
 	site: "https://raks.dev",
 	integrations: [tailwind()],
 	compressHTML: true,
-	vite: {
-		build: {
-			cssMinify: "lightningcss",
-		},
-	},
 	build: {
 		inlineStylesheets: "always",
 	},
