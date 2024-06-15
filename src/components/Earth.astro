@@ -21,12 +21,12 @@ interface Location {
 const locations: Record<Locale, Location> = {
 	en: {
 		label: t("locales.en"),
-		lat: 40.622,
-		lon: -202.606,
+		lat: 34.122,
+		lon: -192.606,
 	},
 	es: {
 		label: t("locales.es"),
-		lat: 16.227,
+		lat: 10,
 		lon: -125.649,
 	},
 }
@@ -41,7 +41,7 @@ const locations: Record<Locale, Location> = {
 				title={location.label}
 				data-lat={location.lat}
 				data-lon={location.lon}
-				class="location absolute left-0 top-0"
+				class="location absolute left-0 top-0 flex size-7 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
 			>
 				<Ping class="[&>div]:bg-red-600" />
 			</a>
@@ -112,7 +112,7 @@ const locations: Record<Locale, Location> = {
 		}
 		const mesh = new THREE.Mesh(geometry, material)
 		mesh.scale.setScalar(0.99)
-		mesh.rotation.z = (23.5 / 360) * 2 * Math.PI
+		mesh.rotation.z = (30 / 360) * 2 * Math.PI
 		mesh.rotation.y = 1
 		group.add(mesh)
 	}
