@@ -1,0 +1,39 @@
+---
+import Chip from "@/components/Chip.astro"
+import ArrowIcon from "@/icons/Arrow.astro"
+
+interface Props {
+  name: string
+  description: string
+  tags: string[]
+  link: string
+}
+
+const { name, description, tags, link } = Astro.props
+---
+
+<article class="flex flex-col gap-y-2">
+  <a
+    href={link}
+    rel="noopener noreferrer"
+    target="_blank"
+    class="group inline-flex items-center gap-x-1.5 text-sm font-medium text-primary decoration-primary/50 decoration-dotted underline-offset-[0.3125rem] hover:underline focus-visible:outline-none"
+  >
+    {name}
+    <ArrowIcon
+      class="size-3 opacity-50 group-hover:translate-x-[0.09375rem] group-hover:opacity-100 group-focus-visible:translate-x-[0.09375rem] group-focus-visible:opacity-100 motion-safe:duration-200"
+    />
+  </a>
+
+  <p class="truncate text-sm text-secondary">{description}</p>
+
+  <ul class="flex flex-wrap gap-2">
+    {
+      tags.map((tag) => (
+        <Chip as="li" class="font-mono font-medium">
+          {tag}
+        </Chip>
+      ))
+    }
+  </ul>
+</article>

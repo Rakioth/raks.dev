@@ -1,0 +1,63 @@
+{
+  "title": "Daniel's Portfolio | {0}",
+  "subtitle": "Full-Stack Developer",
+  "description": "Developer focused on the creation and design of products, with the goal of improving the user experience by providing solutions to everyday problems.",
+  "go-back": "Go back home",
+  "hero": {
+    "state": "Available for new projects",
+    "social": "Find me on {0}"
+  },
+  "experience": {
+    "title": "Work Experience",
+    "current": "Current",
+    "logo": "{0} company logo",
+    "cv": "Read CV",
+    "0": {
+      "company": "Tragsatec",
+      "position": "Full-Stack Developer"
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "0": {
+      "name": "Swiftly",
+      "description": "🛒 A modern online shop.",
+      "link": "https://github.com/Rakioth/ProgrammingCourse/tree/main/Exams/E6-KnowledgeIntegration/README.md"
+    },
+    "1": {
+      "name": "PV Creator",
+      "description": "🪅 Custom barcode creator app.",
+      "link": "https://play.google.com/store/apps/details?id=com.raks.pvcreator&hl=en"
+    },
+    "2": {
+      "name": "URL Shortener",
+      "description": "🔗 Personal low-latency shortener.",
+      "link": "https://link.raks.dev"
+    },
+    "3": {
+      "name": "Dotfiles",
+      "description": "🌚 Modular and customizable tool.",
+      "link": "https://github.com/Rakioth/Dotfiles/blob/main/README.md"
+    }
+  },
+  "themes": {
+    "default": "Toggle theme",
+    "dark": "Activate dark mode",
+    "light": "Activate light mode"
+  },
+  "locales": {
+    "en": "Switch language to English",
+    "es": "Switch language to Spanish"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Let's stay in touch!",
+    "description": "Building exceptional digital experiences, let's talk about your project!",
+    "email": "Send me an Email"
+  },
+  "seo": {
+    "keywords": "Full-Stack Developer, Web Development, Front-End Development, Back-End Development, JavaScript, HTML, CSS, React, Node.js, Express, MongoDB, Portfolio, Software Engineer, Web Design, Responsive Design, UI/UX, API Development, Agile Methodologies, Version Control, Git",
+    "site-name": "Daniel's Portfolio",
+    "image-alt": "Background from the website raks.dev"
+  }
+}

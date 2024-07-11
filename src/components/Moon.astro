@@ -1,0 +1,81 @@
+---
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<canvas id="moon" class:list={[className]}></canvas>
+
+<script>
+  import * as THREE from "three"
+
+  import type { Theme } from "@/consts/theme"
+  import {
+    loadTextures,
+    renderingManager,
+    setupRenderer,
+  } from "@/webgl/renderer"
+  import { FresnelMaterial } from "@/webgl/utils"
+
+  const canvas = document.getElementById("moon") as HTMLCanvasElement
+
+  const { scene, camera, renderer, group, geometry } = setupRenderer(canvas)
+
+  const [map, normalMap] = await loadTextures([
+    "/texture/moon/color.webp",
+    "/texture/moon/normal.webp",
+  ])
+
+  function addDirectionalLight() {
+    const light = new THREE.DirectionalLight(0xffffff, 3)
+    light.position.set(2, 2.5, 1.5)
+    scene.add(light)
+  }
+
+  function addMoonMesh() {
+    const material = new THREE.MeshStandardMaterial({
+      map,
+      normalMap,
+    })
+    const mesh = new THREE.Mesh(geometry, material)
+    group.add(mesh)
+  }
+
+  function addFresnelEffect() {
+    const material = FresnelMaterial({
+      fresnelColor: 0xffffff,
+      baseColor: 0x9a9999,
+    })
+    const mesh = new THREE.Mesh(geometry, material)
+    mesh.scale.setScalar(1.01)
+    group.add(mesh)
+  }
+
+  addDirectionalLight()
+  addMoonMesh()
+  addFresnelEffect()
+
+  function animation() {
+    group.rotation.y += 0.0002
+  }
+
+  const {
+    startRendering,
+    stopRendering,
+    initRendering,
+    reducedMotionPreference,
+  } = renderingManager(scene, camera, renderer, animation)
+
+  function handleThemeToggled(theme: Theme) {
+    if (theme === "light" || !reducedMotionPreference.matches) stopRendering()
+    else startRendering()
+  }
+
+  initRendering()
+  handleThemeToggled(window.getThemePreference())
+  document.addEventListener("themetoggled", (event) =>
+    handleThemeToggled(event.detail.theme)
+  )
+</script>

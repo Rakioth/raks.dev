@@ -1,0 +1,63 @@
+{
+  "title": "Porfolio de Daniel | {0}",
+  "subtitle": "Desarrollador Full-Stack",
+  "description": "Desarrollador enfocado en la creación y diseño de productos, con el objetivo de mejorar la experiencia del usuario dándole soluciones a problemas cotidianos.",
+  "go-back": "Volver al inicio",
+  "hero": {
+    "state": "Disponible para proyectos",
+    "social": "Encuéntrame en {0}"
+  },
+  "experience": {
+    "title": "Experiencia Laboral",
+    "current": "Actual",
+    "logo": "Logo de la empresa {0}",
+    "cv": "Leer CV",
+    "0": {
+      "company": "Tragsatec",
+      "position": "Desarrollador Full-Stack"
+    }
+  },
+  "projects": {
+    "title": "Proyectos",
+    "0": {
+      "name": "Swiftly",
+      "description": "🛒 Una tienda online moderna.",
+      "link": "https://github.com/Rakioth/ProgrammingCourse/tree/main/Exams/E6-KnowledgeIntegration/README_ES.md"
+    },
+    "1": {
+      "name": "PV Creator",
+      "description": "🪅 Creador de código de barras personalizado.",
+      "link": "https://play.google.com/store/apps/details?id=com.raks.pvcreator&hl=es"
+    },
+    "2": {
+      "name": "Acortador de URLs",
+      "description": "🔗 Acortador personal de baja latencia.",
+      "link": "https://link.raks.dev"
+    },
+    "3": {
+      "name": "Dotfiles",
+      "description": "🌚 Herramienta modular y personalizable.",
+      "link": "https://github.com/Rakioth/Dotfiles/blob/main/README_ES.md"
+    }
+  },
+  "themes": {
+    "default": "Alternar tema",
+    "dark": "Activar modo oscuro",
+    "light": "Activar modo claro"
+  },
+  "locales": {
+    "en": "Cambiar idioma a inglés",
+    "es": "Cambiar idioma a español"
+  },
+  "contact": {
+    "title": "Contactar",
+    "subtitle": "Sigamos en contacto!",
+    "description": "Construyendo experiencias digitales excepcionales. ¡Hablemos de tu proyecto!",
+    "email": "Envíame un Email"
+  },
+  "seo": {
+    "keywords": "Desarrollador Full-Stack, Desarrollo Web, Desarrollo Front-End, Desarrollo Back-End, JavaScript, HTML, CSS, React, Node.js, Express, MongoDB, Portafolio, Ingeniero de Software, Diseño Web, Diseño Responsivo, UI/UX, Desarrollo de API, Metodologías Ágiles, Control de Versiones, Git",
+    "site-name": "Porfolio de Daniel",
+    "image-alt": "Fondo del sitio web raks.dev"
+  }
+}

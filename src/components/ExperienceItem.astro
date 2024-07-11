@@ -1,0 +1,52 @@
+---
+import Chip from "@/components/Chip.astro"
+import FigureContainer from "@/components/FigureContainer.astro"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+const options: Intl.DateTimeFormatOptions = { month: "short", year: "numeric" }
+
+interface Props {
+  company: string
+  position: string
+  image: string
+  background: string
+  startDate: string
+  endDate?: string
+}
+
+const { company, position, image, background, startDate, endDate } = Astro.props
+
+const startYear = new Date(startDate)
+  .toLocaleString(locale, options)
+  .replace(/^\w/, (c) => c.toUpperCase())
+const endYear = endDate
+  ? new Date(endDate)
+      .toLocaleString(locale, options)
+      .replace(/^\w/, (c) => c.toUpperCase())
+  : t("experience.current")
+---
+
+<article class="flex items-center gap-x-4">
+  <FigureContainer>
+    <img
+      class:list={[background]}
+      src={image}
+      alt={t("experience.logo", company)}
+    />
+  </FigureContainer>
+
+  <main class="flex flex-1 flex-col justify-between sm:flex-row">
+    <div>
+      <h3 class="text-primary">{company}</h3>
+      <h4 class="text-sm text-secondary">{position}</h4>
+    </div>
+
+    <Chip class="mt-2 size-fit font-mono font-medium sm:mx-2 sm:mt-0">
+      <time datetime={startDate}>{startYear}</time>
+      —
+      <time datetime={endDate}>{endYear}</time>
+    </Chip>
+  </main>
+</article>

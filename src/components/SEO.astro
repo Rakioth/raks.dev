@@ -1,0 +1,183 @@
+---
+import onest from "@fontsource-variable/onest/files/onest-latin-wght-normal.woff2"
+
+import { THEME_COLOR } from "@/consts/theme"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+interface Props {
+  title: string
+  description: string
+  image?: string
+}
+
+const { title, description, image = "/og.jpg" } = Astro.props
+---
+
+<title>{title}</title>
+
+<meta charset="UTF-8" />
+<meta name="description" content={description} />
+
+<link rel="preload" href={onest} as="font" type="font/woff2" crossorigin />
+
+<meta name="viewport" content="width=device-width" />
+<meta name="theme-color" content={THEME_COLOR.light} />
+<meta name="apple-mobile-web-app-status-bar" content={THEME_COLOR.light} />
+<meta name="keywords" content={t("seo.keywords")} />
+
+<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:image:alt" content={t("seo.image-alt")} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:site_name" content={t("seo.site-name")} />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:locale:alternate" content="es_ES" />
+
+<meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:domain" content={Astro.url.hostname} />
+
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+<meta name="googlebot" content="notranslate" />
+
+<link rel="alternate" href={Astro.url} hreflang="x-default" />
+<link rel="alternate" href={new URL("/en", Astro.url)} hreflang="en" />
+<link rel="alternate" href={new URL("/es", Astro.url)} hreflang="es" />
+
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+<link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+
+<link rel="manifest" href=`/${locale}/light.webmanifest` />
+<meta name="msapplication-config" content="/browserconfig.xml" />
+
+<script is:inline define:vars={{ THEME_COLOR }}>
+  window.getThemePreference = () => {
+    const localItem =
+      typeof localStorage !== "undefined" && localStorage.getItem("theme")
+    if (localItem) return localItem
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light"
+  }
+
+  window.updateSeoState = (theme) => {
+    const manifest = document.querySelector("link[rel=manifest]")
+    const themeColor = document.querySelector("meta[name=theme-color]")
+    const statusColor = document.querySelector(
+      "meta[name=apple-mobile-web-app-status-bar]"
+    )
+    const color = theme === "dark" ? THEME_COLOR.dark : THEME_COLOR.light
+
+    manifest.href = manifest.getAttribute("href").replace(/dark|light/, theme)
+    themeColor.content = color
+    statusColor.content = color
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    const theme = window.getThemePreference()
+
+    document.documentElement.classList.toggle("dark", theme === "dark")
+    window.updateSeoState(theme)
+  })
+</script>
+
+<script is:inline define:vars={{ originalTitle: title }}>
+  let countTitleRun = 0
+  let intervalTitleRun = 0
+  let weatherEmoji = null
+
+  async function getWeatherEmoji() {
+    const weatherCode = await fetch(
+      "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&daily=weather_code&timezone=auto&forecast_days=1"
+    )
+      .then((res) => res.json())
+      .then((data) => data.daily.weather_code[0])
+      .catch(() => -1)
+
+    switch (true) {
+      case weatherCode === 0:
+        return "☀️"
+      case weatherCode === 1:
+        return "🌤️"
+      case weatherCode === 2:
+        return "⛅"
+      case weatherCode === 3:
+        return "☁️"
+      case weatherCode >= 45 && weatherCode <= 48:
+        return "🌫️"
+      case (weatherCode >= 51 && weatherCode <= 55) ||
+        (weatherCode >= 61 && weatherCode <= 65) ||
+        (weatherCode >= 80 && weatherCode <= 82):
+        return "🌧️"
+      case (weatherCode >= 56 && weatherCode <= 57) ||
+        (weatherCode >= 66 && weatherCode <= 67):
+        return "🌨️"
+      case (weatherCode >= 71 && weatherCode <= 77) ||
+        (weatherCode >= 85 && weatherCode <= 86):
+        return "❄️"
+      case weatherCode >= 95 && weatherCode <= 96:
+        return "🌩️"
+      case weatherCode === 99:
+        return "⛈️"
+      default:
+        return "❓"
+    }
+  }
+
+  async function titleRun() {
+    if (!weatherEmoji) weatherEmoji = await getWeatherEmoji()
+
+    const title = Array.from(originalTitle).reduce(
+      (accumulator, currentValue) => {
+        const previousValue = accumulator[accumulator.length - 1]
+        if (
+          previousValue &&
+          (previousValue.length === 2 ||
+            (previousValue.codePointAt(0) >= 55296 &&
+              previousValue.codePointAt(0) <= 56319))
+        ) {
+          accumulator[accumulator.length - 1] = previousValue + currentValue
+        } else {
+          accumulator.push(currentValue)
+        }
+        return accumulator
+      },
+      []
+    )
+
+    const emojiIndex = title.indexOf(weatherEmoji)
+    if (emojiIndex >= 0) title.splice(emojiIndex, 1)
+
+    title.splice(countTitleRun, 0, weatherEmoji)
+    document.title = title.join("")
+    countTitleRun = (countTitleRun + 1) % title.length
+  }
+
+  function handleBlur() {
+    intervalTitleRun = setInterval(titleRun, 500)
+  }
+
+  function handleFocus() {
+    if (intervalTitleRun) clearInterval(intervalTitleRun)
+    document.title = originalTitle
+  }
+
+  document.addEventListener("astro:before-swap", () => {
+    window.removeEventListener("blur", handleBlur)
+    window.removeEventListener("focus", handleFocus)
+  })
+
+  window.addEventListener("blur", handleBlur)
+  window.addEventListener("focus", handleFocus)
+</script>

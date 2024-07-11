@@ -1,0 +1,31 @@
+---
+import ButtonLink from "@/components/ButtonLink.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+import MessageIcon from "@/icons/Message.astro"
+import SendIcon from "@/icons/Send.astro"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<SectionContainer
+  title={t("contact.title")}
+  class:list={[className, "group flex flex-col"]}
+>
+  <MessageIcon slot="icon" />
+  <h3 class="mb-1 mt-1.5 text-lg font-bold text-primary">
+    {t("contact.subtitle")}
+  </h3>
+  <p class="mb-auto text-pretty text-secondary">{t("contact.description")}</p>
+  <ButtonLink href="mailto:dmunozneyra@gmail.com" class="mt-4">
+    <SendIcon />
+    {t("contact.email")}
+  </ButtonLink>
+</SectionContainer>

@@ -1,0 +1,91 @@
+---
+import { TRANSLATIONS, getLocaleByUrl, useTranslations } from "@/i18n"
+import Layout from "@/layouts/Layout.astro"
+import Contact from "@/sections/Contact.astro"
+import Experience from "@/sections/Experience.astro"
+import Hero from "@/sections/Hero.astro"
+import Locales from "@/sections/Locales.astro"
+import Projects from "@/sections/Projects.astro"
+import Themes from "@/sections/Themes.astro"
+
+export function getStaticPaths() {
+  return Object.keys(TRANSLATIONS).map((locale) => ({ params: { locale } }))
+}
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+---
+
+<Layout
+  lang={locale}
+  title={t("title", t("subtitle"))}
+  description={t("description")}
+>
+  <main
+    class="mx-auto my-24 grid max-w-[33rem] auto-cols-fr grid-cols-1 gap-4 md:grid-cols-2 lg:max-w-[50rem] lg:grid-cols-3 [&>section]:motion-safe:animate-[slide-in_0.3s_ease-in-out_backwards,fade-in_0.3s_ease-in-out_backwards]"
+  >
+    <Hero class="![animation-delay:0.2s] md:col-span-2" />
+    <Projects class="![animation-delay:0.6s] md:row-span-2" />
+    <Themes class="![animation-delay:1.0s]" />
+    <Locales class="![animation-delay:1.2s]" />
+    <Experience class="[animation-delay:0.4s] md:col-span-2" />
+    <Contact
+      class="col-span-1 ![animation-delay:0.8s] md:col-span-2 lg:col-span-1"
+    />
+  </main>
+</Layout>
+
+<style>
+  @keyframes slide-in {
+    0%,
+    50% {
+      transform: translateY(0.625rem);
+    }
+
+    80% {
+      transform: translateY(-0.3125rem);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const articles = document.querySelectorAll("section article")
+
+    const callback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle("blur-[0.125rem]", !entry.isIntersecting)
+        entry.target.classList.toggle("opacity-30", !entry.isIntersecting)
+      })
+    }
+
+    const observer = new IntersectionObserver(callback, {
+      threshold: 0.7,
+    })
+
+    function handleVisibilityChange() {
+      if (document.hidden) observer.disconnect()
+      else articles.forEach((article) => observer.observe(article))
+    }
+
+    articles.forEach((article) => {
+      article.classList.add("motion-safe:transition-[filter,opacity]")
+      observer.observe(article)
+    })
+    document.addEventListener("visibilitychange", handleVisibilityChange)
+  })
+</script>

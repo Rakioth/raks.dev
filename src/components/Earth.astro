@@ -1,0 +1,240 @@
+---
+import Ping from "@/components/Ping.astro"
+import type { Locale } from "@/i18n"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+
+interface Location {
+  label: string
+  lat: number
+  lon: number
+}
+
+const locations: Record<Locale, Location> = {
+  en: {
+    label: t("locales.en"),
+    lat: 34.122,
+    lon: -192.606,
+  },
+  es: {
+    label: t("locales.es"),
+    lat: 10,
+    lon: -125.649,
+  },
+}
+---
+
+<div class="relative">
+  {
+    Object.entries(locations).map(([locale, location]) => (
+      <a
+        href={`/${locale}`}
+        aria-label={location.label}
+        title={location.label}
+        data-lat={location.lat}
+        data-lon={location.lon}
+        class="location absolute left-0 top-0 flex size-7 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+      >
+        <Ping class="[&>div]:bg-red-600" />
+      </a>
+    ))
+  }
+  <canvas transition:persist id="earth" class:list={[className]}></canvas>
+</div>
+
+<script>
+  import * as THREE from "three"
+
+  import {
+    loadTextures,
+    renderingManager,
+    setupOrbitControls,
+    setupRenderer,
+  } from "@/webgl/renderer"
+  import { FresnelMaterial } from "@/webgl/utils"
+
+  const canvas = document.getElementById("earth") as HTMLCanvasElement
+
+  const { scene, camera, renderer, group, geometry } = setupRenderer(canvas)
+
+  const controls = setupOrbitControls(camera, renderer.domElement)
+
+  const [map, bumpMap, oceanMap, emissiveMap, alphaMap] = await loadTextures([
+    "/texture/earth/color.webp",
+    "/texture/earth/bump.webp",
+    "/texture/earth/ocean.webp",
+    "/texture/earth/emissive.webp",
+    "/texture/earth/clouds.webp",
+  ])
+
+  function addDirectionalLight() {
+    const light = new THREE.DirectionalLight(0xffffff, 3)
+    light.position.set(2, 2.5, -0.5)
+    scene.add(camera)
+    camera.add(light)
+  }
+
+  function addEarthMesh() {
+    const material = new THREE.MeshStandardMaterial({
+      map,
+      bumpMap,
+      bumpScale: 0.03,
+      roughnessMap: oceanMap,
+      metalness: 0.1,
+      metalnessMap: oceanMap,
+      emissiveMap,
+      emissive: 0xffff88,
+    })
+    material.onBeforeCompile = (shader) => {
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <roughnessmap_fragment>",
+        `
+        float roughnessFactor = roughness;
+
+        #ifdef USE_ROUGHNESSMAP
+
+          vec4 texelRoughness = texture2D( roughnessMap, vRoughnessMapUv );
+          texelRoughness = vec4(1.0) - texelRoughness;
+
+          roughnessFactor *= clamp(texelRoughness.g, 0.5, 1.0);
+
+        #endif
+      `
+      )
+    }
+    const mesh = new THREE.Mesh(geometry, material)
+    mesh.scale.setScalar(0.99)
+    mesh.rotation.z = (30 / 360) * 2 * Math.PI
+    mesh.rotation.y = 1
+    group.add(mesh)
+  }
+
+  function addClouds() {
+    const material = new THREE.MeshStandardMaterial({
+      alphaMap,
+      blending: THREE.AdditiveBlending,
+    })
+    const mesh = new THREE.Mesh(geometry, material)
+    group.add(mesh)
+    return mesh
+  }
+
+  function addFresnelEffect() {
+    const material = FresnelMaterial({
+      fresnelColor: 0x0088ff,
+      baseColor: 0x6d69c6,
+    })
+    const mesh = new THREE.Mesh(geometry, material)
+    mesh.scale.setScalar(1.01)
+    group.add(mesh)
+  }
+
+  let locationsInfo = getLocationsInfo()
+
+  function getLocationsInfo() {
+    const locations = document.querySelectorAll(
+      ".location"
+    ) as NodeListOf<HTMLElement>
+
+    const lonFudge = Math.PI * 1.5
+    const latFudge = Math.PI
+
+    const lonHelper = new THREE.Object3D()
+    const latHelper = new THREE.Object3D()
+
+    lonHelper.add(latHelper)
+    const positionHelper = new THREE.Object3D()
+    positionHelper.position.z = 1
+    latHelper.add(positionHelper)
+
+    return Array.from(locations).map((location) => {
+      const lat = Number.parseFloat(location.dataset.lat!)
+      const lon = Number.parseFloat(location.dataset.lon!)
+
+      lonHelper.rotation.y = THREE.MathUtils.degToRad(lon) + lonFudge
+      latHelper.rotation.x = THREE.MathUtils.degToRad(lat) + latFudge
+
+      positionHelper.updateWorldMatrix(true, false)
+      const position = new THREE.Vector3()
+      positionHelper.getWorldPosition(position)
+
+      return {
+        position,
+        element: location,
+      }
+    })
+  }
+
+  const tempV = new THREE.Vector3()
+  const cameraToPoint = new THREE.Vector3()
+  const cameraPosition = new THREE.Vector3()
+  const normalMatrix = new THREE.Matrix3()
+
+  function updateLocations() {
+    normalMatrix.getNormalMatrix(camera.matrixWorldInverse)
+    camera.getWorldPosition(cameraPosition)
+
+    for (const locationInfo of locationsInfo) {
+      const { position, element } = locationInfo
+
+      tempV.copy(position)
+      tempV.applyMatrix3(normalMatrix)
+
+      cameraToPoint.copy(position)
+      cameraToPoint.applyMatrix4(camera.matrixWorldInverse).normalize()
+
+      const dot = tempV.dot(cameraToPoint)
+
+      if (dot > -0.2) {
+        element.classList.add("hidden")
+        continue
+      }
+
+      element.classList.remove("hidden")
+
+      tempV.copy(position)
+      tempV.project(camera)
+
+      const x = (tempV.x * 0.5 + 0.5) * renderer.domElement.clientWidth
+      const y = (tempV.y * -0.5 + 0.5) * renderer.domElement.clientHeight
+
+      element.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px)`
+    }
+  }
+
+  addDirectionalLight()
+  addEarthMesh()
+  addFresnelEffect()
+  const clouds = addClouds()
+
+  const controlsRender = () => {
+    requestAnimationFrame(controlsRender)
+    controls.update()
+    controls.autoRotateSpeed = 0
+    updateLocations()
+    renderer.render(scene, camera)
+  }
+
+  requestAnimationFrame(controlsRender)
+
+  function animation() {
+    clouds.rotation.y += 0.001
+    controls.autoRotateSpeed = 0.3
+  }
+
+  const { initRendering } = renderingManager(scene, camera, renderer, animation)
+  initRendering()
+
+  document.addEventListener(
+    "astro:page-load",
+    () => (locationsInfo = getLocationsInfo())
+  )
+</script>

@@ -1,0 +1,25 @@
+---
+interface Props {
+  title?: string
+  class?: string
+}
+
+const { title, class: className } = Astro.props
+---
+
+<section
+  class:list={[
+    className,
+    "box-blur min-h-64 rounded-2xl p-4 shadow hover:shadow-lg motion-safe:transition-shadow",
+  ]}
+>
+  {
+    title && (
+      <h2 class="box-blur mb-4 line-clamp-2 inline-flex h-8 w-fit items-center gap-x-1.5 rounded-2xl px-4 text-sm leading-5 text-primary [&>svg]:size-4">
+        <slot name="icon" />
+        {title}
+      </h2>
+    )
+  }
+  <slot />
+</section>

@@ -1,0 +1,41 @@
+---
+import ButtonLink from "@/components/ButtonLink.astro"
+import ExperienceItem from "@/components/ExperienceItem.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+import BriefcaseIcon from "@/icons/Briefcase.astro"
+import ScrollIcon from "@/icons/Scroll.astro"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+
+const experiences = [
+  {
+    company: t("experience.0.company"),
+    position: t("experience.0.position"),
+    image: "/company/tragsatec.webp",
+    background: "bg-white",
+    startDate: "2023-09-18",
+  },
+]
+---
+
+<SectionContainer
+  title={t("experience.title")}
+  class:list={[className, "group"]}
+>
+  <BriefcaseIcon slot="icon" />
+  <main class="flex h-[7.8rem] flex-col gap-y-[2.45rem] overflow-y-auto">
+    {experiences.map((experience) => <ExperienceItem {...experience} />)}
+  </main>
+  <ButtonLink href=`https://cv.raks.dev/${locale}` class="mt-4 w-full">
+    <ScrollIcon />
+    {t("experience.cv")}
+  </ButtonLink>
+</SectionContainer>

@@ -1,0 +1,21 @@
+---
+interface Props {
+  href: string
+  isExternal?: boolean
+  class?: string
+}
+
+const { href, isExternal = true, class: className } = Astro.props
+---
+
+<a
+  href={href}
+  rel={isExternal ? "noopener noreferrer" : undefined}
+  target={isExternal ? "_blank" : "_self"}
+  class:list={[
+    className,
+    "box-blur inline-flex items-center justify-center gap-x-2 rounded-md p-1.5 text-sm text-primary hover:bg-white motion-safe:transition-colors hover:dark:bg-neutral-900/90 [&>svg]:size-4 [&>svg]:text-zinc-600 [&>svg]:focus-visible:text-zinc-900 [&>svg]:group-hover:text-zinc-900 [&>svg]:motion-safe:transition-colors [&>svg]:dark:text-zinc-400 [&>svg]:focus-visible:dark:text-zinc-100 [&>svg]:group-hover:dark:text-zinc-100",
+  ]}
+>
+  <slot />
+</a>

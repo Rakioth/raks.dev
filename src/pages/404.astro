@@ -1,0 +1,26 @@
+---
+import ButtonLink from "@/components/ButtonLink.astro"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+import BackIcon from "@/icons/Back.astro"
+import Layout from "@/layouts/Layout.astro"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+---
+
+<Layout
+  lang={locale}
+  title={t("title", "Error 404")}
+  description={t("description")}
+>
+  <main
+    class="group m-auto flex flex-col items-center justify-center gap-y-4 text-primary"
+  >
+    <h3 class="text-4xl font-bold uppercase sm:text-5xl">Error</h3>
+    <h1 class="text-8xl sm:text-9xl">404</h1>
+    <ButtonLink href=`/${locale}` isExternal={false}>
+      <BackIcon />
+      {t("go-back")}
+    </ButtonLink>
+  </main>
+</Layout>

@@ -1,0 +1,16 @@
+---
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<figure
+  class:list={[
+    className,
+    "box-blur size-16 rounded-full p-0.5 [&>img]:rounded-[inherit]",
+  ]}
+>
+  <slot />
+</figure>

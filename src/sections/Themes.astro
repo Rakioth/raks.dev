@@ -1,0 +1,120 @@
+---
+import Moon from "@/components/Moon.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import Sun from "@/components/Sun.astro"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+
+const darkModeLabel = t("themes.dark")
+const lightModeLabel = t("themes.light")
+---
+
+<SectionContainer class:list={[className, "flex items-center justify-center"]}>
+  <button
+    transition:persist
+    id="theme-toggle"
+    type="button"
+    title={t("themes.default")}
+    aria-label={t("themes.default")}
+    class="flex aspect-square h-full items-center justify-center overflow-hidden rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+  >
+    <Sun class="block dark:hidden" />
+    <Moon class="hidden dark:block" />
+  </button>
+</SectionContainer>
+
+<script
+  is:inline
+  define:vars={{ darkModeLabel, lightModeLabel }}
+  data-astro-rerun
+>
+  const themeToggle = document.getElementById("theme-toggle")
+  const colorSchemePreference = window.matchMedia(
+    "(prefers-color-scheme: dark)"
+  )
+  const reducedMotionPreference = window.matchMedia(
+    "(prefers-reduced-motion: no-preference)"
+  )
+
+  function updateThemeState(theme) {
+    const label = theme ? lightModeLabel : darkModeLabel
+    themeToggle.title = label
+    themeToggle.ariaLabel = label
+    window.updateSeoState(theme ? "dark" : "light")
+  }
+
+  function handleToggleClick() {
+    const element = document.documentElement
+    element.classList.toggle("dark")
+
+    const isDark = element.classList.contains("dark")
+    const theme = isDark ? "dark" : "light"
+    localStorage.setItem("theme", theme)
+
+    const themeToggledEvent = new CustomEvent("themetoggled", {
+      detail: { theme },
+    })
+    updateThemeState(isDark)
+    document.dispatchEvent(themeToggledEvent)
+    themeToggle.disabled = false
+  }
+
+  function handleToggleTransition() {
+    themeToggle.disabled = true
+
+    if (!document.startViewTransition || !reducedMotionPreference.matches) {
+      handleToggleClick()
+      return
+    }
+
+    const transition = document.startViewTransition(() => handleToggleClick())
+
+    document.documentElement.classList.add("theme-transition")
+
+    transition.ready.then(() =>
+      document.documentElement.animate(
+        {
+          clipPath: ["inset(0 0 0 100%)", "inset(0 0 0 0)"],
+        },
+        {
+          duration: 1000,
+          easing: "ease-in-out",
+          pseudoElement: "::view-transition-new(root)",
+        }
+      )
+    )
+
+    transition.finished.then(() =>
+      document.documentElement.classList.remove("theme-transition")
+    )
+  }
+
+  function handleColorSchemePreferenceChange(event) {
+    const isDark = document.documentElement.classList.contains("dark")
+    const toggle = (event.matches && !isDark) || (!event.matches && isDark)
+    if (toggle) handleToggleTransition()
+  }
+
+  document.addEventListener("astro:before-swap", () => {
+    themeToggle.removeEventListener("click", handleToggleTransition)
+    colorSchemePreference.removeEventListener(
+      "change",
+      handleColorSchemePreferenceChange
+    )
+  })
+
+  updateThemeState(window.getThemePreference() === "dark")
+  themeToggle.addEventListener("click", handleToggleTransition)
+  colorSchemePreference.addEventListener(
+    "change",
+    handleColorSchemePreferenceChange
+  )
+</script>

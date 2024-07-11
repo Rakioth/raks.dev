@@ -1,0 +1,36 @@
+---
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+import ArrowIcon from "@/icons/Arrow.astro"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+interface Props {
+  href: string
+  label: string
+  isExternal?: boolean
+  class?: string
+}
+
+const { href, label, isExternal = true, class: className } = Astro.props
+---
+
+<a
+  href={href}
+  rel={isExternal ? "noopener noreferrer" : undefined}
+  target={isExternal ? "_blank" : "_self"}
+  aria-label={t("hero.social", label)}
+  class:list={[
+    className,
+    "group relative text-primary focus-visible:outline-none",
+  ]}
+>
+  <ArrowIcon
+    class="absolute size-4 translate-y-5 opacity-0 group-hover:translate-x-1 group-hover:translate-y-1 group-hover:opacity-100 group-focus-visible:translate-x-1 group-focus-visible:translate-y-1 group-focus-visible:opacity-100 motion-safe:transition-[opacity,transform]"
+  />
+  <span
+    class="[&>svg]:size-6 [&>svg]:stroke-[0.09375rem] group-hover:[&>svg]:opacity-20 group-hover:[&>svg]:blur-sm group-focus-visible:[&>svg]:opacity-20 group-focus-visible:[&>svg]:blur-sm [&>svg]:motion-safe:transition-[opacity,filter]"
+  >
+    <slot />
+  </span>
+</a>

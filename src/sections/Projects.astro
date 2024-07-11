@@ -1,0 +1,51 @@
+---
+import ProjectItem from "@/components/ProjectItem.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import { getLocaleByUrl, useTranslations } from "@/i18n"
+import SparklesIcon from "@/icons/Sparkles.astro"
+
+const locale = getLocaleByUrl(Astro.url)
+const t = useTranslations(locale)
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+
+const projects = [
+  {
+    name: t("projects.0.name"),
+    description: t("projects.0.description"),
+    tags: ["Spring Boot", "Vue.js"],
+    link: t("projects.0.link"),
+  },
+  {
+    name: t("projects.1.name"),
+    description: t("projects.1.description"),
+    tags: ["Android", "Kotlin"],
+    link: t("projects.1.link"),
+  },
+  {
+    name: t("projects.2.name"),
+    description: t("projects.2.description"),
+    tags: ["Astro", "Cloudflare Workers"],
+    link: t("projects.2.link"),
+  },
+  {
+    name: t("projects.3.name"),
+    description: t("projects.3.description"),
+    tags: ["PowerShell", "Bash"],
+    link: t("projects.3.link"),
+  },
+]
+---
+
+<SectionContainer title={t("projects.title")} class:list={[className]}>
+  <SparklesIcon slot="icon" />
+  <main
+    class="flex h-[10.8rem] flex-col gap-y-[2.45rem] overflow-y-auto md:h-[27.8rem]"
+  >
+    {projects.map((project) => <ProjectItem {...project} />)}
+  </main>
+</SectionContainer>

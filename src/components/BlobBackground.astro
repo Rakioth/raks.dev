@@ -1,0 +1,62 @@
+<div
+  transition:persist
+  id="blob"
+  class="pointer-events-none fixed left-1/2 top-1/2 -z-20 aspect-square w-[31.25rem] rounded-full bg-gradient-to-r from-[#f4119e] to-[#891798] opacity-80 motion-safe:animate-[rotate_20s_infinite]"
+>
+</div>
+<div class="pointer-events-none fixed inset-0 -z-10 backdrop-blur-[12.5rem]">
+</div>
+
+<style>
+  #blob {
+    translate: -50% -50%;
+  }
+
+  @keyframes rotate {
+    from {
+      rotate: 0deg;
+    }
+
+    50% {
+      scale: 1 1.5;
+    }
+
+    to {
+      rotate: 360deg;
+    }
+  }
+</style>
+
+<script>
+  const blob = document.getElementById("blob")
+  const reducedMotionPreference = window.matchMedia(
+    "(prefers-reduced-motion: no-preference)"
+  )
+
+  function handlePointerMove(event: PointerEvent) {
+    const { clientX, clientY } = event
+
+    blob?.animate(
+      {
+        left: `${clientX}px`,
+        top: `${clientY}px`,
+      },
+      {
+        duration: 3000,
+        fill: "forwards",
+      }
+    )
+  }
+
+  function handleReducedMotionPreferenceChange(event: MediaQueryListEvent) {
+    if (event.matches) window.addEventListener("pointermove", handlePointerMove)
+    else window.removeEventListener("pointermove", handlePointerMove)
+  }
+
+  reducedMotionPreference.addEventListener(
+    "change",
+    handleReducedMotionPreferenceChange
+  )
+  if (reducedMotionPreference.matches)
+    window.addEventListener("pointermove", handlePointerMove)
+</script>

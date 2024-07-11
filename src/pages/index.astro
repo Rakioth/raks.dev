@@ -1,0 +1,7 @@
+---
+import { getLocaleByUrl } from "@/i18n"
+
+const locale = getLocaleByUrl(Astro.url)
+---
+
+<meta http-equiv="refresh" content=`0;url=/${locale}/` />

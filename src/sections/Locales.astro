@@ -1,0 +1,14 @@
+---
+import Earth from "@/components/Earth.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<SectionContainer class:list={[className, "flex items-center justify-center"]}>
+  <Earth />
+</SectionContainer>

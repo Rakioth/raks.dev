@@ -1,0 +1,118 @@
+---
+import { ViewTransitions } from "astro:transitions"
+
+import BlobBackground from "@/components/BlobBackground.astro"
+import SEO from "@/components/SEO.astro"
+import "@fontsource-variable/onest"
+
+interface Props {
+  lang: string
+  title: string
+  description: string
+  image?: string
+}
+
+const { lang, title, description, image } = Astro.props
+---
+
+<!doctype html>
+<html lang={lang} class="h-full">
+  <head>
+    <SEO title={title} description={description} image={image} />
+    <ViewTransitions />
+  </head>
+
+  <body
+    class="flex min-h-full flex-col bg-[--color-background] bg-gradient-to-br from-[--color-background] to-[--color-backdrop] p-4"
+  >
+    <BlobBackground />
+    <slot />
+    <style is:global>
+      :root {
+        --color-primary: 23 23 23;
+        --color-secondary: 64 64 64;
+        --color-accent: 203 101 185;
+        --color-background: #f3f2f9;
+        --color-backdrop: #a9a9ae;
+      }
+
+      .dark {
+        --color-primary: 255 255 255;
+        --color-secondary: 212 212 212;
+        --color-accent: 137 16 133;
+        --color-background: #0f004a;
+        --color-backdrop: #3c2989;
+      }
+
+      html {
+        font-family: "Onest Variable", system-ui, sans-serif;
+        scroll-behavior: none;
+        scrollbar-gutter: stable;
+        color-scheme: light;
+        cursor: url(/cursor/light.png), auto;
+        cursor: -webkit-image-set(url(/cursor/light.png) 2x), auto;
+      }
+
+      html.dark {
+        color-scheme: dark;
+        cursor: url(/cursor/dark.png), auto;
+        cursor: -webkit-image-set(url(/cursor/dark.png) 2x), auto;
+      }
+
+      .theme-transition::view-transition-old(root),
+      .theme-transition::view-transition-new(root) {
+        animation: none;
+        mix-blend-mode: normal;
+      }
+
+      .box-blur {
+        @apply border border-white bg-zinc-200/20 bg-blend-luminosity outline outline-1 outline-offset-0 outline-zinc-200 backdrop-blur-xl dark:border-white/10 dark:bg-zinc-900/20 dark:outline-zinc-900;
+      }
+
+      @media screen and (prefers-reduced-motion: no-preference) {
+        html {
+          scroll-behavior: smooth;
+        }
+      }
+
+      @supports selector(::selection) {
+        ::selection {
+          @apply bg-accent text-primary;
+        }
+      }
+
+      @supports selector(::-webkit-scrollbar) {
+        ::-webkit-scrollbar {
+          width: 0.675rem;
+          border-radius: 0.675rem;
+        }
+
+        ::-webkit-scrollbar-thumb {
+          @apply bg-accent;
+          border: 0.125rem solid transparent;
+          border-radius: 0.675rem;
+          background-clip: content-box;
+        }
+
+        ::-webkit-scrollbar-thumb:active {
+          @apply bg-neutral-500;
+        }
+
+        ::-webkit-scrollbar-track {
+          background: var(--background-image);
+        }
+
+        ::-webkit-scrollbar-corner {
+          background: var(--background-image);
+        }
+      }
+
+      @supports not selector(::-webkit-scrollbar) {
+        * {
+          scrollbar-width: thin;
+          scrollbar-color: theme("colors.accent") transparent;
+        }
+      }
+    </style>
+  </body>
+</html>
