@@ -84,12 +84,14 @@ const { title, description, image = "/og.jpg" } = Astro.props
     statusColor.content = color
   }
 
-  document.addEventListener("astro:page-load", () => {
+  function handleThemeLoad() {
     const theme = window.getThemePreference()
-
     document.documentElement.classList.toggle("dark", theme === "dark")
     window.updateSeoState(theme)
-  })
+  }
+
+  handleThemeLoad()
+  document.addEventListener("astro:page-load", handleThemeLoad)
 </script>
 
 <script is:inline define:vars={{ originalTitle: title }}>
