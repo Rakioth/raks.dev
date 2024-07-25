@@ -1,10 +1,10 @@
 ---
 import ButtonLink from "@/components/ButtonLink.astro"
-import { getLocaleByUrl, useTranslations } from "@/i18n"
+import { getLocale, useTranslations } from "@/i18n"
 import BackIcon from "@/icons/Back.astro"
 import Layout from "@/layouts/Layout.astro"
 
-const locale = getLocaleByUrl(Astro.url)
+const locale = getLocale(Astro.currentLocale)
 const t = useTranslations(locale)
 ---
 

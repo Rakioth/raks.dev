@@ -2,7 +2,7 @@ import type { APIRoute } from "astro"
 
 import type { Theme } from "@/consts/theme"
 import { BACKGROUND_COLOR, THEME_COLOR } from "@/consts/theme"
-import { TRANSLATIONS, getLocaleByUrl, useTranslations } from "@/i18n"
+import { TRANSLATIONS, getLocale, useTranslations } from "@/i18n"
 
 export function getStaticPaths() {
   return Object.keys(TRANSLATIONS).flatMap((locale) =>
@@ -10,9 +10,9 @@ export function getStaticPaths() {
   )
 }
 
-export const GET: APIRoute = ({ params, url }) => {
+export const GET: APIRoute = ({ params, currentLocale }) => {
   const theme = params.theme as Theme
-  const locale = getLocaleByUrl(url)
+  const locale = getLocale(currentLocale)
   const t = useTranslations(locale)
 
   return new Response(

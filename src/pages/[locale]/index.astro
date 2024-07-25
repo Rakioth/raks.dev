@@ -1,5 +1,5 @@
 ---
-import { TRANSLATIONS, getLocaleByUrl, useTranslations } from "@/i18n"
+import { TRANSLATIONS, getLocale, useTranslations } from "@/i18n"
 import Layout from "@/layouts/Layout.astro"
 import Contact from "@/sections/Contact.astro"
 import Experience from "@/sections/Experience.astro"
@@ -12,7 +12,7 @@ export function getStaticPaths() {
   return Object.keys(TRANSLATIONS).map((locale) => ({ params: { locale } }))
 }
 
-const locale = getLocaleByUrl(Astro.url)
+const locale = getLocale(Astro.currentLocale)
 const t = useTranslations(locale)
 ---
 

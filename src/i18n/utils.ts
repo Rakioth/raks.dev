@@ -1,10 +1,8 @@
 import type { Locale, Translation } from "@/i18n/config"
 import { DEFAULT_LOCALE, TRANSLATIONS } from "@/i18n/config"
 
-export function getLocaleByUrl(url: URL) {
-  const [, locale] = url.pathname.split("/")
-  if (locale in TRANSLATIONS) return locale as Locale
-  return DEFAULT_LOCALE
+export function getLocale(locale: string | undefined) {
+  return (locale as Locale) || DEFAULT_LOCALE
 }
 
 export function useTranslations(locale: Locale) {

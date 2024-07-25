@@ -1,11 +1,11 @@
 ---
 import ButtonLink from "@/components/ButtonLink.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
-import { getLocaleByUrl, useTranslations } from "@/i18n"
+import { getLocale, useTranslations } from "@/i18n"
 import MessageIcon from "@/icons/Message.astro"
 import SendIcon from "@/icons/Send.astro"
 
-const locale = getLocaleByUrl(Astro.url)
+const locale = getLocale(Astro.currentLocale)
 const t = useTranslations(locale)
 
 interface Props {

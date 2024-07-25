@@ -2,11 +2,11 @@
 import ButtonLink from "@/components/ButtonLink.astro"
 import ExperienceItem from "@/components/ExperienceItem.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
-import { getLocaleByUrl, useTranslations } from "@/i18n"
+import { getLocale, useTranslations } from "@/i18n"
 import BriefcaseIcon from "@/icons/Briefcase.astro"
 import ScrollIcon from "@/icons/Scroll.astro"
 
-const locale = getLocaleByUrl(Astro.url)
+const locale = getLocale(Astro.currentLocale)
 const t = useTranslations(locale)
 
 interface Props {

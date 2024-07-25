@@ -3,10 +3,11 @@ import { ViewTransitions } from "astro:transitions"
 
 import BlobBackground from "@/components/BlobBackground.astro"
 import SEO from "@/components/SEO.astro"
+import type { Locale } from "@/i18n"
 import "@fontsource-variable/onest"
 
 interface Props {
-  lang: string
+  lang: Locale
   title: string
   description: string
   image?: string

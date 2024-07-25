@@ -1,8 +1,8 @@
 ---
-import { getLocaleByUrl, useTranslations } from "@/i18n"
+import { getLocale, useTranslations } from "@/i18n"
 import ArrowIcon from "@/icons/Arrow.astro"
 
-const locale = getLocaleByUrl(Astro.url)
+const locale = getLocale(Astro.currentLocale)
 const t = useTranslations(locale)
 
 interface Props {

@@ -2,9 +2,9 @@
 import onest from "@fontsource-variable/onest/files/onest-latin-wght-normal.woff2"
 
 import { THEME_COLOR } from "@/consts/theme"
-import { getLocaleByUrl, useTranslations } from "@/i18n"
+import { getLocale, useTranslations } from "@/i18n"
 
-const locale = getLocaleByUrl(Astro.url)
+const locale = getLocale(Astro.currentLocale)
 const t = useTranslations(locale)
 
 interface Props {
