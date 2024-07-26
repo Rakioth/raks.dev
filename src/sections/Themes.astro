@@ -8,16 +8,20 @@ const locale = getLocale(Astro.currentLocale)
 const t = useTranslations(locale)
 
 interface Props {
+  delay: string
   class?: string
 }
 
-const { class: className } = Astro.props
+const { delay, class: className } = Astro.props
 
 const darkModeLabel = t("themes.dark")
 const lightModeLabel = t("themes.light")
 ---
 
-<SectionContainer class:list={[className, "flex items-center justify-center"]}>
+<SectionContainer
+  delay={delay}
+  class:list={[className, "flex items-center justify-center"]}
+>
   <button
     transition:persist
     id="theme-toggle"

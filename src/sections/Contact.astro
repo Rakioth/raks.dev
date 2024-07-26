@@ -9,14 +9,16 @@ const locale = getLocale(Astro.currentLocale)
 const t = useTranslations(locale)
 
 interface Props {
+  delay: string
   class?: string
 }
 
-const { class: className } = Astro.props
+const { delay, class: className } = Astro.props
 ---
 
 <SectionContainer
   title={t("contact.title")}
+  delay={delay}
   class:list={[className, "group flex flex-col"]}
 >
   <MessageIcon slot="icon" />

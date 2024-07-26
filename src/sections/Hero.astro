@@ -12,10 +12,11 @@ const locale = getLocale(Astro.currentLocale)
 const t = useTranslations(locale)
 
 interface Props {
+  delay: string
   class?: string
 }
 
-const { class: className } = Astro.props
+const { delay, class: className } = Astro.props
 
 const socialLinks = [
   {
@@ -31,7 +32,7 @@ const socialLinks = [
 ]
 ---
 
-<SectionContainer class:list={[className]}>
+<SectionContainer delay={delay} class:list={[className]}>
   <FigureContainer class="group [&>img]:bg-accent">
     <img
       class="block group-hover:hidden"

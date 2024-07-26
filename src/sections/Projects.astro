@@ -8,10 +8,11 @@ const locale = getLocale(Astro.currentLocale)
 const t = useTranslations(locale)
 
 interface Props {
+  delay: string
   class?: string
 }
 
-const { class: className } = Astro.props
+const { delay, class: className } = Astro.props
 
 const projects = [
   {
@@ -41,7 +42,11 @@ const projects = [
 ]
 ---
 
-<SectionContainer title={t("projects.title")} class:list={[className]}>
+<SectionContainer
+  title={t("projects.title")}
+  delay={delay}
+  class:list={[className]}
+>
   <SparklesIcon slot="icon" />
   <main
     class="flex h-[10.8rem] flex-col gap-y-[2.45rem] overflow-y-auto md:h-[27.8rem]"

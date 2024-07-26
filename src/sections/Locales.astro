@@ -3,12 +3,16 @@ import Earth from "@/components/Earth.astro"
 import SectionContainer from "@/components/SectionContainer.astro"
 
 interface Props {
+  delay: string
   class?: string
 }
 
-const { class: className } = Astro.props
+const { delay, class: className } = Astro.props
 ---
 
-<SectionContainer class:list={[className, "flex items-center justify-center"]}>
+<SectionContainer
+  delay={delay}
+  class:list={[className, "flex items-center justify-center"]}
+>
   <Earth />
 </SectionContainer>

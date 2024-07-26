@@ -10,10 +10,11 @@ const locale = getLocale(Astro.currentLocale)
 const t = useTranslations(locale)
 
 interface Props {
+  delay: string
   class?: string
 }
 
-const { class: className } = Astro.props
+const { delay, class: className } = Astro.props
 
 const experiences = [
   {
@@ -28,6 +29,7 @@ const experiences = [
 
 <SectionContainer
   title={t("experience.title")}
+  delay={delay}
   class:list={[className, "group"]}
 >
   <BriefcaseIcon slot="icon" />
