@@ -1,0 +1,6 @@
+{
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/(?<locale>[^/]*)/(.*)", "dest": "/$locale/404", "status": 404 }
+  ]
+}

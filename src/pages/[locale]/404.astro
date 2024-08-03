@@ -1,0 +1,10 @@
+---
+import NotFound from "@/components/NotFound.astro"
+import { TRANSLATIONS } from "@/i18n"
+
+export function getStaticPaths() {
+  return Object.keys(TRANSLATIONS).map((locale) => ({ params: { locale } }))
+}
+---
+
+<NotFound />
